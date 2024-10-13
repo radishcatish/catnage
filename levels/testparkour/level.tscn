@@ -1,0 +1,377 @@
+[gd_scene load_steps=23 format=3 uid="uid://yjalun4tda5k"]
+
+[ext_resource type="AudioStream" uid="uid://bj7ws5ahaxedi" path="res://audiio/music/meowmoeowewmewo.mp3" id="1"]
+[ext_resource type="PackedScene" uid="uid://c65pip2hvassk" path="res://scenes/witz.tscn" id="1_0yy8x"]
+[ext_resource type="Script" path="res://scripts/tempGimmick.gd" id="3_8vlvc"]
+[ext_resource type="Script" path="res://scripts/hurtbox.gd" id="4_4nx64"]
+[ext_resource type="Texture2D" uid="uid://cu85xnthfclge" path="res://levels/testparkour/ef.png" id="5_4ngf8"]
+
+[sub_resource type="RectangleShape2D" id="1"]
+size = Vector2(1050, 1102)
+
+[sub_resource type="RectangleShape2D" id="2"]
+size = Vector2(1809, 2023)
+
+[sub_resource type="RectangleShape2D" id="4"]
+size = Vector2(977, 1033)
+
+[sub_resource type="RectangleShape2D" id="5"]
+size = Vector2(626, 1064)
+
+[sub_resource type="RectangleShape2D" id="6"]
+size = Vector2(322, 2254)
+
+[sub_resource type="RectangleShape2D" id="7"]
+size = Vector2(186, 62)
+
+[sub_resource type="RectangleShape2D" id="8"]
+size = Vector2(729, 122)
+
+[sub_resource type="RectangleShape2D" id="9"]
+size = Vector2(82, 313)
+
+[sub_resource type="RectangleShape2D" id="10"]
+size = Vector2(752, 592)
+
+[sub_resource type="RectangleShape2D" id="11"]
+size = Vector2(1494.03, 141.609)
+
+[sub_resource type="RectangleShape2D" id="12"]
+size = Vector2(1152.5, 110)
+
+[sub_resource type="CapsuleShape2D" id="14"]
+radius = 65.9603
+height = 450.409
+
+[sub_resource type="RectangleShape2D" id="15"]
+size = Vector2(1037, 229)
+
+[sub_resource type="RectangleShape2D" id="16"]
+size = Vector2(216, 790)
+
+[sub_resource type="RectangleShape2D" id="17"]
+size = Vector2(362.424, 2975.96)
+
+[sub_resource type="CircleShape2D" id="18"]
+radius = 96.3328
+
+[sub_resource type="RectangleShape2D" id="13"]
+size = Vector2(23040, 3929)
+
+[node name="level" type="Node"]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("1")
+volume_db = -20.0
+autoplay = true
+
+[node name="geo" type="Node2D" parent="."]
+
+[node name="Area2D" type="Area2D" parent="geo"]
+collision_layer = 7
+collision_mask = 7
+gravity_point_center = Vector2(0, 1.63)
+gravity_direction = Vector2(0, 1.63)
+script = ExtResource("3_8vlvc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="geo/Area2D"]
+position = Vector2(-48, -4608)
+shape = SubResource("1")
+debug_color = Color(0.243137, 0, 0.407843, 0.419608)
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="geo/Area2D"]
+position = Vector2(-2048, -3816)
+shape = SubResource("2")
+debug_color = Color(0.243137, 0, 0.407843, 0.419608)
+
+[node name="stage" type="StaticBody2D" parent="geo"]
+collision_layer = 4
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="geo/stage"]
+position = Vector2(-175.5, 427.5)
+shape = SubResource("4")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="geo/stage"]
+position = Vector2(863, 404)
+shape = SubResource("5")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="geo/stage"]
+position = Vector2(1592, -216)
+shape = SubResource("6")
+
+[node name="CollisionShape2D5" type="CollisionShape2D" parent="geo/stage"]
+position = Vector2(1000, -1561)
+shape = SubResource("6")
+
+[node name="CollisionShape2D7" type="CollisionShape2D" parent="geo/stage"]
+position = Vector2(2032, -1496)
+shape = SubResource("7")
+one_way_collision_margin = 11.5
+
+[node name="CollisionShape2D8" type="CollisionShape2D" parent="geo/stage"]
+position = Vector2(-1336, -944)
+shape = SubResource("7")
+one_way_collision = true
+one_way_collision_margin = 11.5
+
+[node name="CollisionShape2D26" type="CollisionShape2D" parent="geo/stage"]
+position = Vector2(-1984, -1152)
+shape = SubResource("7")
+one_way_collision_margin = 11.5
+
+[node name="CollisionShape2D31" type="CollisionShape2D" parent="geo/stage"]
+position = Vector2(-2944, -1464)
+shape = SubResource("7")
+one_way_collision_margin = 11.5
+
+[node name="CollisionShape2D32" type="CollisionShape2D" parent="geo/stage"]
+position = Vector2(-2600, -1224)
+shape = SubResource("7")
+one_way_collision_margin = 11.5
+
+[node name="CollisionShape2D9" type="CollisionShape2D" parent="geo/stage"]
+position = Vector2(2712, -1560)
+shape = SubResource("7")
+one_way_collision_margin = 11.5
+
+[node name="CollisionShape2D11" type="CollisionShape2D" parent="geo/stage"]
+position = Vector2(-1099.5, -4808)
+shape = SubResource("8")
+one_way_collision = true
+one_way_collision_margin = 11.5
+
+[node name="CollisionShape2D10" type="CollisionShape2D" parent="geo/stage"]
+position = Vector2(2560, -2080)
+rotation = 0.261799
+shape = SubResource("7")
+one_way_collision_margin = 11.5
+
+[node name="CollisionShape2D20" type="CollisionShape2D" parent="geo/stage"]
+position = Vector2(3080, -1836.5)
+shape = SubResource("9")
+
+[node name="CollisionShape2D14" type="CollisionShape2D" parent="geo/stage"]
+position = Vector2(1608, -3432)
+shape = SubResource("9")
+
+[node name="CollisionShape2D27" type="CollisionShape2D" parent="geo/stage"]
+position = Vector2(480, -2952)
+shape = SubResource("9")
+
+[node name="CollisionShape2D18" type="CollisionShape2D" parent="geo/stage"]
+position = Vector2(832, -3776)
+shape = SubResource("10")
+
+[node name="CollisionShape2D19" type="CollisionShape2D" parent="geo/stage"]
+position = Vector2(1624, -4056)
+shape = SubResource("9")
+
+[node name="CollisionShape2D23" type="CollisionShape2D" parent="geo/stage"]
+position = Vector2(-1048, -1280)
+shape = SubResource("9")
+
+[node name="CollisionShape2D24" type="CollisionShape2D" parent="geo/stage"]
+position = Vector2(-1432, -1640)
+shape = SubResource("9")
+
+[node name="CollisionShape2D34" type="CollisionShape2D" parent="geo/stage"]
+position = Vector2(-4968, -1568)
+shape = SubResource("9")
+
+[node name="CollisionShape2D25" type="CollisionShape2D" parent="geo/stage"]
+position = Vector2(-712, -1544)
+rotation = 1.57079
+shape = SubResource("9")
+
+[node name="CollisionShape2D12" type="CollisionShape2D" parent="geo/stage"]
+position = Vector2(2136, -2264)
+shape = SubResource("7")
+one_way_collision_margin = 11.5
+
+[node name="CollisionShape2D13" type="CollisionShape2D" parent="geo/stage"]
+position = Vector2(1536, -2456)
+shape = SubResource("7")
+one_way_collision_margin = 11.5
+
+[node name="CollisionShape2D16" type="CollisionShape2D" parent="geo/stage"]
+position = Vector2(1128, -3088)
+shape = SubResource("7")
+one_way_collision_margin = 11.5
+
+[node name="CollisionShape2D28" type="CollisionShape2D" parent="geo/stage"]
+position = Vector2(-56, -2568)
+shape = SubResource("7")
+one_way_collision_margin = 11.5
+
+[node name="CollisionShape2D29" type="CollisionShape2D" parent="geo/stage"]
+position = Vector2(-472, -2800)
+shape = SubResource("7")
+one_way_collision_margin = 11.5
+
+[node name="CollisionShape2D33" type="CollisionShape2D" parent="geo/stage"]
+position = Vector2(-3944, -1176)
+shape = SubResource("11")
+one_way_collision_margin = 11.5
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+
+[node name="CollisionShape2D30" type="CollisionShape2D" parent="geo/stage"]
+position = Vector2(-1048, -3056)
+shape = SubResource("7")
+one_way_collision_margin = 11.5
+
+[node name="CollisionShape2D21" type="CollisionShape2D" parent="geo/stage"]
+position = Vector2(-2879.75, -2392)
+shape = SubResource("12")
+one_way_collision = true
+one_way_collision_margin = 11.5
+
+[node name="CollisionShape2D22" type="CollisionShape2D" parent="geo/stage"]
+position = Vector2(-3768, -2040)
+shape = SubResource("11")
+one_way_collision_margin = 11.5
+
+[node name="Area2D2" type="Area2D" parent="geo"]
+collision_layer = 7
+collision_mask = 7
+script = ExtResource("4_4nx64")
+damage = 1
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="geo/Area2D2"]
+position = Vector2(2384, -1528)
+shape = SubResource("14")
+debug_color = Color(0.968627, 0, 0.466667, 0.419608)
+
+[node name="CollisionShape2D6" type="CollisionShape2D" parent="geo/Area2D2"]
+position = Vector2(-65.5, -3954.5)
+shape = SubResource("15")
+debug_color = Color(0.968627, 0, 0.466667, 0.419608)
+
+[node name="CollisionShape2D7" type="CollisionShape2D" parent="geo/Area2D2"]
+position = Vector2(-680, -4464)
+shape = SubResource("16")
+debug_color = Color(0.968627, 0, 0.466667, 0.419608)
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="geo/Area2D2"]
+position = Vector2(1824, -2288)
+rotation = 0.261799
+shape = SubResource("14")
+debug_color = Color(0.968627, 0, 0.466667, 0.419608)
+
+[node name="CollisionShape2D5" type="CollisionShape2D" parent="geo/Area2D2"]
+position = Vector2(1304, -2416)
+shape = SubResource("14")
+debug_color = Color(0.968627, 0, 0.466667, 0.419608)
+
+[node name="CollisionShape2D13" type="CollisionShape2D" parent="geo/Area2D2"]
+position = Vector2(-703.979, -2352)
+rotation = 1.57079
+shape = SubResource("17")
+debug_color = Color(0.968627, 0, 0.466667, 0.419608)
+
+[node name="CollisionShape2D8" type="CollisionShape2D" parent="geo/Area2D2"]
+position = Vector2(-3024, -2488)
+shape = SubResource("18")
+debug_color = Color(0.968627, 0, 0.466667, 0.419608)
+
+[node name="CollisionShape2D9" type="CollisionShape2D" parent="geo/Area2D2"]
+position = Vector2(-3360, -2184)
+shape = SubResource("18")
+debug_color = Color(0.968627, 0, 0.466667, 0.419608)
+
+[node name="CollisionShape2D10" type="CollisionShape2D" parent="geo/Area2D2"]
+position = Vector2(-4264, -2144)
+shape = SubResource("18")
+debug_color = Color(0.968627, 0, 0.466667, 0.419608)
+
+[node name="CollisionShape2D14" type="CollisionShape2D" parent="geo/Area2D2"]
+position = Vector2(-3216, -1400)
+shape = SubResource("18")
+debug_color = Color(0.968627, 0, 0.466667, 0.419608)
+
+[node name="CollisionShape2D16" type="CollisionShape2D" parent="geo/Area2D2"]
+position = Vector2(-4240, -1304)
+shape = SubResource("18")
+debug_color = Color(0.968627, 0, 0.466667, 0.419608)
+
+[node name="CollisionShape2D12" type="CollisionShape2D" parent="geo/Area2D2"]
+position = Vector2(-1632, -1160)
+shape = SubResource("18")
+debug_color = Color(0.968627, 0, 0.466667, 0.419608)
+
+[node name="CollisionShape2D15" type="CollisionShape2D" parent="geo/Area2D2"]
+position = Vector2(-2272, -1288)
+shape = SubResource("18")
+debug_color = Color(0.968627, 0, 0.466667, 0.419608)
+
+[node name="CollisionShape2D17" type="CollisionShape2D" parent="geo/Area2D2"]
+position = Vector2(-1472, -4576)
+rotation = -2.35619
+shape = SubResource("14")
+debug_color = Color(0.968627, 0, 0.466667, 0.419608)
+
+[node name="CollisionShape2D18" type="CollisionShape2D" parent="geo/Area2D2"]
+position = Vector2(-1856, -4288)
+rotation = -2.35619
+shape = SubResource("14")
+debug_color = Color(0.968627, 0, 0.466667, 0.419608)
+
+[node name="CollisionShape2D19" type="CollisionShape2D" parent="geo/Area2D2"]
+position = Vector2(-2216, -3992)
+rotation = -2.61799
+shape = SubResource("14")
+debug_color = Color(0.968627, 0, 0.466667, 0.419608)
+
+[node name="CollisionShape2D20" type="CollisionShape2D" parent="geo/Area2D2"]
+position = Vector2(-2656, -3480)
+rotation = -0.785397
+shape = SubResource("14")
+debug_color = Color(0.968627, 0, 0.466667, 0.419608)
+
+[node name="CollisionShape2D21" type="CollisionShape2D" parent="geo/Area2D2"]
+position = Vector2(-2640, -3104)
+shape = SubResource("14")
+debug_color = Color(0.968627, 0, 0.466667, 0.419608)
+
+[node name="CollisionShape2D22" type="CollisionShape2D" parent="geo/Area2D2"]
+position = Vector2(-1856, -3456)
+rotation = -2.61799
+shape = SubResource("14")
+debug_color = Color(0.968627, 0, 0.466667, 0.419608)
+
+[node name="CollisionShape2D23" type="CollisionShape2D" parent="geo/Area2D2"]
+position = Vector2(-2112, -3040)
+rotation = -2.61799
+shape = SubResource("14")
+debug_color = Color(0.968627, 0, 0.466667, 0.419608)
+
+[node name="death plane" type="Area2D" parent="geo"]
+collision_layer = 7
+collision_mask = 7
+script = ExtResource("4_4nx64")
+damage = 16
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="geo/death plane"]
+position = Vector2(-440, 1944)
+shape = SubResource("13")
+debug_color = Color(0.968627, 0, 0.466667, 0.419608)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -10
+texture_filter = 1
+texture_repeat = 1
+position = Vector2(-777, -2539)
+scale = Vector2(5.31, 5.31)
+texture = ExtResource("5_4ngf8")
+
+[node name="Sprite2D3" type="Sprite2D" parent="."]
+z_index = -11
+texture_filter = 1
+texture_repeat = 1
+position = Vector2(13884, -27123)
+rotation = 3.14159
+scale = Vector2(23.438, 61.0757)
+texture = ExtResource("5_4ngf8")
+
+[node name="witzPlayer" parent="." instance=ExtResource("1_0yy8x")]
+position = Vector2(-194, -276)

@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=3 uid="uid://cdvpawd8q3x70"]
+
+[ext_resource type="Script" path="res://scripts/interactabletestobj.gd" id="1_f4mhd"]
+[ext_resource type="Texture2D" uid="uid://hfliv3qfqa0v" path="res://sprites/apogustester.png" id="1_wtsm1"]
+[ext_resource type="AudioStream" uid="uid://cbqhdjbb7fvxu" path="res://audiio/jumpoffwall.mp3" id="3_mt6gi"]
+[ext_resource type="AudioStream" uid="uid://bqljq3xxsfuv" path="res://audiio/land.mp3" id="4_jydcv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_howio"]
+size = Vector2(128, 128)
+
+[node name="interactabletestobj" type="Node2D"]
+script = ExtResource("1_f4mhd")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, -64)
+shape = SubResource("RectangleShape2D_howio")
+
+[node name="Apogustester" type="Sprite2D" parent="."]
+z_as_relative = false
+texture_filter = 1
+position = Vector2(0, -96)
+texture = ExtResource("1_wtsm1")
+
+[node name="Jumpoffwall" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_mt6gi")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+visible = false
+position = Vector2(0, -64)
+color = Color(1, 1, 0, 1)
+texture = ExtResource("1_wtsm1")
+texture_scale = 2.0
+
+[node name="Land" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_jydcv")

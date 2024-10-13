@@ -1,0 +1,234 @@
+[gd_scene load_steps=8 format=3 uid="uid://cx2rfwdc6b4ct"]
+
+[ext_resource type="Script" path="res://levels/levelselect/levelselect.gd" id="1_t2wah"]
+[ext_resource type="AudioStream" uid="uid://3c82jmxmpuaq" path="res://audiio/witzstep.mp3" id="2_v7kxs"]
+[ext_resource type="AudioStream" uid="uid://bdgtfuyy50stl" path="res://audiio/gothit3.mp3" id="3_h8nwq"]
+[ext_resource type="PackedScene" uid="uid://c65pip2hvassk" path="res://scenes/witz.tscn" id="4_xk20s"]
+[ext_resource type="PackedScene" uid="uid://cffafmxly01bl" path="res://scenes/physicsball.tscn" id="5_678u1"]
+[ext_resource type="AudioStream" uid="uid://0wo6ti2vgfci" path="res://audiio/death.mp3" id="6_m32l0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y872e"]
+size = Vector2(2240, 32)
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_t2wah")
+
+[node name="witzPlayer" parent="." instance=ExtResource("4_xk20s")]
+position = Vector2(576, -1000)
+titleText = " Level Select"
+levelDesc = " FUCK!!!!!!!!!!!!!!x"
+cameraon = false
+noclip = true
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_layer = 4
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(576, 656)
+shape = SubResource("RectangleShape2D_y872e")
+
+[node name="physicsball" parent="." instance=ExtResource("5_678u1")]
+position = Vector2(544, 576)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(576, 500)
+zoom = Vector2(0.64, 0.64)
+
+[node name="physicsball2" parent="." instance=ExtResource("5_678u1")]
+position = Vector2(608, 576)
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+position = Vector2(-544, -1632)
+scale = Vector2(1.91429, 3.66667)
+color = Color(0.556863, 0.556863, 0.556863, 1)
+polygon = PackedVector2Array(-785.672, 619.636, 1888.96, 619.636, 1170.15, 846.546, 0, 846.546)
+
+[node name="Polygon2D2" type="Polygon2D" parent="."]
+z_index = -20
+position = Vector2(0, -2240)
+scale = Vector2(1, 3.5)
+color = Color(0.513726, 0.513726, 0.513726, 1)
+polygon = PackedVector2Array(0, 640, 1152, 640, 1696, 832, -544, 832)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_v7kxs")
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_h8nwq")
+
+[node name="AudioStreamPlayer3" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_m32l0")
+
+[node name="Control" type="Control" parent="."]
+z_index = -1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control"]
+auto_translate_mode = 2
+layout_mode = 0
+offset_top = 32.0
+offset_right = 399.0
+offset_bottom = 86.0
+scale = Vector2(2.885, 2.885)
+localize_numeral_system = false
+text = "res://levels/"
+scroll_active = false
+shortcut_keys_enabled = false
+deselect_on_focus_loss_enabled = false
+drag_and_drop_selection_enabled = false
+
+[node name="ocl" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 1472.0
+offset_top = 544.0
+offset_right = 1569.0
+offset_bottom = 608.0
+text = "old levels
+"
+
+[node name="tl1" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 129.0
+offset_right = 159.0
+offset_bottom = 257.0
+text = "test level 1
+(parkour)"
+clip_text = true
+
+[node name="tl2" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 224.0
+offset_top = 128.0
+offset_right = 352.0
+offset_bottom = 256.0
+text = "two-tailed chili
+pepper test"
+
+[node name="pb1" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 416.0
+offset_top = 128.0
+offset_right = 544.0
+offset_bottom = 256.0
+text = "physics ball 1
+"
+clip_text = true
+
+[node name="pb2" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 607.0
+offset_top = 128.0
+offset_right = 735.0
+offset_bottom = 256.0
+text = "physics ball 2"
+
+[node name="tl4" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 799.0
+offset_top = 128.0
+offset_right = 927.0
+offset_bottom = 256.0
+
+[node name="tl5" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 991.0
+offset_top = 128.0
+offset_right = 1119.0
+offset_bottom = 256.0
+
+[node name="tl6" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 288.0
+offset_right = 160.0
+offset_bottom = 416.0
+
+[node name="tl7" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 224.0
+offset_top = 288.0
+offset_right = 352.0
+offset_bottom = 416.0
+
+[node name="tl8" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 416.0
+offset_top = 288.0
+offset_right = 544.0
+offset_bottom = 416.0
+
+[node name="tl9" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 608.0
+offset_top = 288.0
+offset_right = 736.0
+offset_bottom = 416.0
+
+[node name="tl10" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 800.0
+offset_top = 288.0
+offset_right = 928.0
+offset_bottom = 416.0
+
+[node name="tl11" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 992.0
+offset_top = 288.0
+offset_right = 1120.0
+offset_bottom = 416.0
+
+[node name="tl12" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 448.0
+offset_right = 160.0
+offset_bottom = 576.0
+
+[node name="tl13" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 224.0
+offset_top = 448.0
+offset_right = 352.0
+offset_bottom = 576.0
+
+[node name="tl14" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 416.0
+offset_top = 448.0
+offset_right = 544.0
+offset_bottom = 576.0
+
+[node name="tl15" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 608.0
+offset_top = 448.0
+offset_right = 736.0
+offset_bottom = 576.0
+
+[node name="tl16" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 800.0
+offset_top = 448.0
+offset_right = 928.0
+offset_bottom = 576.0
+
+[node name="tl17" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 992.0
+offset_top = 448.0
+offset_right = 1120.0
+offset_bottom = 576.0
+
+[connection signal="pressed" from="Control/ocl" to="." method="ocl_pressed"]
+[connection signal="pressed" from="Control/tl1" to="." method="tl1_pressed"]
+[connection signal="pressed" from="Control/tl2" to="." method="_on_tl_2_pressed"]
+[connection signal="pressed" from="Control/pb1" to="." method="_on_bt_pressed"]
+[connection signal="pressed" from="Control/pb2" to="." method="_on_pb_2_pressed"]
