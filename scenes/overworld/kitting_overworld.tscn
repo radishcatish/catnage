@@ -1,0 +1,47 @@
+[gd_scene load_steps=7 format=3 uid="uid://c36kd4foy5v4a"]
+
+[ext_resource type="Texture2D" uid="uid://bxx65r8uj756j" path="res://sprites/kitting.png" id="1_04vju"]
+[ext_resource type="PackedScene" uid="uid://ibqgc5h7yl8c" path="res://scenes/fogshader.tscn" id="2_5fq7g"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wa4f5"]
+atlas = ExtResource("1_04vju")
+region = Rect2(0, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xgv37"]
+atlas = ExtResource("1_04vju")
+region = Rect2(192, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5ppe3"]
+atlas = ExtResource("1_04vju")
+region = Rect2(384, 0, 192, 192)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_me1ak"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wa4f5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xgv37")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5ppe3")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="kitting_overworld" type="Node2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.705882)
+clip_children = 2
+texture_filter = 1
+position = Vector2(160, 64)
+sprite_frames = SubResource("SpriteFrames_me1ak")
+autoplay = "default"
+frame_progress = 0.698685
+
+[node name="fogshader" parent="AnimatedSprite2D" instance=ExtResource("2_5fq7g")]
+modulate = Color(1, 1, 1, 0.65098)
