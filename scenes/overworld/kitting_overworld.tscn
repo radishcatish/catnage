@@ -1,7 +1,18 @@
-[gd_scene load_steps=7 format=3 uid="uid://c36kd4foy5v4a"]
+[gd_scene load_steps=10 format=3 uid="uid://c36kd4foy5v4a"]
 
+[ext_resource type="Script" path="res://scripts/kitting_overworld.gd" id="1_3x46y"]
 [ext_resource type="Texture2D" uid="uid://bxx65r8uj756j" path="res://sprites/kitting.png" id="1_04vju"]
-[ext_resource type="PackedScene" uid="uid://ibqgc5h7yl8c" path="res://scenes/fogshader.tscn" id="2_5fq7g"]
+[ext_resource type="Shader" path="res://shaders/kitting.gdshader" id="2_2eyx1"]
+[ext_resource type="Texture2D" uid="uid://bxmrt0igga602" path="res://sprites/kittingfog.png" id="2_fydry"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1g1wr"]
+shader = ExtResource("2_2eyx1")
+shader_parameter/hole_color = Color(1, 1, 1, 1)
+shader_parameter/outline_color = Color(0.180392, 0, 0.329412, 1)
+shader_parameter/direction = Vector2(0, 1)
+shader_parameter/speed = 0.15
+shader_parameter/transparency_strength = 0.8
+shader_parameter/holes = ExtResource("2_fydry")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wa4f5"]
 atlas = ExtResource("1_04vju")
@@ -33,15 +44,14 @@ animations = [{
 }]
 
 [node name="kitting_overworld" type="Node2D"]
+script = ExtResource("1_3x46y")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-modulate = Color(1, 1, 1, 0.705882)
+modulate = Color(1, 1, 1, 0.733333)
 clip_children = 2
 texture_filter = 1
-position = Vector2(160, 64)
+material = SubResource("ShaderMaterial_1g1wr")
+position = Vector2(0, -64)
 sprite_frames = SubResource("SpriteFrames_me1ak")
 autoplay = "default"
-frame_progress = 0.698685
-
-[node name="fogshader" parent="AnimatedSprite2D" instance=ExtResource("2_5fq7g")]
-modulate = Color(1, 1, 1, 0.65098)
+frame_progress = 0.205641

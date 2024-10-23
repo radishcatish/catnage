@@ -1,6 +1,6 @@
 [gd_scene load_steps=23 format=3 uid="uid://yjalun4tda5k"]
 
-[ext_resource type="AudioStream" uid="uid://bj7ws5ahaxedi" path="res://audiio/music/meowmoeowewmewo.mp3" id="1"]
+[ext_resource type="AudioStream" uid="uid://bj7ws5ahaxedi" path="res://audio/music/meowmoeowewmewo.mp3" id="1"]
 [ext_resource type="PackedScene" uid="uid://c65pip2hvassk" path="res://scenes/witz.tscn" id="1_0yy8x"]
 [ext_resource type="Script" path="res://scripts/tempGimmick.gd" id="3_8vlvc"]
 [ext_resource type="Script" path="res://scripts/hurtbox.gd" id="4_4nx64"]

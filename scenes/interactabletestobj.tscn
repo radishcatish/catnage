@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" path="res://scripts/interactabletestobj.gd" id="1_f4mhd"]
 [ext_resource type="Texture2D" uid="uid://hfliv3qfqa0v" path="res://sprites/apogustester.png" id="1_wtsm1"]
-[ext_resource type="AudioStream" uid="uid://cbqhdjbb7fvxu" path="res://audiio/jumpoffwall.mp3" id="3_mt6gi"]
-[ext_resource type="AudioStream" uid="uid://bqljq3xxsfuv" path="res://audiio/land.mp3" id="4_jydcv"]
+[ext_resource type="AudioStream" uid="uid://cbqhdjbb7fvxu" path="res://audio/jumpoffwall.mp3" id="3_mt6gi"]
+[ext_resource type="AudioStream" uid="uid://bqljq3xxsfuv" path="res://audio/land.mp3" id="4_jydcv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_howio"]
 size = Vector2(128, 128)
