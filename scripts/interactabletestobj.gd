@@ -16,8 +16,8 @@ func interact():
 func onfunc():
 	$Jumpoffwall.play()
 	$PointLight2D.visible = true
-	$Apogustester.scale.y = 1
+	$Debug.scale.y = 1
 func offfunc():
 	$PointLight2D.visible = false
 	$Land.play()
-	$Apogustester.scale.y = .5
+	$Debug.scale.y = .5

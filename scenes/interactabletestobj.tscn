@@ -1,12 +1,15 @@
-[gd_scene load_steps=6 format=3 uid="uid://cdvpawd8q3x70"]
+[gd_scene load_steps=7 format=3 uid="uid://cdvpawd8q3x70"]
 
 [ext_resource type="Script" path="res://scripts/interactabletestobj.gd" id="1_f4mhd"]
-[ext_resource type="Texture2D" uid="uid://hfliv3qfqa0v" path="res://sprites/apogustester.png" id="1_wtsm1"]
 [ext_resource type="AudioStream" uid="uid://cbqhdjbb7fvxu" path="res://audio/jumpoffwall.mp3" id="3_mt6gi"]
 [ext_resource type="AudioStream" uid="uid://bqljq3xxsfuv" path="res://audio/land.mp3" id="4_jydcv"]
+[ext_resource type="Texture2D" uid="uid://qibhohyseimi" path="res://sprites/witz/debug.PNG" id="4_pim0y"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_howio"]
 size = Vector2(128, 128)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_5h07a"]
+load_path = "res://.godot/imported/apogustester.png-da89c60d73dc657f4ca168e8df269613.ctex"
 
 [node name="interactabletestobj" type="Node2D"]
 script = ExtResource("1_f4mhd")
@@ -17,12 +20,6 @@ script = ExtResource("1_f4mhd")
 position = Vector2(0, -64)
 shape = SubResource("RectangleShape2D_howio")
 
-[node name="Apogustester" type="Sprite2D" parent="."]
-z_as_relative = false
-texture_filter = 1
-position = Vector2(0, -96)
-texture = ExtResource("1_wtsm1")
-
 [node name="Jumpoffwall" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_mt6gi")
 
@@ -30,8 +27,12 @@ stream = ExtResource("3_mt6gi")
 visible = false
 position = Vector2(0, -64)
 color = Color(1, 1, 0, 1)
-texture = ExtResource("1_wtsm1")
+texture = SubResource("CompressedTexture2D_5h07a")
 texture_scale = 2.0
 
 [node name="Land" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_jydcv")
+
+[node name="Debug" type="Sprite2D" parent="."]
+position = Vector2(0, -96)
+texture = ExtResource("4_pim0y")

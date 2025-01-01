@@ -16,6 +16,7 @@ region_enabled = true
 region_rect = Rect2(-17714, -17960, 35993, 35314)
 
 [node name="Witz" parent="." instance=ExtResource("1_unhbi")]
+script = null
 
 [node name="interactabletestobj" parent="." instance=ExtResource("3_hvotb")]
 position = Vector2(288, -64)

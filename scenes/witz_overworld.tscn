@@ -1,6 +1,6 @@
 [gd_scene load_steps=21 format=3 uid="uid://sai5p2aowgti"]
 
-[ext_resource type="Script" path="res://scripts/witzPlayer_overworld.gd" id="1_hqf7n"]
+[ext_resource type="Script" path="res://scripts/witz_overworld.tres.gd" id="1_dv1er"]
 [ext_resource type="Texture2D" uid="uid://megm7cil7oin" path="res://sprites/kris.png" id="2_7lht1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wf81x"]
@@ -201,7 +201,7 @@ size = Vector2(65, 12)
 motion_mode = 1
 wall_min_slide_angle = 0.785398
 platform_on_leave = 2
-script = ExtResource("1_hqf7n")
+script = ExtResource("1_dv1er")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -24)
