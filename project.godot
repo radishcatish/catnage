@@ -10,4 +10,10 @@ config_version=5
 
 [application]
 
+config/name="CATNAGE"
+run/main_scene="res://scenes/levels/level.tscn"
 config/features=PackedStringArray("4.3")
+
+[rendering]
+
+2d/snap/snap_2d_transforms_to_pixel=true

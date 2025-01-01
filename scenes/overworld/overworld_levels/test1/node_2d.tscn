@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://bmvj7on67xiwh"]
 
-[ext_resource type="PackedScene" uid="uid://sai5p2aowgti" path="res://scenes/witz_overworld.tscn" id="1_unhbi"]
+[ext_resource type="PackedScene" uid="uid://sai5p2aowgti" path="res://scenes/overworld/witz_overworld.tscn" id="1_unhbi"]
 [ext_resource type="Texture2D" uid="uid://b7hjyek5r3gx0" path="res://icon.svg" id="2_8ju7j"]
-[ext_resource type="PackedScene" uid="uid://cdvpawd8q3x70" path="res://scenes/interactabletestobj.tscn" id="3_hvotb"]
+[ext_resource type="PackedScene" uid="uid://cdvpawd8q3x70" path="res://scenes/overworld/interactabletestobj.tscn" id="3_hvotb"]
 
 [node name="Node2D" type="Node2D"]
 y_sort_enabled = true

@@ -1,0 +1,81 @@
+[gd_scene load_steps=8 format=4 uid="uid://luwyapbxnh1u"]
+
+[ext_resource type="Texture2D" uid="uid://b7hjyek5r3gx0" path="res://icon.svg" id="1_i0kyf"]
+[ext_resource type="PackedScene" uid="uid://bf23v172i8ots" path="res://scenes/witz_game.tscn" id="2_m0kn7"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_g4b6d"]
+
+[sub_resource type="Gradient" id="Gradient_42lfi"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_uwraj"]
+gradient = SubResource("Gradient_42lfi")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_f1pvq"]
+texture = ExtResource("1_i0kyf")
+texture_region_size = Vector2i(128, 128)
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_dv6ot"]
+tile_size = Vector2i(128, 128)
+sources/0 = SubResource("TileSetAtlasSource_f1pvq")
+
+[node name="level" type="Node"]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("WorldBoundaryShape2D_g4b6d")
+
+[node name="Icon" type="Sprite2D" parent="StaticBody2D"]
+self_modulate = Color(1, 1, 1, 0.439216)
+z_index = -4095
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("1_i0kyf")
+region_enabled = true
+region_rect = Rect2(32000, 32000, 64000, 64000)
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D"]
+z_index = -4096
+position = Vector2(-31815, -15873)
+rotation = -1.5708
+scale = Vector2(125.178, 63649.1)
+texture = SubResource("GradientTexture1D_uwraj")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(256, 0, 256, -128, 384, -128, 384, -256, 640, -256, 640, -384, 896, -384, 896, 0)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(1152, -512, 1408, -512, 1408, -384, 1152, -384)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(1536, -1024, 1536, -640, 1408, -640, 1408, -1024)
+
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(640, -896, 1152, -896, 1152, -768, 640, -768)
+
+[node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(128, -1152, 128, -1024, 512, -1024, 512, -1152)
+
+[node name="CollisionPolygon2D6" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(-640, -1664, -256, -1664, -256, -1024, -128, -1024, -128, -1792, -640, -1792)
+
+[node name="CollisionPolygon2D7" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(384, -1920, 384, -1408, 256, -1408, 256, -1920)
+
+[node name="Icon" type="Sprite2D" parent="."]
+z_index = -4061
+texture_filter = 1
+texture_repeat = 1
+position = Vector2(0, 22717)
+scale = Vector2(1000, 354.953)
+texture = ExtResource("1_i0kyf")
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray("AAACAP//AAAAAAAAAAADAP7/AAAAAAAAAAADAP//AAAAAAAAAAAEAP//AAAAAAAAAAAEAP7/AAAAAAAAAAAFAP3/AAAAAAAAAAAFAP7/AAAAAAAAAAAFAP//AAAAAAAAAAAGAP//AAAAAAAAAAAGAP7/AAAAAAAAAAAGAP3/AAAAAAAAAAAJAPz/AAAAAAAAAAAKAPz/AAAAAAAAAAALAPr/AAAAAAAAAAALAPn/AAAAAAAAAAALAPj/AAAAAAAAAAAIAPn/AAAAAAAAAAAHAPn/AAAAAAAAAAAGAPn/AAAAAAAAAAAFAPn/AAAAAAAAAAADAPf/AAAAAAAAAAACAPf/AAAAAAAAAAABAPf/AAAAAAAAAAD+//P/AAAAAAAAAAD+//T/AAAAAAAAAAD+//X/AAAAAAAAAAD+//b/AAAAAAAAAAD+//f/AAAAAAAAAAACAPH/AAAAAAAAAAACAPL/AAAAAAAAAAACAPP/AAAAAAAAAAACAPT/AAAAAAAAAAD+//L/AAAAAAAAAAD9//L/AAAAAAAAAAD8//L/AAAAAAAAAAD7//L/AAAAAAAAAAA=")
+tile_set = SubResource("TileSet_dv6ot")
+
+[node name="Witz" parent="." instance=ExtResource("2_m0kn7")]
