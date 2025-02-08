@@ -1,8 +1,15 @@
-[gd_scene load_steps=2 format=3 uid="uid://bf23v172i8ots"]
+[gd_scene load_steps=3 format=3 uid="uid://bf23v172i8ots"]
 
 [ext_resource type="Script" path="res://scripts/witz_game.gd" id="1_7r1x6"]
+[ext_resource type="Texture2D" uid="uid://bv4rov6evcbmq" path="res://sprites/witz/witz.png" id="2_1xjkc"]
 
 [node name="Witz" type="CharacterBody2D"]
 script = ExtResource("1_7r1x6")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+
+[node name="Witz" type="Sprite2D" parent="."]
+texture = ExtResource("2_1xjkc")
+offset = Vector2(0, -90)
+region_enabled = true
+region_rect = Rect2(0, 0, 192, 192)

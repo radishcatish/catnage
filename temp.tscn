@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=3 uid="uid://cf87d1ml2k4xo"]
+
+[ext_resource type="Texture2D" uid="uid://cpnncat7lcn2o" path="res://sprites/witz/witz1.png" id="1_1sm3c"]
+[ext_resource type="Script" path="res://tempcam.gd" id="2_b1nfh"]
+[ext_resource type="PackedScene" uid="uid://c36kd4foy5v4a" path="res://scenes/overworld/kitting_overworld.tscn" id="2_v53m7"]
+[ext_resource type="Texture2D" uid="uid://bj28bdugydcfg" path="res://sprites/wip - Copy.png" id="3_g0jli"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Witz1" type="Sprite2D" parent="."]
+position = Vector2(288, 376)
+texture = ExtResource("1_1sm3c")
+
+[node name="Camera2D" type="Camera2D" parent="Witz1"]
+position = Vector2(0, -32)
+scale = Vector2(1.11546, 0.475034)
+script = ExtResource("2_b1nfh")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+z_index = -950
+position = Vector2(488, 514)
+scale = Vector2(4.26073, 3.736)
+polygon = PackedVector2Array(-1307, -746, -639, 381, 1138, 432, 1120, -899, -1340, -749, -1277, -725)
+
+[node name="Polygon2D2" type="Polygon2D" parent="."]
+z_index = -950
+position = Vector2(10416, 20472)
+scale = Vector2(35.225, 35.225)
+color = Color(0.650128, 0.650128, 0.650128, 1)
+polygon = PackedVector2Array(-998, -568, -14, -568, 234, -40, -1510, -192)
+
+[node name="kitting_overworld" parent="." instance=ExtResource("2_v53m7")]
+position = Vector2(328, 448)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Wip-Copy" type="Sprite2D" parent="CanvasLayer"]
+texture = ExtResource("3_g0jli")
+centered = false
