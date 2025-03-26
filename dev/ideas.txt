@@ -1,0 +1,40 @@
+	General
+	
+	- use a lot more classes and global functions. make everything as object oriented and sectioned as possible
+	- pressing a certain key should switch to kitting in applicable areas 
+	- find a better name and design for kitting, christ's sake man
+
+
+
+
+
+	Hitbox, Hurtbox, and Bumpbox System
+	
+	- hitboxes should have a defense number and knockback resistance number
+	- hurtboxes should keep a list of the things that were hit by it as to not hit them every frame
+	
+  Player
+  - hurtboxes are made via a function that takes time in seconds, a vector for relative position, a vector for direction, damage amount, and knockback
+  - the actual hurtbox scene will have all of those same variables
+  - the hitbox for witz should change shape depending on how he's posed
+ 
+ 
+  Enemy
+  
+  - hurtbox creation function is in a global script instead, with an extra param after time that tells it where the hurtbox goes
+  - the actual hurtbox scene will have all of those same variables except the extra param, because the global script puts it there itself
+  
+ 
+ 	Attacks and Movement
+	
+	- if two attacks with equal power clash, add the knockback of both and apply it to both things away from eachother
+	
+  Player
+  - player can doubletap left or right to start running, OR hold shift. this can and should be able to be changed to always run in settings
+  - z jumps (no shit), x attacks, and c modifies. pressing c should mean high risk high reward, like slow attack but high power
+  - space should be dodge
+  - make sure to add armor when doing a strong attack
+  
+  Enemy
+  
+  - depends on the enemy
