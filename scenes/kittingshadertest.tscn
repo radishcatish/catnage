@@ -1,17 +1,17 @@
-[gd_scene load_steps=9 format=3 uid="uid://c36kd4foy5v4a"]
+[gd_scene load_steps=9 format=3 uid="uid://d28hedbaepd28"]
 
 [ext_resource type="Texture2D" uid="uid://bxx65r8uj756j" path="res://sprites/kitting.png" id="1_04vju"]
-[ext_resource type="Shader" path="res://shaders/kitting.gdshader" id="2_2eyx1"]
+[ext_resource type="Shader" uid="uid://bc1gxcv5bd3rc" path="res://shaders/kitting.gdshader" id="2_2eyx1"]
 [ext_resource type="Texture2D" uid="uid://bxmrt0igga602" path="res://sprites/kittingfog.png" id="2_fydry"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1g1wr"]
 shader = ExtResource("2_2eyx1")
+shader_parameter/holes = ExtResource("2_fydry")
 shader_parameter/hole_color = Color(1, 1, 1, 1)
 shader_parameter/outline_color = Color(0.180392, 0, 0.329412, 1)
 shader_parameter/direction = Vector2(0, 1)
 shader_parameter/speed = 0.15
 shader_parameter/transparency_strength = 1.0
-shader_parameter/holes = ExtResource("2_fydry")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wa4f5"]
 atlas = ExtResource("1_04vju")

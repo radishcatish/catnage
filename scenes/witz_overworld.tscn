@@ -1,69 +1,70 @@
-[gd_scene load_steps=21 format=3 uid="uid://sai5p2aowgti"]
+[gd_scene load_steps=22 format=3 uid="uid://sai5p2aowgti"]
 
-[ext_resource type="Script" path="res://scripts/witz_overworld.tres.gd" id="1_dv1er"]
-[ext_resource type="Texture2D" uid="uid://megm7cil7oin" path="res://sprites/kris.png" id="2_7lht1"]
+[ext_resource type="Script" uid="uid://dts6q5ginb0ee" path="res://scripts/witz_overworld.gd" id="1_rif3q"]
+[ext_resource type="PackedScene" uid="uid://d28hedbaepd28" path="res://scenes/kittingshadertest.tscn" id="2_posdy"]
+[ext_resource type="Texture2D" uid="uid://megm7cil7oin" path="res://sprites/kris.png" id="3_5a4ds"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wf81x"]
 size = Vector2(48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1o23w"]
-atlas = ExtResource("2_7lht1")
+atlas = ExtResource("3_5a4ds")
 region = Rect2(0, 0, 192, 200)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6g3q3"]
-atlas = ExtResource("2_7lht1")
+atlas = ExtResource("3_5a4ds")
 region = Rect2(192, 0, 192, 200)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ymyh0"]
-atlas = ExtResource("2_7lht1")
+atlas = ExtResource("3_5a4ds")
 region = Rect2(384, 0, 192, 200)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bmr5w"]
-atlas = ExtResource("2_7lht1")
+atlas = ExtResource("3_5a4ds")
 region = Rect2(0, 200, 192, 200)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_05vc7"]
-atlas = ExtResource("2_7lht1")
+atlas = ExtResource("3_5a4ds")
 region = Rect2(192, 200, 192, 200)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rsqsy"]
-atlas = ExtResource("2_7lht1")
+atlas = ExtResource("3_5a4ds")
 region = Rect2(384, 200, 192, 200)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xg3e5"]
-atlas = ExtResource("2_7lht1")
+atlas = ExtResource("3_5a4ds")
 region = Rect2(0, 800, 192, 200)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_osk5x"]
-atlas = ExtResource("2_7lht1")
+atlas = ExtResource("3_5a4ds")
 region = Rect2(192, 800, 192, 200)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1sc3g"]
-atlas = ExtResource("2_7lht1")
+atlas = ExtResource("3_5a4ds")
 region = Rect2(384, 800, 192, 200)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_f2pey"]
-atlas = ExtResource("2_7lht1")
+atlas = ExtResource("3_5a4ds")
 region = Rect2(0, 600, 192, 200)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pgpal"]
-atlas = ExtResource("2_7lht1")
+atlas = ExtResource("3_5a4ds")
 region = Rect2(192, 600, 192, 200)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dunqj"]
-atlas = ExtResource("2_7lht1")
+atlas = ExtResource("3_5a4ds")
 region = Rect2(384, 600, 192, 200)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7wbed"]
-atlas = ExtResource("2_7lht1")
+atlas = ExtResource("3_5a4ds")
 region = Rect2(0, 400, 192, 200)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4pkx2"]
-atlas = ExtResource("2_7lht1")
+atlas = ExtResource("3_5a4ds")
 region = Rect2(192, 400, 192, 200)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jxot7"]
-atlas = ExtResource("2_7lht1")
+atlas = ExtResource("3_5a4ds")
 region = Rect2(384, 400, 192, 200)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_a8xcu"]
@@ -201,7 +202,11 @@ size = Vector2(65, 12)
 motion_mode = 1
 wall_min_slide_angle = 0.785398
 platform_on_leave = 2
-script = ExtResource("1_dv1er")
+script = ExtResource("1_rif3q")
+
+[node name="kitting_overworld" parent="." instance=ExtResource("2_posdy")]
+position = Vector2(-115, -64)
+scale = Vector2(2, 2)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -24)

@@ -14,16 +14,17 @@ var pressx: bool = false
 var pressc: bool = false
 
 func _process(_delta: float) -> void:
-	input_direction = Input.get_vector(&"arrowleft",&"arrowright",&"arrowup",&"arrowdown")
+	
+	input_direction = Input.get_vector(&"left",&"right",&"up",&"down")
 	if input_direction.x:
 		ani.flip_h = input_direction.x < 0
 		
 	side   = input_direction.x != 0
 	up     = input_direction.y < 0
 	down   = input_direction.y > 0
-	pressz = Input.is_action_pressed(&"jump")
-	pressx = Input.is_action_pressed(&"attack")
-	pressc = Input.is_action_pressed(&"cbutton")
+	pressz = Input.is_action_pressed(&"z")
+	pressx = Input.is_action_pressed(&"x")
+	pressc = Input.is_action_pressed(&"c")
 	
 	if up:
 		if side:
@@ -39,7 +40,7 @@ func _process(_delta: float) -> void:
 		ani.play("SS_walk")
 	else:
 		ani.play(ani.animation.substr(0, 2) + &"_idle")
-	ani.speed_scale = 1 + float(Input.is_action_pressed(&"jump"))
+	ani.speed_scale = 1 + float(Input.is_action_pressed(&"x"))
 	
 func _physics_process(delta: float) -> void:
 	
@@ -47,12 +48,10 @@ func _physics_process(delta: float) -> void:
 		select_box.position = Vector2(0, -24) + input_direction.normalized() * 65
 		select_box.rotation = input_direction.angle()
 	is_selecting = false
-	is_selecting = Input.is_action_just_pressed("attack")
+	is_selecting = Input.is_action_just_pressed(&"z")
 	if is_selecting:
-		for area in select_box.get_overlapping_areas():
-			if area.get_parent() is InteractableObject:
-				area.get_parent().interact()
+			print("select")
 	
 	
-	velocity = (input_direction * (12000 + float(Input.is_action_pressed(&"jump")) * 12000) ) * delta
+	velocity = (input_direction * (12000 + float(Input.is_action_pressed(&"x")) * 12000) ) * delta
 	move_and_slide()
