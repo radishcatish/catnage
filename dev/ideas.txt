@@ -1,40 +1,124 @@
-	General
-	
-	- use a lot more classes and global functions. make everything as object oriented and sectioned as possible
-	- pressing a certain key should switch to kitting in applicable areas 
-	- find a better name and design for kitting, christ's sake man
+>	General
+		- use a lot more classes and global functions. make everything as component-based and object-oriented as possible.
+		- pressing a certain key should switch to kitting in applicable areas 
+		- find a better name and design for kitting, christ's sake man
 
+>	Hitbox, Hurtbox, and Bumpbox System
+		- hitboxes should have a defense number and knockback resistance number
+		- hurtboxes should keep a list of the things that were hit by it as to not hit them every frame
 
-
-
-
-	Hitbox, Hurtbox, and Bumpbox System
-	
-	- hitboxes should have a defense number and knockback resistance number
-	- hurtboxes should keep a list of the things that were hit by it as to not hit them every frame
-	
-  Player
-  - hurtboxes are made via a function that takes time in seconds, a vector for relative position, a vector for direction, damage amount, and knockback
-  - the actual hurtbox scene will have all of those same variables
-  - the hitbox for witz should change shape depending on how he's posed
+	>	Player
+			- hurtboxes are made via a function that takes time in seconds, a vector for relative position, a vector for direction, damage amount, power, and knockback
+			- the actual hurtbox scene will have all of those same variables
+			- the hitbox for witz should change shape depending on how he's posed
  
  
-  Enemy
-  
-  - hurtbox creation function is in a global script instead, with an extra param after time that tells it where the hurtbox goes
-  - the actual hurtbox scene will have all of those same variables except the extra param, because the global script puts it there itself
-  
- 
- 	Attacks and Movement
+	>	Enemy
+	
+			- hurtbox creation function is in a global script instead, with an extra param after time that tells it where the hurtbox goes
+			- the actual hurtbox scene will have all of those same variables except the extra param, because the global script puts it there itself
+	
+> 	Attacks and Movement
 	
 	- if two attacks with equal power clash, add the knockback of both and apply it to both things away from eachother
+	- if two attacks with equal damage clash, the one with more power gets the hit
 	
-  Player
-  - player can doubletap left or right to start running, OR hold shift. this can and should be able to be changed to always run in settings
-  - z jumps (no shit), x attacks, and c modifies. pressing c should mean high risk high reward, like slow attack but high power
-  - space should be dodge
-  - make sure to add armor when doing a strong attack
-  
-  Enemy
-  
-  - depends on the enemy
+	>	Player
+			- player can doubletap left or right to start running, OR hold shift. this can and should be able to be changed to always run in settings
+			- z jumps (no shit), x attacks, and c modifies. pressing c should mean high risk high reward, like slow attack but high power
+			- space should be dodge
+			- make sure to add armor when doing a strong attack
+
+
+> 	Gameplay Additions
+
+	>	Experience Points
+	
+		- you can gain EXP via getting points in levels. however, it has to be *fresh* points. if you complete a level with a high score, then complete it again with a lower score, you'll only get 1/4th the amount of EXP, or a little bit more depending on:
+			= if it is a hard level
+			= if it has a boss
+			= if it has special challenges or clear conditions, and you complete it
+			= if you get a better time 
+			= you have an EXP badge
+		
+		- you can also get EXP by getting large combos, seperate from the points you get from it.
+		- there should be an EXP cap. If reached, every X amount of EXP converts to one of the currency from the world you're in, depending on how valuable it is.
+		- at certain milestones, you get rewards. these can't be money, as it wouldn't make sense, so perhaps badge points, or extra badges.
+		
+	>	Badges
+		
+			- badges should be upgradable if possible
+			- all badges should be equal in some way (unless very hard to get), and should have a good reason to use it 
+			- there are badge points, like the Paper Mario series.
+			
+			> Badge Ideas
+
+				- all levels, badge points, and prices are examples, and shouldn't reflect how they are ingame. 
+
+				- Plus Attack
+					= "Increases your damage by X, lowers your power by Y."
+					= does what it says on the tin
+					= levels:  (1, 1),  (2, 2), (3, 3), (3, 2), (4, 2), (4, 1)
+					= badge points: 5
+					= price: should be low hightier, and gets more expensive exponentially
+
+				- Plus Defense
+					= "Increases your defense by X, at a cost to your damage and power."
+					= damage and power are consistently decreased by floor(added_defense / 3 + 1)
+					= levels: increase by 1 for each level
+					= badge points: 3
+					= price: midtier
+			
+				- Good Bad Internet
+					= "Increases the lag of your attacks, but makes them stay out longer."
+					= hitboxes are't activated until X frames late, but they stay out Y frames longer.
+					= levels:  (4, 4), (3, 4), (3, 6), (2, 5), (1, 4), (0, 4)
+					= badge points: 2 + LVL / 2 
+					= price: should be high lowtier when first bought, but get exponentially more expensive when levelled up.
+
+				- Switcharoo
+					= "Your damage and defense are swapped!"
+					= badge points: 2
+					= price: low midtier
+
+				- Priority Attacks
+					= "Your damage is halved, but your power is doubled"
+					= basically you overpower more attacks but the damage you do is ass. would be fucking DEVASTATING with plus attack, but you'd use most if not all of your BP
+					= badge points: 5
+					= cannot be used with: Nimble, because you wouldn't do any fuckin damage
+					= price: high midtier
+
+				- Nimble
+					= "You have decreased damage, power, defense, and can't do smash attacks, but you're a lot faster in every aspect"
+					= idfk what to say about this lmao
+					= levels: if leveled up, removes the power debuff and gives you a bit more damage
+					= badge points: 3
+					= cannot be used with: Tank
+					= should be on the higher end of midtier in terms of price
+
+				- Tank
+					= "You have increased damage, power, and defense. However, you can only do smash attacks, but they're a bit faster. Your movement speed is also a bit slower too"
+					= i also dfk what to say about this
+					= badge points: 8
+					= cannot be used with: Nimble, because it would cancel it out
+					= price: hightier
+
+				- Damage Fuel
+					= "Your combo level adds + X to your damage, but you start with 0 damage"
+					= note, you still do knockback and can clash, it's just your damage changing
+					= levels: increase by 1 for each level
+					= badge points: 5
+					= price: hightier
+
+				- Plus Aerials
+					= "You can do X more aerials midair without hitting something"
+					= levels: increase by 1 for each level
+					= badge points: 2
+					= price: hightier
+
+				- Plus DI
+					= "You can influence your movement direction more"
+					= this literally adds velocity to your input direction
+					= levels: get faster for each level
+					= badge points: 1
+					= price: hightier
