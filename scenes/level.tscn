@@ -1,0 +1,132 @@
+[gd_scene load_steps=10 format=3 uid="uid://b63rfol4tymgn"]
+
+[ext_resource type="PackedScene" path="res://scenes/platform.tscn" id="1_w7c3h"]
+[ext_resource type="PackedScene" uid="uid://dqpui52ogt8m2" path="res://scenes/witz.tscn" id="2_w7c3h"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_u52ul"]
+
+[sub_resource type="Gradient" id="Gradient_oi3di"]
+interpolation_mode = 2
+colors = PackedColorArray(0.183333, 1, 0, 1, 1, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_0b4ue"]
+gradient = SubResource("Gradient_oi3di")
+
+[sub_resource type="Gradient" id="Gradient_5xgho"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_u52ul"]
+gradient = SubResource("Gradient_5xgho")
+
+[sub_resource type="Gradient" id="Gradient_u52ul"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0.19, 0.19, 0.19, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_oi3di"]
+gradient = SubResource("Gradient_u52ul")
+
+[node name="Level" type="Node"]
+
+[node name="Environment" type="StaticBody2D" parent="."]
+z_index = -4096
+scale = Vector2(0.245, 0.245)
+metadata/_edit_lock_ = true
+
+[node name="bottomcol" type="CollisionShape2D" parent="Environment"]
+shape = SubResource("WorldBoundaryShape2D_u52ul")
+metadata/_edit_lock_ = true
+
+[node name="topcol" type="CollisionShape2D" parent="Environment"]
+position = Vector2(0, -11738)
+rotation = 3.14159
+shape = SubResource("WorldBoundaryShape2D_u52ul")
+metadata/_edit_lock_ = true
+
+[node name="leftcol" type="CollisionShape2D" parent="Environment"]
+position = Vector2(-5904, 0)
+rotation = 1.5708
+shape = SubResource("WorldBoundaryShape2D_u52ul")
+metadata/_edit_lock_ = true
+
+[node name="rightcol" type="CollisionShape2D" parent="Environment"]
+position = Vector2(5904, 0)
+rotation = -1.5708
+shape = SubResource("WorldBoundaryShape2D_u52ul")
+metadata/_edit_lock_ = true
+
+[node name="Background" type="Node2D" parent="Environment"]
+scale = Vector2(1.025, 1)
+metadata/_edit_lock_ = true
+
+[node name="BG2" type="Sprite2D" parent="Environment/Background"]
+modulate = Color(1, 1, 1, 0.67451)
+z_index = -2
+position = Vector2(0, -5904.03)
+scale = Vector2(184.5, 225.516)
+texture = SubResource("GradientTexture2D_0b4ue")
+metadata/_edit_lock_ = true
+
+[node name="BG1" type="Sprite2D" parent="Environment/Background"]
+modulate = Color(1, 1, 1, 0.701961)
+z_index = -2
+position = Vector2(0, -5904.03)
+rotation = -1.5708
+scale = Vector2(184.5, 225.516)
+texture = SubResource("GradientTexture2D_u52ul")
+metadata/_edit_lock_ = true
+
+[node name="Background2" type="Node2D" parent="Environment"]
+position = Vector2(5, 3982)
+scale = Vector2(1.684, 1.675)
+metadata/_edit_lock_ = true
+
+[node name="EnvironmentCustom" type="Node2D" parent="Environment/Background2"]
+
+[node name="platform" parent="Environment/Background2/EnvironmentCustom" instance=ExtResource("1_w7c3h")]
+position = Vector2(-3053.44, -2882.39)
+scale = Vector2(1.80247, 9.52533)
+
+[node name="floor" type="Sprite2D" parent="Environment/Background2"]
+position = Vector2(0, -1188.66)
+scale = Vector2(183.881, 37.1534)
+texture = SubResource("GradientTexture2D_oi3di")
+metadata/_edit_lock_ = true
+
+[node name="ceiling" type="Sprite2D" parent="Environment/Background2"]
+position = Vector2(0, -10573.7)
+rotation = -3.14159
+scale = Vector2(183.881, 37.1534)
+texture = SubResource("GradientTexture2D_oi3di")
+metadata/_edit_lock_ = true
+
+[node name="leftwall" type="Sprite2D" parent="Environment/Background2"]
+position = Vector2(-4692.54, -5881.19)
+rotation = -1.5708
+scale = Vector2(183.881, 37.1534)
+texture = SubResource("GradientTexture2D_oi3di")
+metadata/_edit_lock_ = true
+
+[node name="rightwall" type="Sprite2D" parent="Environment/Background2"]
+position = Vector2(4692.54, -5881.19)
+rotation = 1.5708
+scale = Vector2(183.881, 37.1534)
+texture = SubResource("GradientTexture2D_oi3di")
+metadata/_edit_lock_ = true
+
+[node name="Coloring" type="Node2D" parent="Environment/Background2"]
+modulate = Color(1, 1, 1, 0.203922)
+metadata/_edit_lock_ = true
+
+[node name="BG2" type="Sprite2D" parent="Environment/Background2/Coloring"]
+modulate = Color(1, 1, 1, 0.67451)
+z_index = 1
+position = Vector2(0, -5904.03)
+scale = Vector2(184.323, 187.747)
+texture = SubResource("GradientTexture2D_0b4ue")
+metadata/_edit_lock_ = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+offset = Vector2(0, -3000)
+enabled = false
+zoom = Vector2(0.09, 0.09)
+
+[node name="Witz" parent="." instance=ExtResource("2_w7c3h")]

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://2pnxanbhssld"
-path="res://.godot/imported/witz.png-89bc23f327f98591032d1b11ad019f6c.ctex"
+uid="uid://pqxo4rdn5y8s"
+path="res://.godot/imported/idlestand2.png-1261cbf2ac09cd6596b8f20e8c5aaf9b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/witz.png"
-dest_files=["res://.godot/imported/witz.png-89bc23f327f98591032d1b11ad019f6c.ctex"]
+source_file="res://sprites/witz/idlestand2.png"
+dest_files=["res://.godot/imported/idlestand2.png-1261cbf2ac09cd6596b8f20e8c5aaf9b.ctex"]
 
 [params]
 
