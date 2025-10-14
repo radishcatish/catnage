@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/witz.ase-5f50b89461e4eeaa46d2e87a5f677391.res
 
 [params]
 
-layer/exclude_layers_pattern=""
+layer/exclude_layers_pattern="Layer 0"
 layer/only_visible_layers=true
 sheet/sheet_type="packed"
 sheet/sheet_columns=12

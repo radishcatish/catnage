@@ -86,6 +86,11 @@ metadata/_edit_lock_ = true
 position = Vector2(-3053.44, -2882.39)
 scale = Vector2(1.80247, 9.52533)
 
+[node name="platform2" parent="Environment/Background2/EnvironmentCustom" instance=ExtResource("1_w7c3h")]
+position = Vector2(-2807.2734, -3137.5935)
+rotation = 1.5707964
+scale = Vector2(1.80247, 9.52533)
+
 [node name="floor" type="Sprite2D" parent="Environment/Background2"]
 position = Vector2(0, -1188.66)
 scale = Vector2(183.881, 37.1534)

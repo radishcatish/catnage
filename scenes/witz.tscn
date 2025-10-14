@@ -21,6 +21,7 @@ offset = Vector2(0, -48)
 offset = Vector2(0, -48)
 limit_enabled = false
 position_smoothing_enabled = true
+drag_bottom_margin = 0.3
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 position = Vector2(0, -16)
