@@ -18,7 +18,6 @@ autoplay = "idle"
 
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2(0, -48)
-process_callback = 0
 limit_enabled = false
 position_smoothing_enabled = true
 drag_bottom_margin = 0.3
