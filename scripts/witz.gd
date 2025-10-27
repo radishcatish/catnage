@@ -70,12 +70,12 @@ func _physics_process(_delta: float) -> void:
 	
 	# main movement
 	if not lock_movement:
-		if not lock_slow:
+		if direction:
 			velocity.x = move_toward(velocity.x, direction * (MAX_SPEED + extra_speed), accel)
 		else:
-			velocity.x = move_toward(velocity.x, direction * (AIR_ACCEL), accel)
+			velocity.x = move_toward(velocity.x, 0, accel / 4)
 	else:
-		velocity.x = move_toward(velocity.x, 0, accel)
+		velocity.x = move_toward(velocity.x, 0, accel / 4)
 	
 	
 	
@@ -98,17 +98,19 @@ func _physics_process(_delta: float) -> void:
 	
 	sprite.flip_h = false if visual_dir == 1 else true
 	sprite.rotation_degrees = lerpf(0, clamp(velocity.x / 100, -18, 18), 1.5) if not is_on_floor() else 0
-	
+	print(velocity.x)
 	match State:
 		PlayerState.GENERAL:
 			if is_on_floor():
-				if direction or abs(velocity.x) > 10:
-					if Input.is_action_pressed("shift"):
-						sprite.play("run")
+				if direction or abs(velocity.x) > 22:
+					if abs(velocity.x) > 500:
+						sprite.play("run", self.velocity.x / 1000)
 					else:
-						sprite.play("walk")
-					if ((direction == 1 and velocity.x < 0) or (direction == -1 and velocity.x > 0)) and abs(velocity.x) > 22:
+						sprite.play("walk", self.velocity.x / 500)
+					if ((visual_dir == 1 and velocity.x < 0) or (visual_dir == -1 and velocity.x > 0) ) and abs(velocity.x) > 22:
 						sprite.play("skid")
+						
+						
 				else:
 					sprite.play("idle")
 				if not direction and Input.is_action_pressed("down"):

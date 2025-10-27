@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://d28hedbaepd28"]
+[gd_scene load_steps=10 format=3 uid="uid://d28hedbaepd28"]
 
 [ext_resource type="Shader" uid="uid://bc1gxcv5bd3rc" path="res://shaders/kitting.gdshader" id="1_gq7kj"]
 [ext_resource type="Texture2D" uid="uid://bxmrt0igga602" path="res://sprites/kittingfog.png" id="2_bwpq7"]
 [ext_resource type="Texture2D" uid="uid://bxx65r8uj756j" path="res://sprites/kitting.png" id="3_nl17w"]
+[ext_resource type="Script" uid="uid://csm3rdx2p6gyw" path="res://sprites/kitting.gd" id="4_bwpq7"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1g1wr"]
 shader = ExtResource("1_gq7kj")
@@ -42,10 +43,11 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D"]
+[node name="Kitting" type="AnimatedSprite2D"]
 modulate = Color(1, 1, 1, 0.733333)
 texture_filter = 1
 material = SubResource("ShaderMaterial_1g1wr")
 sprite_frames = SubResource("SpriteFrames_me1ak")
 autoplay = "default"
 frame_progress = 0.15111572
+script = ExtResource("4_bwpq7")
