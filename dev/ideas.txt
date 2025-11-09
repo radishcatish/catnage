@@ -1,7 +1,7 @@
 >	General
 		- use a lot more classes and global functions. make everything as component-based and object-oriented as possible.
 		- pressing a certain key should switch to kitting in applicable areas 
-		- find a better name and design for kitting, christ's sake man
+		- find a better name for kitting, christ's sake man
 
 >	Hitbox, Hurtbox, and Bumpbox System
 		- hitboxes should have a defense number and knockback resistance number

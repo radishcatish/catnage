@@ -24,19 +24,22 @@ const AIR_ACCEL = 60.0
 const MAX_SPEED = 500.0
 const FRICTION = 100.0
 const JUMP_VELOCITY = -1000.0
-enum PlayerState {GENERAL, JAB}
+enum PlayerState {GENERAL, ATTACKING}
 var State := PlayerState.GENERAL
-var AltState: int = 0
+enum Attacks {NONE, JAB, UPGROUND, FAIR, BAIR, UAIR, DAIR, NAIR}
+var AttackState := Attacks.NONE
+var AltAttackState: int = 0
 func _physics_process(_delta: float) -> void:
-	var direction := int(Input.get_axis("left", "right")) if not lock_movement else 0
+	var direction := int(Input.get_axis(&"left", &"right")) if not lock_movement else 0
 	var accel = WALK_ACCEL if is_on_floor() else AIR_ACCEL
+	State = PlayerState.ATTACKING if AttackState != Attacks.NONE else State
 	last_on_floor = last_on_floor + 1 if not is_on_floor() else 0
 	last_on_wall = last_on_wall + 1 if not is_on_wall() else 0
 	last_z_press = last_z_press + 1 if not Input.is_action_just_pressed("z") else 0
 	last_x_press = last_x_press + 1 if not Input.is_action_just_pressed("x") else 0
 	last_c_press = last_c_press + 1 if not Input.is_action_just_pressed("c") else 0
-	extra_speed = 500 if Input.is_action_pressed("shift") else 0
-	if not lock_dir:
+	extra_speed = 500 if Input.is_action_pressed(&"shift") else 0
+	if not lock_dir or State == PlayerState.ATTACKING:
 		visual_dir = direction if direction != 0 and last_on_floor < 2 else visual_dir
 
 	if is_on_floor():
@@ -56,17 +59,17 @@ func _physics_process(_delta: float) -> void:
 			if not lock_dir:
 				visual_dir = wall_normal
 		if last_on_floor < 5:
-			velocity.y += JUMP_VELOCITY
+			velocity.y += JUMP_VELOCITY - abs(velocity.x) / 10
 			last_on_floor = 5
 	
 	# wall sliding
 	#velocity.y *= .9 if is_on_wall() and old_wall_normal != wall_normal and velocity.y > 0 else 1.0
 	
 	# variable jump height (gravity)
-	velocity.y += (60 - (int(Input.is_action_pressed("z")) * 20))
+	velocity.y += (60 - (int(Input.is_action_pressed(&"z")) * 20))
 	
 	# variable jump height 2 (instant stop)
-	velocity.y = -200.0 if Input.is_action_just_released("z") and velocity.y < -200.0 else velocity.y
+	velocity.y = -200.0 if Input.is_action_just_released(&"z") and velocity.y < -200.0 else velocity.y
 	
 	# main movement
 	if not lock_movement:
@@ -75,48 +78,78 @@ func _physics_process(_delta: float) -> void:
 		else:
 			velocity.x = move_toward(velocity.x, 0, accel / 4)
 	else:
-		velocity.x = move_toward(velocity.x, 0, accel / 4)
-	
-	
+		velocity.x = move_toward(velocity.x, 0, accel / 2)
 	
 	move_and_slide()
 	
 	
-	
-	if is_on_floor() and last_x_press < 3:
-		State = PlayerState.JAB
-		sprite.play("jab")
-		lock_dir = true
-		lock_movement = true
-		await sprite.animation_finished
-		lock_dir = false
-		lock_movement = false
-		State = PlayerState.GENERAL
+	if Input.is_action_just_pressed(&"x"):
+		attack_handler()
 	
 	
 
 	
 	sprite.flip_h = false if visual_dir == 1 else true
 	sprite.rotation_degrees = lerpf(0, clamp(velocity.x / 100, -18, 18), 1.5) if not is_on_floor() else 0
-	print(velocity.x)
+
 	match State:
 		PlayerState.GENERAL:
 			if is_on_floor():
 				if direction or abs(velocity.x) > 22:
 					if abs(velocity.x) > 500:
-						sprite.play("run", self.velocity.x / 1000)
+						sprite.play(&"run", self.velocity.x / 1000)
 					else:
-						sprite.play("walk", self.velocity.x / 500)
+						sprite.play(&"walk", self.velocity.x / 500)
 					if ((visual_dir == 1 and velocity.x < 0) or (visual_dir == -1 and velocity.x > 0) ) and abs(velocity.x) > 22:
-						sprite.play("skid")
+						sprite.play(&"skid")
 						
 						
 				else:
-					sprite.play("idle")
-				if not direction and Input.is_action_pressed("down"):
-					sprite.play("crouch")
+					sprite.play(&"idle")
+				if not direction and Input.is_action_pressed(&"down"):
+					sprite.play(&"crouch")
 			else:
-				sprite.play("midair")
+				sprite.play(&"midair")
 				if sprite.animation == "midair":
 					var t = clamp((velocity.y + 20.0) / 500.0, 0.0, 1.0)
 					sprite.frame = int(t * 3.999)
+	
+func attack_handler():
+	if State == PlayerState.ATTACKING: return
+	State = PlayerState.ATTACKING
+	if is_on_floor():
+		if not Input.is_action_pressed(&"up"):
+			if last_x_press < 3 and not AttackState == Attacks.JAB:
+				AttackState = Attacks.JAB
+				sprite.play(&"jab")
+				lock_movement = true
+				await sprite.frame_changed
+				spawn_hitbox(10, Vector2(visual_dir, 0), Vector2(visual_dir * 40, -30), Vector2(80,50), .1, .5, 1)
+				await sprite.animation_finished
+				lock_movement = false
+				AttackState = Attacks.NONE
+				State = PlayerState.GENERAL
+		else:
+			if last_x_press < 3 and not AttackState == Attacks.UPGROUND:
+				AttackState = Attacks.JAB
+				sprite.play(&"upground")
+				lock_movement = true
+				spawn_hitbox(10, Vector2(float(-visual_dir) / 4,1), Vector2(-visual_dir * 10, -80), Vector2(50,80), .1, .5, 1)
+				await sprite.animation_finished
+				lock_movement = false
+				AttackState = Attacks.NONE
+				State = PlayerState.GENERAL
+	else:
+		State = PlayerState.GENERAL
+const HITBOX = preload("res://scenes/hitbox.tscn")
+func spawn_hitbox(ticks:int,angle:Vector2,pos:Vector2,size:Vector2,knockback:float,damage:float,power:int):
+	var hitbox = HITBOX.duplicate().instantiate()
+	hitbox.size = size
+	hitbox.position = pos
+	hitbox.ticks = ticks
+	hitbox.angle = angle
+	hitbox.knockback = knockback
+	hitbox.damage = damage
+	hitbox.power = power
+	add_child(hitbox)
+	

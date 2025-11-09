@@ -31,6 +31,17 @@ project/assembly_name="UnnamedProject"
 
 enabled=PackedStringArray("res://addons/AsepriteWizard/plugin.cfg")
 
+[file_customization]
+
+folder_colors={
+"res://addons/": "red",
+"res://dev/": "orange",
+"res://scenes/": "yellow",
+"res://scripts/": "green",
+"res://shaders/": "teal",
+"res://sprites/": "blue"
+}
+
 [input]
 
 left={
