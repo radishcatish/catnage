@@ -10,8 +10,15 @@ var size:      Vector2 = Vector2.ZERO
 
 var hit_hurtboxes: Array = []
 func _on_area_entered(area: Area2D) -> void:
-	if area not in hit_hurtboxes:
-		hit_hurtboxes.append(area)
+	if player:
+		if area not in hit_hurtboxes:
+			if area.owner.has_method("hit") or area.name == "test":
+				hit_hurtboxes.append(area)
+				global.heat_progress += 15
+	else:
+		if area.owner.name == "Witz":
+			area.owner.hit()
+			queue_free()
 
 func _physics_process(_delta) -> void:
 	collision.shape.size = size

@@ -23,13 +23,14 @@ var last_shift_press:         int = 10
 var last_up_press:            int = 10
 var last_left_press:          int = 10
 var last_right_press:         int = 10
-var visual_dir:      int = 1
-var extra_speed:     float = 0.0
-var old_wall_normal: float = 0.0
-var wall_normal:     float = 0.0
-var lock_dir:  bool = false
-var lock_slow: bool = false
-var lock_movement: bool = false
+var visual_dir:               int = 1
+var extra_speed:              float = 0.0
+var old_wall_normal:          float = 0.0
+var wall_normal:              float = 0.0
+var lock_dir:                 bool = false
+var lock_slow:                bool = false
+var lock_movement:            bool = false
+var health:                   int = 8
 const WALK_ACCEL = 100.0
 const AIR_ACCEL = 60.0
 const MAX_SPEED = 500.0
@@ -131,7 +132,7 @@ func _physics_process(_delta: float) -> void:
 				AttackState = Attacks.NONE
 				State = PlayerState.GENERAL
 				
-
+#region extra functions
 func attack_handler():
 	if State == PlayerState.ATTACKING:
 		return
@@ -177,6 +178,7 @@ func attack_handler():
 	State = PlayerState.GENERAL
 
 
+
 func _on_sprite_frame_changed() -> void:
 	
 	if sprite.animation == "run":
@@ -202,6 +204,7 @@ func _on_sprite_frame_changed() -> void:
 const HITBOX = preload("res://scenes/hitbox.tscn")
 func spawn_hitbox(ticks:int,angle:Vector2,pos:Vector2,size:Vector2,knockback:float,damage:float,power:int):
 	var hitbox = HITBOX.duplicate().instantiate()
+	hitbox.player = true
 	hitbox.size = size
 	hitbox.position = pos
 	hitbox.ticks = ticks
@@ -212,6 +215,7 @@ func spawn_hitbox(ticks:int,angle:Vector2,pos:Vector2,size:Vector2,knockback:flo
 	add_child(hitbox)
 	
 
+#region sound functions
 func jumpsound():
 	if randf() < .5:
 		jump_1.pitch_scale = randf_range(.9, 1.1)
@@ -246,3 +250,5 @@ func whipsound():
 		whip_2.pitch_scale = randf_range(.9, 1.1)
 		whip_2.play()
 		
+#endregion
+#endregion

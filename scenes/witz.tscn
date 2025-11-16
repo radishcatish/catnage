@@ -16,7 +16,7 @@
 radius = 8.0
 height = 40.0
 
-[node name="Witz" type="CharacterBody2D"]
+[node name="Witz" type="CharacterBody2D" groups=["Player"]]
 script = ExtResource("1_007ym")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]

@@ -3,7 +3,6 @@
 [ext_resource type="PackedScene" uid="uid://d1l2po41udgd1" path="res://scenes/platform.tscn" id="1_w7c3h"]
 [ext_resource type="PackedScene" uid="uid://d28hedbaepd28" path="res://scenes/kitting.tscn" id="2_mx8sn"]
 [ext_resource type="PackedScene" uid="uid://dqpui52ogt8m2" path="res://scenes/witz.tscn" id="2_w7c3h"]
-[ext_resource type="Texture2D" uid="uid://d2q7531v7kg1x" path="res://dev/dontcry.png" id="3_w8frs"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_u52ul"]
 
@@ -25,6 +24,8 @@ colors = PackedColorArray(0.19, 0.19, 0.19, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_oi3di"]
 gradient = SubResource("Gradient_u52ul")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w8frs"]
 
 [node name="Level" type="Node"]
 
@@ -131,7 +132,8 @@ scale = Vector2(184.323, 187.747)
 texture = SubResource("GradientTexture2D_0b4ue")
 metadata/_edit_lock_ = true
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="Environment"]
+scale = Vector2(4.0816326, 4.0816326)
 offset = Vector2(0, -3000)
 enabled = false
 zoom = Vector2(0.09, 0.09)
@@ -142,7 +144,8 @@ process_callback = 0
 [node name="Kitting" parent="." instance=ExtResource("2_mx8sn")]
 z_index = -1
 
-[node name="Dontcry" type="Sprite2D" parent="."]
-z_index = -4056
-position = Vector2(1185, -203)
-texture = ExtResource("3_w8frs")
+[node name="test" type="Area2D" parent="."]
+position = Vector2(164, -80)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="test"]
+shape = SubResource("RectangleShape2D_w8frs")

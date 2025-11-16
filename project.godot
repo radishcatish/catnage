@@ -17,7 +17,7 @@ boot_splash/use_filter=false
 
 [autoload]
 
-Autoload="*res://scenes/autoload.tscn"
+global="*res://scenes/autoload.tscn"
 
 [display]
 
@@ -39,8 +39,13 @@ folder_colors={
 "res://scenes/": "yellow",
 "res://scripts/": "green",
 "res://shaders/": "teal",
-"res://sprites/": "blue"
+"res://sounds/": "blue",
+"res://sprites/": "purple"
 }
+
+[global_group]
+
+Player=""
 
 [input]
 
