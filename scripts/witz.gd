@@ -158,7 +158,7 @@ func attack_handler():
 		elif vdir == 1:
 			AttackState = Attacks.DAIR
 			sprite.play(&"downair")
-			spawn_hitbox(10, Vector2(0, 1), Vector2(0, 0), Vector2(40,50), .1, .5, 1)
+			spawn_hitbox(10, Vector2(visual_dir / 2, 1), Vector2(0, 0), Vector2(40,50), .1, .5, 1)
 		elif vdir == -1:
 			AttackState = Attacks.UAIR
 			sprite.play(&"upair")
@@ -201,9 +201,9 @@ func _on_sprite_frame_changed() -> void:
 		if sprite.frame == 1:
 			whipsound()
 			
-const HITBOX = preload("res://scenes/hitbox.tscn")
+
 func spawn_hitbox(ticks:int,angle:Vector2,pos:Vector2,size:Vector2,knockback:float,damage:float,power:int):
-	var hitbox = HITBOX.duplicate().instantiate()
+	var hitbox = load("res://scenes/hitbox.tscn").duplicate().instantiate()
 	hitbox.player = true
 	hitbox.size = size
 	hitbox.position = pos

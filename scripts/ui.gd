@@ -1,8 +1,12 @@
 extends Node2D
 @onready var autoload: Node = $"../.."
 @onready var heat_meter: TextureProgressBar = $HeatMeter
+@onready var detail: Sprite2D = $HeatMeter/detail
+@onready var portrait_bounds: Polygon2D = $PortraitBounds
+@onready var portrait: AnimatedSprite2D = $PortraitBounds/Portrait
 @onready var health_bar: AnimatedSprite2D = $HealthBar
 @onready var mult: AnimatedSprite2D = $Mult
+
 var colors = PackedColorArray([
 	Color.from_hsv(0, 0, .5), 
 	Color.from_hsv(0, .5, .5), 
@@ -24,9 +28,10 @@ func _process(delta: float) -> void:
 	heat_meter.value = autoload.heat_progress % 100
 	mult.frame = autoload.heat_progress / 100
 	health_bar.frame = autoload.player.health
+	scale = Vector2(2,2) if DisplayServer.window_get_size() >= Vector2i(1500,750) else Vector2(1,1)
+	
 	var heat_meter_color = snapped((autoload.heat_progress / 100.0 ), 0) 
 	heat_meter.tint_under = colors[heat_meter_color]
-	print(heat_meter_color)
 	if autoload.heat_progress == 1200:
 		heat_meter.tint_progress = colors[12]
 	else:

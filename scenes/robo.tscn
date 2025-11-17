@@ -1,0 +1,74 @@
+[gd_scene load_steps=12 format=3 uid="uid://btj6i3022nwrd"]
+
+[ext_resource type="Script" uid="uid://d1wdslawn0edg" path="res://scripts/robo.gd" id="1_3a0kg"]
+[ext_resource type="SpriteFrames" uid="uid://b3ix3negq5du6" path="res://sprites/robo.aseprite" id="2_4i8o7"]
+[ext_resource type="AudioStream" uid="uid://qerpeqwelvq2" path="res://sounds/roboglitch1.mp3" id="3_asm71"]
+[ext_resource type="AudioStream" uid="uid://dk2bgdp01ojan" path="res://sounds/roboslap1.wav" id="3_gbsgu"]
+[ext_resource type="AudioStream" uid="uid://cd34vt3bsqcm0" path="res://sounds/roboslap2.wav" id="4_g01v5"]
+[ext_resource type="AudioStream" uid="uid://tdbe5d40m05h" path="res://sounds/roboglitch2.mp3" id="4_spj2k"]
+[ext_resource type="AudioStream" uid="uid://c7yw4qjqy0gsm" path="res://sounds/roboglitch3.mp3" id="5_gbsgu"]
+[ext_resource type="AudioStream" uid="uid://bq4pc8icg0wpk" path="res://sounds/roboglitch4.mp3" id="6_g01v5"]
+[ext_resource type="AudioStream" uid="uid://bso125r58riqc" path="res://sounds/roboglitch5.mp3" id="7_wn3li"]
+[ext_resource type="AudioStream" uid="uid://rufik18ydw8j" path="res://sounds/roboglitch6.mp3" id="8_1x2nq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r73vv"]
+size = Vector2(40, 79)
+
+[node name="enemytest" type="CharacterBody2D"]
+script = ExtResource("1_3a0kg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_r73vv")
+
+[node name="Hitbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("RectangleShape2D_r73vv")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -9)
+sprite_frames = ExtResource("2_4i8o7")
+animation = &"walk"
+autoplay = "walk"
+
+[node name="Slaps" type="Node" parent="."]
+
+[node name="Roboslap1" type="AudioStreamPlayer2D" parent="Slaps"]
+stream = ExtResource("3_gbsgu")
+volume_db = -5.0
+
+[node name="Roboslap2" type="AudioStreamPlayer2D" parent="Slaps"]
+stream = ExtResource("4_g01v5")
+volume_db = -5.0
+
+[node name="Glitches" type="Node" parent="."]
+
+[node name="Roboglitch1" type="AudioStreamPlayer2D" parent="Glitches"]
+stream = ExtResource("3_asm71")
+volume_db = 5.0
+max_polyphony = 3
+
+[node name="Roboglitch2" type="AudioStreamPlayer2D" parent="Glitches"]
+stream = ExtResource("4_spj2k")
+volume_db = 5.0
+max_polyphony = 3
+
+[node name="Roboglitch3" type="AudioStreamPlayer2D" parent="Glitches"]
+stream = ExtResource("5_gbsgu")
+volume_db = 5.0
+max_polyphony = 3
+
+[node name="Roboglitch4" type="AudioStreamPlayer2D" parent="Glitches"]
+stream = ExtResource("6_g01v5")
+volume_db = 5.0
+max_polyphony = 3
+
+[node name="Roboglitch5" type="AudioStreamPlayer2D" parent="Glitches"]
+stream = ExtResource("7_wn3li")
+volume_db = 5.0
+max_polyphony = 3
+
+[node name="Roboglitch6" type="AudioStreamPlayer2D" parent="Glitches"]
+stream = ExtResource("8_1x2nq")
+volume_db = 5.0
+max_polyphony = 3
