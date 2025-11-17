@@ -28,7 +28,7 @@ func _process(delta: float) -> void:
 	heat_display = lerp(heat_display, float(autoload.heat_progress), delta * 3.5)
 	heat_meter.value = int(heat_display) % 100
 	mult.frame = heat_display / 100
-	health_bar.frame = autoload.player.health
+	health_bar.frame = autoload.witz_health
 	scale = Vector2(2,2) if DisplayServer.window_get_size() >= Vector2i(1500,750) else Vector2(1,1)
 	
 	var heat_meter_color = snapped((heat_display / 100.0 ), 0) 

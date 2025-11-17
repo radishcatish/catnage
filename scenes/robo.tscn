@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://btj6i3022nwrd"]
+[gd_scene load_steps=15 format=3 uid="uid://btj6i3022nwrd"]
 
 [ext_resource type="Script" uid="uid://d1wdslawn0edg" path="res://scripts/robo.gd" id="1_3a0kg"]
 [ext_resource type="SpriteFrames" uid="uid://b3ix3negq5du6" path="res://sprites/robo.aseprite" id="2_4i8o7"]
@@ -10,14 +10,17 @@
 [ext_resource type="AudioStream" uid="uid://bq4pc8icg0wpk" path="res://sounds/roboglitch4.mp3" id="6_g01v5"]
 [ext_resource type="AudioStream" uid="uid://bso125r58riqc" path="res://sounds/roboglitch5.mp3" id="7_wn3li"]
 [ext_resource type="AudioStream" uid="uid://rufik18ydw8j" path="res://sounds/roboglitch6.mp3" id="8_1x2nq"]
+[ext_resource type="AudioStream" uid="uid://ywrjnocxodhw" path="res://sounds/robodie1.mp3" id="11_uankg"]
+[ext_resource type="AudioStream" uid="uid://buhunjiblpldg" path="res://sounds/robodie2.mp3" id="12_2d6rv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r73vv"]
 size = Vector2(40, 79)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oyjml"]
-size = Vector2(38, 61)
+size = Vector2(38, 51)
 
 [node name="Robo" type="CharacterBody2D"]
+collision_layer = 0
 script = ExtResource("1_3a0kg")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -26,7 +29,7 @@ shape = SubResource("RectangleShape2D_r73vv")
 [node name="DetectionRange" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionRange"]
-position = Vector2(-47, -20.5)
+position = Vector2(-47, -15.5)
 shape = SubResource("RectangleShape2D_oyjml")
 
 [node name="Hurtbox" type="Area2D" parent="."]
@@ -82,5 +85,13 @@ max_polyphony = 3
 stream = ExtResource("8_1x2nq")
 volume_db = 5.0
 max_polyphony = 3
+
+[node name="Deaths" type="Node" parent="."]
+
+[node name="Robodie1" type="AudioStreamPlayer2D" parent="Deaths"]
+stream = ExtResource("11_uankg")
+
+[node name="Robodie2" type="AudioStreamPlayer2D" parent="Deaths"]
+stream = ExtResource("12_2d6rv")
 
 [connection signal="area_entered" from="DetectionRange" to="." method="_on_detection_range_area_entered"]

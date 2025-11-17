@@ -12,6 +12,7 @@ extends CharacterBody2D
 @onready var jump_1: AudioStreamPlayer = $Sounds/jump1
 @onready var jump_2: AudioStreamPlayer = $Sounds/jump2
 @onready var jump_3: AudioStreamPlayer = $Sounds/jump3
+@onready var squeak: AudioStreamPlayer = $Sounds/Squeak
 
 var last_on_floor:            int = 10
 var last_off_floor:           int = 10
@@ -30,8 +31,8 @@ var wall_normal:              float = 0.0
 var lock_dir:                 bool = false
 var lock_slow:                bool = false
 var lock_movement:            bool = false
-var health:                   int = 8
 var stuntimer:                int = 0
+var iframes:                  int = 1
 const WALK_ACCEL = 100.0
 const AIR_ACCEL = 60.0
 const MAX_SPEED = 500.0
@@ -42,11 +43,17 @@ var State := PlayerState.GENERAL
 enum Attacks {NONE, JAB, UPGROUND, FAIR, BAIR, UAIR, DAIR, NAIR}
 var AttackState := Attacks.NONE
 var AltAttackState: int = 0
+
+func _process(_delta: float) -> void:
+	
+	sprite.visible = iframes % 2
+	
 func _physics_process(_delta: float) -> void:
 	var direction := int(Input.get_axis(&"left", &"right")) if not lock_movement else 0
 	var accel = WALK_ACCEL if is_on_floor() else AIR_ACCEL
 	State = PlayerState.ATTACKING if AttackState != Attacks.NONE else State
 	stuntimer -= 1 if stuntimer > 0 else 0 
+	iframes -= 1 if iframes > 1 else 0 
 	last_on_floor = last_on_floor + 1 if not is_on_floor() else 0
 	last_off_floor = last_off_floor + 1 if is_on_floor() else 0
 	last_on_wall = last_on_wall + 1 if not is_on_wall() else 0
@@ -155,11 +162,11 @@ func attack_handler():
 			AttackState = Attacks.JAB
 			sprite.play(&"jab")
 			await sprite.frame_changed
-			spawn_hitbox(10, Vector2(visual_dir, 0), Vector2(visual_dir * 40, -30), Vector2(80,50), .1, .5, 1)
+			spawn_hitbox(5, Vector2(visual_dir, 0), Vector2(visual_dir * 40, -30), Vector2(80,50), .1, .5, 1)
 		else:
 			AttackState = Attacks.JAB
 			sprite.play(&"upground")
-			spawn_hitbox(10, Vector2(float(-visual_dir) / 4, -1), Vector2(-visual_dir * 10, -80), Vector2(50,80), .1, .5, 1)
+			spawn_hitbox(5, Vector2(float(-visual_dir) / 4, -1), Vector2(-visual_dir * 10, -80), Vector2(50,80), .1, .5, 1)
 	else:
 		if dir == 0 and vdir == 0:
 			AttackState = Attacks.NAIR
@@ -168,19 +175,19 @@ func attack_handler():
 		elif vdir == 1:
 			AttackState = Attacks.DAIR
 			sprite.play(&"downair")
-			spawn_hitbox(10, Vector2(visual_dir / 2, 1), Vector2(0, 0), Vector2(40,50), .1, .5, 1)
+			spawn_hitbox(5, Vector2(visual_dir / 2, 1), Vector2(0, 0), Vector2(40,50), .1, .5, 1)
 		elif vdir == -1:
 			AttackState = Attacks.UAIR
 			sprite.play(&"upair")
-			spawn_hitbox(10, Vector2(0,-1), Vector2(0, -80), Vector2(50,80), .1, .5, 1)
+			spawn_hitbox(5, Vector2(0,-1), Vector2(0, -80), Vector2(50,80), .1, .5, 1)
 		elif dir and dir != -visual_dir:
 			AttackState = Attacks.FAIR
 			sprite.play(&"forwardair")
-			spawn_hitbox(10, Vector2(visual_dir, 0), Vector2(visual_dir * 50, -30), Vector2(80,50), .1, .5, 1)
+			spawn_hitbox(5, Vector2(visual_dir, 0), Vector2(visual_dir * 50, -30), Vector2(80,50), .1, .5, 1)
 		elif dir == -visual_dir:
 			AttackState = Attacks.BAIR
 			sprite.play(&"backair")
-			spawn_hitbox(10, Vector2(-visual_dir, 0), Vector2(visual_dir * -50, -30), Vector2(80,50), .1, .5, 1)
+			spawn_hitbox(5, Vector2(-visual_dir, 0), Vector2(visual_dir * -50, -30), Vector2(80,50), .1, .5, 1)
 
 	await sprite.animation_finished
 	lock_movement = false
@@ -188,12 +195,22 @@ func attack_handler():
 	State = PlayerState.GENERAL
 
 func hit(node: Node):
+	if iframes > 1: return
+	for child in hitboxes.get_children():
+		hitboxes.remove_child(child)
+	global.punchsound()
+	global.witz_health -= 1
+	visual_dir = sign(global_position.x - node.get_parent().global_position.x) * -1
+	velocity = node.angle * 250
+	squeak.pitch_scale = randf_range(.9, 1.1)
+	squeak.play()
 	if State == PlayerState.OUCH: return
+	iframes = 100
+	velocity = node.angle * 500
 	State = PlayerState.OUCH
 	AttackState = Attacks.NONE
-	velocity = node.angle * 500
 	stuntimer = 30
-	global.punchsound()
+
 	
 		
 
@@ -219,6 +236,7 @@ func _on_sprite_frame_changed() -> void:
 		if sprite.frame == 1:
 			whipsound()
 			
+@onready var hitboxes: Node2D = $Hitboxes
 
 func spawn_hitbox(ticks:int,angle:Vector2,pos:Vector2,size:Vector2,knockback:float,damage:float,power:int):
 	var hitbox = load("res://scenes/hitbox.tscn").duplicate().instantiate()
@@ -230,7 +248,7 @@ func spawn_hitbox(ticks:int,angle:Vector2,pos:Vector2,size:Vector2,knockback:flo
 	hitbox.knockback = knockback
 	hitbox.damage = damage
 	hitbox.power = power
-	add_child(hitbox)
+	hitboxes.add_child(hitbox)
 	
 
 #region sound functions

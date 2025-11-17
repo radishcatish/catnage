@@ -4,6 +4,11 @@ extends Node
 var heat_progress: int = 0
 var heat_progress_before: int = 0
 var heat_progress_wait : int = 0
+var witz_health: int = 8
+
+func _process(_delta: float) -> void:
+	player = get_tree().get_first_node_in_group("Player")
+	
 func _physics_process(_delta: float) -> void:
 
 	var negative_heat = (-heat_progress + 1100) / 100
@@ -23,9 +28,9 @@ func punchsound():
 	s.pitch_scale = randf_range(.9, 1.1)
 	s.play()
 
-func spawn_hitbox(node: Node, ticks:int,angle:Vector2,pos:Vector2,size:Vector2,knockback:float,damage:float,power:int):
+func spawn_hitbox(node: Node, ticks:int,angle:Vector2,pos:Vector2,size:Vector2,knockback:float,damage:float,power:int, plr:bool):
 	var hitbox = load("res://scenes/hitbox.tscn").duplicate().instantiate()
-	hitbox.player = false
+	hitbox.player = plr
 	hitbox.size = size
 	hitbox.position = pos
 	hitbox.ticks = ticks

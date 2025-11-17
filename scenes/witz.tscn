@@ -1,8 +1,9 @@
-[gd_scene load_steps=14 format=3 uid="uid://dqpui52ogt8m2"]
+[gd_scene load_steps=15 format=3 uid="uid://dqpui52ogt8m2"]
 
 [ext_resource type="Script" uid="uid://g0eniykf7qbx" path="res://scripts/witz.gd" id="1_007ym"]
 [ext_resource type="SpriteFrames" uid="uid://c7e2l4qfjkjnn" path="res://sprites/witz.ase" id="2_007ym"]
 [ext_resource type="AudioStream" uid="uid://demvbwvacimjv" path="res://sounds/swish1.wav" id="3_88d68"]
+[ext_resource type="AudioStream" uid="uid://r47kmxqsslhp" path="res://sounds/squeak.wav" id="3_utthr"]
 [ext_resource type="AudioStream" uid="uid://b0s4yk1qgdkiq" path="res://sounds/swish2.wav" id="4_qewcq"]
 [ext_resource type="AudioStream" uid="uid://bmiptpf8vbbpa" path="res://sounds/whip1.wav" id="5_eycc2"]
 [ext_resource type="AudioStream" uid="uid://kf2gye34rywf" path="res://sounds/whip2.wav" id="6_x18tv"]
@@ -20,7 +21,10 @@ radius = 8.0
 height = 40.0
 
 [node name="Witz" type="CharacterBody2D" groups=["Player"]]
+z_index = 1
 script = ExtResource("1_007ym")
+
+[node name="Hitboxes" type="Node2D" parent="."]
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -48)
@@ -50,6 +54,9 @@ position = Vector2(0, -20)
 shape = SubResource("CapsuleShape2D_007ym")
 
 [node name="Sounds" type="Node" parent="."]
+
+[node name="Squeak" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("3_utthr")
 
 [node name="swish1" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("3_88d68")

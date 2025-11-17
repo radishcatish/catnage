@@ -86,7 +86,7 @@ autoplay = "default"
 frame_progress = 0.36651647
 
 [node name="Mult" type="AnimatedSprite2D" parent="CanvasLayer/Ui"]
-position = Vector2(40, 133)
+position = Vector2(39, 130)
 sprite_frames = ExtResource("7_5dcwp")
 autoplay = "default"
-frame_progress = 0.6017761
+frame_progress = 0.63862884

@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="CATNAGE"
-run/main_scene="uid://b63rfol4tymgn"
+run/main_scene="uid://dmj7de4okjq0w"
 config/features=PackedStringArray("4.5")
 boot_splash/use_filter=false
 
