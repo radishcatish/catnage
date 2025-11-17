@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dqpui52ogt8m2"]
+[gd_scene load_steps=14 format=3 uid="uid://dqpui52ogt8m2"]
 
 [ext_resource type="Script" uid="uid://g0eniykf7qbx" path="res://scripts/witz.gd" id="1_007ym"]
 [ext_resource type="SpriteFrames" uid="uid://c7e2l4qfjkjnn" path="res://sprites/witz.ase" id="2_007ym"]
@@ -12,6 +12,9 @@
 [ext_resource type="AudioStream" uid="uid://bo1f158pjmh4x" path="res://sounds/step2.wav" id="10_sk0pf"]
 [ext_resource type="AudioStream" uid="uid://clad82pd65lmg" path="res://sounds/whop3.wav" id="11_i5k17"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i5k17"]
+size = Vector2(20, 67)
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_007ym"]
 radius = 8.0
 height = 40.0
@@ -24,6 +27,12 @@ position = Vector2(0, -48)
 sprite_frames = ExtResource("2_007ym")
 animation = &"walk"
 autoplay = "idle"
+
+[node name="Hurtbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(0, -33.5)
+shape = SubResource("RectangleShape2D_i5k17")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2(0, -48)

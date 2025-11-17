@@ -31,12 +31,13 @@ var lock_dir:                 bool = false
 var lock_slow:                bool = false
 var lock_movement:            bool = false
 var health:                   int = 8
+var stuntimer:                int = 0
 const WALK_ACCEL = 100.0
 const AIR_ACCEL = 60.0
 const MAX_SPEED = 500.0
 const FRICTION = 100.0
 const JUMP_VELOCITY = -1000.0
-enum PlayerState {GENERAL, ATTACKING}
+enum PlayerState {GENERAL, ATTACKING, OUCH}
 var State := PlayerState.GENERAL
 enum Attacks {NONE, JAB, UPGROUND, FAIR, BAIR, UAIR, DAIR, NAIR}
 var AttackState := Attacks.NONE
@@ -45,6 +46,7 @@ func _physics_process(_delta: float) -> void:
 	var direction := int(Input.get_axis(&"left", &"right")) if not lock_movement else 0
 	var accel = WALK_ACCEL if is_on_floor() else AIR_ACCEL
 	State = PlayerState.ATTACKING if AttackState != Attacks.NONE else State
+	stuntimer -= 1 if stuntimer > 0 else 0 
 	last_on_floor = last_on_floor + 1 if not is_on_floor() else 0
 	last_off_floor = last_off_floor + 1 if is_on_floor() else 0
 	last_on_wall = last_on_wall + 1 if not is_on_wall() else 0
@@ -91,7 +93,7 @@ func _physics_process(_delta: float) -> void:
 	velocity.y = -200.0 if Input.is_action_just_released(&"z") and velocity.y < -200.0 else velocity.y
 	
 	# main movement
-	if not lock_movement:
+	if not lock_movement or stuntimer <= 0:
 		if direction:
 			velocity.x = move_toward(velocity.x, direction * (MAX_SPEED + extra_speed), accel)
 		else:
@@ -131,10 +133,18 @@ func _physics_process(_delta: float) -> void:
 			if is_on_floor() and not AttackState in [Attacks.JAB, Attacks.UPGROUND, Attacks.NONE]:
 				AttackState = Attacks.NONE
 				State = PlayerState.GENERAL
+		PlayerState.OUCH:
+			lock_movement = true
+			lock_dir = true
+			sprite.play("ouch")
+			if stuntimer <= 0:
+				State = PlayerState.GENERAL
+				lock_movement = false
+				lock_dir = false
 				
 #region extra functions
 func attack_handler():
-	if State == PlayerState.ATTACKING:
+	if State == PlayerState.ATTACKING or State == PlayerState.OUCH:
 		return
 	var dir := int(Input.get_axis(&"left", &"right"))
 	var vdir := int(Input.get_axis(&"up", &"down"))
@@ -177,7 +187,15 @@ func attack_handler():
 	AttackState = Attacks.NONE
 	State = PlayerState.GENERAL
 
-
+func hit(node: Node):
+	if State == PlayerState.OUCH: return
+	State = PlayerState.OUCH
+	AttackState = Attacks.NONE
+	velocity = node.angle * 500
+	stuntimer = 30
+	global.punchsound()
+	
+		
 
 func _on_sprite_frame_changed() -> void:
 	

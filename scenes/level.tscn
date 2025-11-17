@@ -141,10 +141,37 @@ process_callback = 0
 [node name="Kitting" parent="." instance=ExtResource("2_mx8sn")]
 z_index = -1
 
-[node name="enemytest" parent="." instance=ExtResource("4_mx8sn")]
+[node name="Robo" parent="." instance=ExtResource("4_mx8sn")]
 position = Vector2(1356, -86)
 collision_layer = 0
-direction = 1
+
+[node name="Robo2" parent="." instance=ExtResource("4_mx8sn")]
+position = Vector2(849, -86)
+collision_layer = 0
+
+[node name="Robo3" parent="." instance=ExtResource("4_mx8sn")]
+position = Vector2(58, -159)
+collision_layer = 0
+
+[node name="Robo4" parent="." instance=ExtResource("4_mx8sn")]
+position = Vector2(-795, -159)
+collision_layer = 0
+
+[node name="Robo5" parent="." instance=ExtResource("4_mx8sn")]
+position = Vector2(-1085, -173)
+collision_layer = 0
+
+[node name="Robo6" parent="." instance=ExtResource("4_mx8sn")]
+position = Vector2(-1354, -201)
+collision_layer = 0
+
+[node name="Robo7" parent="." instance=ExtResource("4_mx8sn")]
+position = Vector2(-567, -201)
+collision_layer = 0
+
+[node name="Robo8" parent="." instance=ExtResource("4_mx8sn")]
+position = Vector2(251, -160)
+collision_layer = 0
 
 [node name="Witz" parent="." instance=ExtResource("2_w7c3h")]
 position = Vector2(1226, -19)

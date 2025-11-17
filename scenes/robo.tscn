@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://btj6i3022nwrd"]
+[gd_scene load_steps=13 format=3 uid="uid://btj6i3022nwrd"]
 
 [ext_resource type="Script" uid="uid://d1wdslawn0edg" path="res://scripts/robo.gd" id="1_3a0kg"]
 [ext_resource type="SpriteFrames" uid="uid://b3ix3negq5du6" path="res://sprites/robo.aseprite" id="2_4i8o7"]
@@ -14,21 +14,31 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r73vv"]
 size = Vector2(40, 79)
 
-[node name="enemytest" type="CharacterBody2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oyjml"]
+size = Vector2(38, 61)
+
+[node name="Robo" type="CharacterBody2D"]
 script = ExtResource("1_3a0kg")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_r73vv")
 
-[node name="Hitbox" type="Area2D" parent="."]
+[node name="DetectionRange" type="Area2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionRange"]
+position = Vector2(-47, -20.5)
+shape = SubResource("RectangleShape2D_oyjml")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+scale = Vector2(1.315, 1.315)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 shape = SubResource("RectangleShape2D_r73vv")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -9)
 sprite_frames = ExtResource("2_4i8o7")
-animation = &"walk"
+animation = &"attack"
 autoplay = "walk"
 
 [node name="Slaps" type="Node" parent="."]
@@ -72,3 +82,5 @@ max_polyphony = 3
 stream = ExtResource("8_1x2nq")
 volume_db = 5.0
 max_polyphony = 3
+
+[connection signal="area_entered" from="DetectionRange" to="." method="_on_detection_range_area_entered"]
