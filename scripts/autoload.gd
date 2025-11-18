@@ -10,7 +10,7 @@ func _process(_delta: float) -> void:
 	player = get_tree().get_first_node_in_group("Player")
 	
 func _physics_process(_delta: float) -> void:
-
+	
 	var negative_heat = (-heat_progress + 1100) / 100
 	heat_progress_wait -= 1 if heat_progress_wait > 0 else 0
 	

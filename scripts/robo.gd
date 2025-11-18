@@ -12,6 +12,7 @@ var attacking: bool = false
 var spawnhitbox: bool = false
 var direction: int = [-1, 1].pick_random()
 var visual_direction: int = direction
+var dead: bool = false
 func _physics_process(_delta: float) -> void:
 	if health > 0:
 		detection_range.scale.x = direction
@@ -48,11 +49,11 @@ func _physics_process(_delta: float) -> void:
 	animated_sprite_2d.flip_h = false if direction == 1 else true
 	
 func hit(node:Node):
+	if dead: return
 	direction = sign(global_position.x - node.get_parent().global_position.x) * -1
 	attacking = false
 	health -= 1
 	stuntimer = 20
-	velocity += node.angle * 1000
 	var sound1 = glitches.get_child(randi_range(0, glitches.get_child_count() - 1))
 	sound1.pitch_scale = randf_range(.9, 1.1)
 	sound1.play()
@@ -60,16 +61,16 @@ func hit(node:Node):
 	sound2.pitch_scale = randf_range(.9, 1.1)
 	sound2.play()
 	global.punchsound()
+	velocity += node.angle * 1000
 	if health <= 0:
 		deathtimer = 500
-		velocity = node.angle * 1000
+		dead = true
 		var sound3 = deaths.get_child(randi_range(0, deaths.get_child_count() - 1))
 		sound3.pitch_scale = randf_range(.9, 1.1)
 		sound3.play()
-
 
 func _on_detection_range_area_entered(area: Area2D) -> void:
 	if area.owner == global.player and not attacking:
 		attacking = true
 		spawnhitbox = true
-		print(true)
+		

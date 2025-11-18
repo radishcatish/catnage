@@ -33,6 +33,7 @@ var lock_slow:                bool = false
 var lock_movement:            bool = false
 var stuntimer:                int = 0
 var iframes:                  int = 1
+var dead:                     bool = false
 const WALK_ACCEL = 100.0
 const AIR_ACCEL = 60.0
 const MAX_SPEED = 500.0
@@ -44,8 +45,8 @@ enum Attacks {NONE, JAB, UPGROUND, FAIR, BAIR, UAIR, DAIR, NAIR}
 var AttackState := Attacks.NONE
 var AltAttackState: int = 0
 
+
 func _process(_delta: float) -> void:
-	
 	sprite.visible = iframes % 2
 	
 func _physics_process(_delta: float) -> void:
@@ -115,7 +116,6 @@ func _physics_process(_delta: float) -> void:
 		attack_handler()
 	
 	sprite.flip_h = false if visual_dir == 1 else true
-	sprite.rotation_degrees = lerpf(0, clamp(velocity.x / 100, -18, 18), 1.5) if not is_on_floor() else 0
 
 	match State:
 		PlayerState.GENERAL:
@@ -132,6 +132,7 @@ func _physics_process(_delta: float) -> void:
 				if not direction and Input.is_action_pressed(&"down"):
 					sprite.play(&"crouch")
 			else:
+				
 				sprite.play(&"midair")
 				if sprite.animation == &"midair":
 					var t = clamp((velocity.y + 20.0) / 500.0, 0.0, 1.0)
@@ -166,28 +167,34 @@ func attack_handler():
 		else:
 			AttackState = Attacks.JAB
 			sprite.play(&"upground")
-			spawn_hitbox(5, Vector2(float(-visual_dir) / 4, -1), Vector2(-visual_dir * 10, -80), Vector2(50,80), .1, .5, 1)
+			await sprite.frame_changed
+			spawn_hitbox(5, Vector2(0, -1), Vector2(visual_dir * 10, -60), Vector2(40,120), .1, .5, 1)
 	else:
 		if dir == 0 and vdir == 0:
 			AttackState = Attacks.NAIR
 			sprite.play(&"neutralair")
+			await sprite.frame_changed
 			spawn_hitbox(7, Vector2(0, 0), Vector2(0, -40), Vector2(80,80), .1, .5, 1)
 		elif vdir == 1:
 			AttackState = Attacks.DAIR
 			sprite.play(&"downair")
-			spawn_hitbox(5, Vector2(visual_dir / 2, 1), Vector2(0, 0), Vector2(40,50), .1, .5, 1)
+			await sprite.frame_changed
+			spawn_hitbox(5, Vector2(0, 1), Vector2(0, 0), Vector2(40,70), .1, .5, 1)
 		elif vdir == -1:
 			AttackState = Attacks.UAIR
 			sprite.play(&"upair")
+			await sprite.frame_changed
 			spawn_hitbox(5, Vector2(0,-1), Vector2(0, -80), Vector2(50,80), .1, .5, 1)
 		elif dir and dir != -visual_dir:
 			AttackState = Attacks.FAIR
 			sprite.play(&"forwardair")
-			spawn_hitbox(5, Vector2(visual_dir, 0), Vector2(visual_dir * 50, -30), Vector2(80,50), .1, .5, 1)
+			await sprite.frame_changed
+			spawn_hitbox(5, Vector2(visual_dir, 0), Vector2(visual_dir * 30, -30), Vector2(80,50), .1, .5, 1)
 		elif dir == -visual_dir:
 			AttackState = Attacks.BAIR
 			sprite.play(&"backair")
-			spawn_hitbox(5, Vector2(-visual_dir, 0), Vector2(visual_dir * -50, -30), Vector2(80,50), .1, .5, 1)
+			await sprite.frame_changed
+			spawn_hitbox(5, Vector2(-visual_dir, 0), Vector2(visual_dir * -30, -30), Vector2(80,50), .1, .5, 1)
 
 	await sprite.animation_finished
 	lock_movement = false
@@ -228,11 +235,11 @@ func _on_sprite_frame_changed() -> void:
 			step_2.play()
 			
 
-	if sprite.animation in [&"backair", &"downair", &"forwardair", &"neutralair"]:
+	if sprite.animation in [&"backair", &"downair", &"forwardair", &"neutralair", &"upground"]:
 		if sprite.frame == 1:
 			swishsound()
 				
-	if sprite.animation in [&"upair", &"upground", &"neutralair", &"jab"]:
+	if sprite.animation in [&"upair", &"neutralair", &"jab"]:
 		if sprite.frame == 1:
 			whipsound()
 			
