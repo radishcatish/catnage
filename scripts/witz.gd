@@ -3,6 +3,8 @@ extends CharacterBody2D
 @warning_ignore_start("incompatible_ternary")
 @onready var sprite: AnimatedSprite2D = $Sprite
 @onready var camera: Camera2D = $Camera2D
+@onready var hitboxes: Node2D = $Hitboxes
+
 @onready var swish_1: AudioStreamPlayer = $Sounds/swish1
 @onready var swish_2: AudioStreamPlayer = $Sounds/swish2
 @onready var whip_1: AudioStreamPlayer = $Sounds/whip1
@@ -14,239 +16,169 @@ extends CharacterBody2D
 @onready var jump_3: AudioStreamPlayer = $Sounds/jump3
 @onready var squeak: AudioStreamPlayer = $Sounds/Squeak
 
-var last_on_floor:            int = 10
-var last_off_floor:           int = 10
-var last_on_wall:             int = 10
-var last_z_press:             int = 10
-var last_x_press:             int = 10
-var last_c_press:             int = 10
-var last_shift_press:         int = 10
-var last_up_press:            int = 10
-var last_left_press:          int = 10
-var last_right_press:         int = 10
-var visual_dir:               int = 1
-var extra_speed:              float = 0.0
-var old_wall_normal:          float = 0.0
-var wall_normal:              float = 0.0
-var lock_dir:                 bool = false
-var lock_slow:                bool = false
-var lock_movement:            bool = false
-var stuntimer:                int = 0
-var iframes:                  int = 1
-var dead:                     bool = false
 const WALK_ACCEL = 100.0
 const AIR_ACCEL = 60.0
 const MAX_SPEED = 500.0
-const FRICTION = 100.0
 const JUMP_VELOCITY = -1000.0
-enum PlayerState {GENERAL, ATTACKING, OUCH}
+
+enum PlayerState { GENERAL, ATTACKING, OUCH }
+enum Attacks { NONE, JAB, UPGROUND, FAIR, BAIR, UAIR, DAIR, NAIR }
+
 var State := PlayerState.GENERAL
-enum Attacks {NONE, JAB, UPGROUND, FAIR, BAIR, UAIR, DAIR, NAIR}
 var AttackState := Attacks.NONE
-var AltAttackState: int = 0
 
+var stun := 0
+var iframes := 1
+var lock_move := false
+var lock_dir := false
 
-func _process(_delta: float) -> void:
-	sprite.visible = iframes % 2
+var visual_dir := 1
+var extra_speed := 0.0
+
+var last_on_floor := 10
+var last_off_floor := 10
+var last_on_wall := 10
+var last_z_press := 10
+var last_x_press := 10
+
+var wall_touch_timer := 0
+var current_wall_normal := 0
+var last_wall_jump_normal := 999
+var current_attack_anim: String = ""
+
+var input := {
+	"dir": 0,
+	"jump_pressed": false,
+	"attack_pressed": false,
+	"up": false,
+	"down": false
+}
+
+func _ready():
+	sprite.connect("animation_finished", Callable(self, "_on_attack_animation_finished"))
+
+func _process(_delta):
+	sprite.visible = (iframes % 2 == 0) or iframes <= 1
+
+func _physics_process(_d):
+	misc()
+	handle_jump()
+	handle_movement()
+	update_animation()
+	apply_state_logic()
+
+	move_and_slide()
 	
-func _physics_process(_delta: float) -> void:
-	var direction := int(Input.get_axis(&"left", &"right")) if not lock_movement else 0
-	var accel = WALK_ACCEL if is_on_floor() else AIR_ACCEL
-	State = PlayerState.ATTACKING if AttackState != Attacks.NONE else State
-	stuntimer -= 1 if stuntimer > 0 else 0 
-	iframes -= 1 if iframes > 1 else 0 
-	last_on_floor = last_on_floor + 1 if not is_on_floor() else 0
-	last_off_floor = last_off_floor + 1 if is_on_floor() else 0
-	last_on_wall = last_on_wall + 1 if not is_on_wall() else 0
-	last_z_press = last_z_press + 1 if not Input.is_action_just_pressed(&"z") else 0
-	last_x_press = last_x_press + 1 if not Input.is_action_just_pressed(&"x") else 0
-	last_c_press = last_c_press + 1 if not Input.is_action_just_pressed(&"c") else 0
-	extra_speed = 500 if not Input.is_action_pressed(&"shift") else 0
-	if not lock_dir or State == PlayerState.ATTACKING:
-		visual_dir = direction if direction != 0 and last_on_floor < 2 else visual_dir
-	if is_on_floor():
-		old_wall_normal = 0
-		wall_normal = 0
+func misc():
+	input.dir = int(Input.get_axis("left", "right")) if not lock_move else 0
+	input.jump_pressed = Input.is_action_just_pressed("z")
+	input.attack_pressed = Input.is_action_just_pressed("x")
+	input.up = Input.is_action_pressed("up")
+	input.down = Input.is_action_pressed("down")
+	extra_speed = 500 if not Input.is_action_pressed("shift") else 0
+	
+	if is_on_wall():
+		current_wall_normal = get_wall_normal().x
+		wall_touch_timer = 8
 	else:
-		old_wall_normal = get_wall_normal().x
+		wall_touch_timer = max(wall_touch_timer - 1, 0)
 	
-	if last_off_floor == 1:
-		stepsound()
-		
-	if last_z_press < 4 and not lock_movement:
-		last_z_press = 4
-		if last_on_wall < 10 and not last_on_floor < 7 and old_wall_normal != wall_normal:
-			velocity.x += sign(old_wall_normal) * 1200
-			velocity.y = JUMP_VELOCITY
-			last_on_wall = 10
-			wall_normal = old_wall_normal
-			if not lock_dir:
-				visual_dir = wall_normal
-			jumpsound()
-			stepsound()
-		if last_on_floor < 5:
-			velocity.y += JUMP_VELOCITY - abs(velocity.x) / 10
-			last_on_floor = 5
-			jumpsound()
 	
-			
+	stun = max(stun - 1, 0)
+	iframes = max(iframes - 1, 0)
+	last_on_floor = 0 if is_on_floor() else last_on_floor + 1
+	last_off_floor = 0 if not is_on_floor() else last_off_floor + 1
+	last_on_wall = 0 if is_on_wall() else last_on_wall + 1
+	last_z_press = 0 if Input.is_action_just_pressed("z") else last_z_press + 1
+	last_x_press = 0 if Input.is_action_just_pressed("x") else last_x_press + 1
 	
-	# wall sliding
-	#velocity.y *= .9 if is_on_wall() and old_wall_normal != wall_normal and velocity.y > 0 else 1.0
-	
-	# variable jump height (gravity)
-	velocity.y += (60 - (int(Input.is_action_pressed(&"z")) * 20))
-	
-	# variable jump height 2 (instant stop)
-	velocity.y = -200.0 if Input.is_action_just_released(&"z") and velocity.y < -200.0 else velocity.y
-	
-	# main movement
-	if not lock_movement or stuntimer <= 0:
-		if direction:
-			velocity.x = move_toward(velocity.x, direction * (MAX_SPEED + extra_speed), accel)
+	if input.attack_pressed:
+		attack_handler()
+
+func handle_movement():
+	var accel = WALK_ACCEL if is_on_floor() else AIR_ACCEL
+
+	if stun <= 0 and (not lock_move or not is_on_floor()):
+		if input.dir != 0:
+			velocity.x = move_toward(velocity.x, input.dir * (MAX_SPEED + extra_speed), accel)
 		else:
 			velocity.x = move_toward(velocity.x, 0, accel / 2)
 	else:
 		velocity.x = move_toward(velocity.x, 0, accel / 2)
-	
-	move_and_slide()
-	
-	
-	if Input.is_action_just_pressed(&"x"):
-		attack_handler()
-	
-	sprite.flip_h = false if visual_dir == 1 else true
 
-	match State:
-		PlayerState.GENERAL:
-			if is_on_floor():
-				if direction or abs(velocity.x) > 22:
-					if abs(velocity.x) > 500:
-						sprite.play(&"run", self.velocity.x / 1000)
-					else:
-						sprite.play(&"walk", self.velocity.x / 500)
-					if ((visual_dir == 1 and velocity.x < 0) or (visual_dir == -1 and velocity.x > 0) ) and abs(velocity.x) > 22:
-						sprite.play(&"skid")
-				else:
-					sprite.play(&"idle")
-				if not direction and Input.is_action_pressed(&"down"):
-					sprite.play(&"crouch")
-			else:
-				
-				sprite.play(&"midair")
-				if sprite.animation == &"midair":
-					var t = clamp((velocity.y + 20.0) / 500.0, 0.0, 1.0)
-					sprite.frame = int(t * 3.999)
-		PlayerState.ATTACKING:
-			if is_on_floor() and not AttackState in [Attacks.JAB, Attacks.UPGROUND, Attacks.NONE]:
-				AttackState = Attacks.NONE
-				State = PlayerState.GENERAL
-		PlayerState.OUCH:
-			lock_movement = true
-			lock_dir = true
-			sprite.play("ouch")
-			if stuntimer <= 0:
-				State = PlayerState.GENERAL
-				lock_movement = false
-				lock_dir = false
-				
-#region extra functions
+	velocity.y += (60 - (int(Input.is_action_pressed("z")) * 20))
+	if Input.is_action_just_released("z") and velocity.y < -200:
+		velocity.y = -200
+
+func handle_jump():
+	if last_z_press > 5 or lock_move or stun > 0:
+		return
+
+	if last_on_floor < 5:
+		velocity.y = JUMP_VELOCITY - abs(velocity.x)/10
+		last_on_floor = 5
+		jumpsound()
+		return
+
+	if wall_touch_timer > 0 and current_wall_normal != 0 and current_wall_normal != last_wall_jump_normal:
+		velocity.x = current_wall_normal * 1200
+		velocity.y = JUMP_VELOCITY
+		last_wall_jump_normal = current_wall_normal
+		jumpsound()
+		stepsound()
+		visual_dir = int(current_wall_normal)
+
+
 func attack_handler():
 	if State == PlayerState.ATTACKING or State == PlayerState.OUCH:
 		return
-	var dir := int(Input.get_axis(&"left", &"right"))
-	var vdir := int(Input.get_axis(&"up", &"down"))
+
 	State = PlayerState.ATTACKING
+	lock_move = is_on_floor()
+
+	var dir = input.dir
+	var vdir = -1 if input.up else (1 if input.down else 0)
+
 	if is_on_floor():
-		lock_movement = true
-		if not Input.is_action_pressed(&"up"):
-			AttackState = Attacks.JAB
-			sprite.play(&"jab")
-			await sprite.frame_changed
-			spawn_hitbox(5, Vector2(visual_dir, 0), Vector2(visual_dir * 40, -30), Vector2(80,50), .1, .5, 1)
+		if input.up:
+			start_attack(Attacks.UPGROUND, "upground", Vector2(0,-1), Vector2(visual_dir*10, -60), Vector2(40,120))
+			swishsound()
 		else:
-			AttackState = Attacks.JAB
-			sprite.play(&"upground")
-			await sprite.frame_changed
-			spawn_hitbox(5, Vector2(0, -1), Vector2(visual_dir * 10, -60), Vector2(40,120), .1, .5, 1)
+			start_attack(Attacks.JAB, "jab", Vector2(visual_dir,0), Vector2(visual_dir*40, -30), Vector2(80,50))
+			whipsound()
 	else:
 		if dir == 0 and vdir == 0:
-			AttackState = Attacks.NAIR
-			sprite.play(&"neutralair")
-			await sprite.frame_changed
-			spawn_hitbox(7, Vector2(0, 0), Vector2(0, -40), Vector2(80,80), .1, .5, 1)
-		elif vdir == 1:
-			AttackState = Attacks.DAIR
-			sprite.play(&"downair")
-			await sprite.frame_changed
-			spawn_hitbox(5, Vector2(0, 1), Vector2(0, 0), Vector2(40,70), .1, .5, 1)
-		elif vdir == -1:
-			AttackState = Attacks.UAIR
-			sprite.play(&"upair")
-			await sprite.frame_changed
-			spawn_hitbox(5, Vector2(0,-1), Vector2(0, -80), Vector2(50,80), .1, .5, 1)
-		elif dir and dir != -visual_dir:
-			AttackState = Attacks.FAIR
-			sprite.play(&"forwardair")
-			await sprite.frame_changed
-			spawn_hitbox(5, Vector2(visual_dir, 0), Vector2(visual_dir * 30, -30), Vector2(80,50), .1, .5, 1)
-		elif dir == -visual_dir:
-			AttackState = Attacks.BAIR
-			sprite.play(&"backair")
-			await sprite.frame_changed
-			spawn_hitbox(5, Vector2(-visual_dir, 0), Vector2(visual_dir * -30, -30), Vector2(80,50), .1, .5, 1)
-
-	await sprite.animation_finished
-	lock_movement = false
-	AttackState = Attacks.NONE
-	State = PlayerState.GENERAL
-
-func hit(node: Node):
-	if iframes > 1: return
-	for child in hitboxes.get_children():
-		hitboxes.remove_child(child)
-	global.punchsound()
-	global.witz_health -= 1
-	visual_dir = sign(global_position.x - node.get_parent().global_position.x) * -1
-	velocity = node.angle * 250
-	squeak.pitch_scale = randf_range(.9, 1.1)
-	squeak.play()
-	if State == PlayerState.OUCH: return
-	iframes = 100
-	velocity = node.angle * 500
-	State = PlayerState.OUCH
-	AttackState = Attacks.NONE
-	stuntimer = 30
-
-	
-		
-
-func _on_sprite_frame_changed() -> void:
-	
-	if sprite.animation == "run":
-		if sprite.frame == 1:
-			step_1.play()
-		if sprite.frame == 4:
-			step_2.play()
-	if sprite.animation == "walk":
-		if sprite.frame == 1:
-			step_1.play()
-		if sprite.frame == 3:
-			step_2.play()
-			
-
-	if sprite.animation in [&"backair", &"downair", &"forwardair", &"neutralair", &"upground"]:
-		if sprite.frame == 1:
-			swishsound()
-				
-	if sprite.animation in [&"upair", &"neutralair", &"jab"]:
-		if sprite.frame == 1:
+			start_attack(Attacks.NAIR, "neutralair", Vector2(0,0), Vector2(0,-40), Vector2(80,80))
 			whipsound()
+			swishsound()
+		elif vdir == 1:
+			start_attack(Attacks.DAIR, "downair", Vector2(0,1), Vector2(0,0), Vector2(40,70))
+			swishsound()
+		elif vdir == -1:
+			start_attack(Attacks.UAIR, "upair", Vector2(0,-1), Vector2(0,-80), Vector2(50,80))
+			whipsound()
+		elif dir == visual_dir:
+			start_attack(Attacks.FAIR, "forwardair", Vector2(visual_dir,0), Vector2(visual_dir*30, -30), Vector2(80,50))
+			swishsound()
+		else:
+			start_attack(Attacks.BAIR, "backair", Vector2(-visual_dir,0), Vector2(-visual_dir*30, -30), Vector2(80,50))
+			swishsound()
 			
-@onready var hitboxes: Node2D = $Hitboxes
+func start_attack(state, anim, angle, pos, size):
+	AttackState = state
+	current_attack_anim = anim
+	sprite.play(anim)
+	spawn_hitbox(5, angle, pos, size, 0.1, 0.5, 1)
 
-func spawn_hitbox(ticks:int,angle:Vector2,pos:Vector2,size:Vector2,knockback:float,damage:float,power:int):
-	var hitbox = load("res://scenes/hitbox.tscn").duplicate().instantiate()
+func _on_attack_animation_finished():
+	if State == PlayerState.ATTACKING and sprite.animation == current_attack_anim:
+		lock_move = false
+		State = PlayerState.GENERAL
+		AttackState = Attacks.NONE
+		current_attack_anim = ""
+
+func spawn_hitbox(ticks:int, angle:Vector2, pos:Vector2, size:Vector2, knockback:float, damage:float, power:int):
+	var hitbox = load("res://scenes/hitbox.tscn").instantiate()
 	hitbox.player = true
 	hitbox.size = size
 	hitbox.position = pos
@@ -256,42 +188,90 @@ func spawn_hitbox(ticks:int,angle:Vector2,pos:Vector2,size:Vector2,knockback:flo
 	hitbox.damage = damage
 	hitbox.power = power
 	hitboxes.add_child(hitbox)
-	
 
-#region sound functions
+func hit(node: Node):
+	if iframes > 1 or State == PlayerState.OUCH: return
+	for c in hitboxes.get_children():
+		hitboxes.remove_child(c)
+		
+	global.punchsound()
+	global.witz_health -= 1
+	visual_dir = sign(global_position.x - node.get_parent().global_position.x) * -1
+	velocity = node.angle * 500
+	squeak.pitch_scale = randf_range(.9,1.1)
+	squeak.play()
+	iframes = 100
+	State = PlayerState.OUCH
+	AttackState = Attacks.NONE
+	stun = 30
+
+func connected_hit():
+	if AttackState == Attacks.DAIR:
+		velocity.y = JUMP_VELOCITY
+		
+func apply_state_logic():
+	if AttackState != Attacks.NONE and State != PlayerState.OUCH:
+		State = PlayerState.ATTACKING
+
+	if State == PlayerState.ATTACKING:
+		if is_on_floor() and not AttackState in [Attacks.JAB, Attacks.UPGROUND, Attacks.NONE]:
+			AttackState = Attacks.NONE
+			State = PlayerState.GENERAL
+
+	if State == PlayerState.OUCH:
+		lock_dir = true
+		if stun <= 0:
+			State = PlayerState.GENERAL
+			lock_move = false
+			lock_dir = false
+
+	if (not lock_dir) or State == PlayerState.ATTACKING:
+		if input.dir != 0 and last_on_floor < 2:
+			visual_dir = int(input.dir)
+			
+func update_animation():
+	sprite.flip_h = (visual_dir == -1)
+	match State:
+		PlayerState.GENERAL:
+			if is_on_floor():
+				var speed = abs(velocity.x)
+				if speed > 22:
+					if speed > 500:
+						sprite.play("run", speed/1000.0)
+					else:
+						sprite.play("walk", speed/500.0)
+
+					if ((visual_dir == 1 and velocity.x < 0) or (visual_dir == -1 and velocity.x > 0)) and speed > 22:
+						sprite.play("skid")
+				else:
+					sprite.play("idle")
+					if input.down:
+						sprite.play("crouch")
+						
+			else:
+				sprite.play("midair")
+				if sprite.animation == "midair":
+					var t = clamp((velocity.y + 20.0) / 500.0, 0.0, 1.0)
+					sprite.frame = int(t * 1.999)
+		PlayerState.OUCH:
+			sprite.play("ouch")
+
+func random_sfx(a, b):
+	if randf() < .5:
+		a.pitch_scale = randf_range(.9,1.1)
+		a.play()
+	else:
+		b.pitch_scale = randf_range(.9,1.1)
+		b.play()
+
 func jumpsound():
-	if randf() < .5:
-		jump_1.pitch_scale = randf_range(.9, 1.1)
-		jump_1.play()
-	elif randf() < .5:
-		jump_2.pitch_scale = randf_range(.9, 1.1)
-		jump_2.play()
-	else:
-		jump_3.pitch_scale = randf_range(.9, 1.1)
-		jump_3.play()
+	random_sfx(jump_1, jump_2)
+
 func stepsound():
-	if randf() < .5:
-		step_1.pitch_scale = randf_range(.9, 1.1)
-		step_1.play()
-	else:
-		step_2.pitch_scale = randf_range(.9, 1.1)
-		step_2.play()
+	random_sfx(step_1, step_2)
 
 func swishsound():
-	if randf() < .5:
-		swish_1.pitch_scale = randf_range(.9, 1.1)
-		swish_1.play()
-	else:
-		swish_2.pitch_scale = randf_range(.9, 1.1)
-		swish_2.play()
-		
+	random_sfx(swish_1, swish_2)
+
 func whipsound():
-	if randf() < .5:
-		whip_1.pitch_scale = randf_range(.9, 1.1)
-		whip_1.play()
-	else:
-		whip_2.pitch_scale = randf_range(.9, 1.1)
-		whip_2.play()
-		
-#endregion
-#endregion
+	random_sfx(whip_1, whip_2)

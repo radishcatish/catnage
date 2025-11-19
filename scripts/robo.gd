@@ -61,7 +61,7 @@ func hit(node:Node):
 	sound2.pitch_scale = randf_range(.9, 1.1)
 	sound2.play()
 	global.punchsound()
-	velocity += node.angle * 1000
+	velocity = node.angle * 1000
 	if health <= 0:
 		deathtimer = 500
 		dead = true

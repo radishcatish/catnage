@@ -1,6 +1,6 @@
 [gd_scene load_steps=15 format=3 uid="uid://dqpui52ogt8m2"]
 
-[ext_resource type="Script" uid="uid://g0eniykf7qbx" path="res://scripts/witz.gd" id="1_007ym"]
+[ext_resource type="Script" uid="uid://g0eniykf7qbx" path="res://scripts/witz.gd" id="1_utthr"]
 [ext_resource type="SpriteFrames" uid="uid://c7e2l4qfjkjnn" path="res://sprites/witz.ase" id="2_007ym"]
 [ext_resource type="AudioStream" uid="uid://demvbwvacimjv" path="res://sounds/swish1.wav" id="3_88d68"]
 [ext_resource type="AudioStream" uid="uid://r47kmxqsslhp" path="res://sounds/squeak.wav" id="3_utthr"]
@@ -22,7 +22,7 @@ height = 40.0
 
 [node name="Witz" type="CharacterBody2D" groups=["Player"]]
 z_index = 1
-script = ExtResource("1_007ym")
+script = ExtResource("1_utthr")
 
 [node name="Hitboxes" type="Node2D" parent="."]
 
@@ -46,12 +46,10 @@ position_smoothing_enabled = true
 drag_bottom_margin = 0.3
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-visible = false
 position = Vector2(0, -16)
 polygon = PackedVector2Array(-8, -16, -8, -21, 0, -56, 8, -21, 8, -16)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2(0, -20)
 shape = SubResource("CapsuleShape2D_007ym")
 
@@ -99,5 +97,3 @@ max_polyphony = 3
 [node name="jump3" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("11_i5k17")
 max_polyphony = 3
-
-[connection signal="frame_changed" from="Sprite" to="." method="_on_sprite_frame_changed"]

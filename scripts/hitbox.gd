@@ -8,11 +8,17 @@ var player:    bool    = false
 var size:      Vector2 = Vector2.ZERO
 @onready var collision: CollisionShape2D = $CollisionShape2D
 
+
+func _ready() -> void:
+	collision.shape.size = size
+
 var hit_hurtboxes: Array = []
 func _on_area_entered(area: Area2D) -> void:
 	if player:
+		var witz: CharacterBody2D = $"../.."
 		if area not in hit_hurtboxes and not area.owner == global.player:
 			if area.owner and area.owner.has_method("hit") and area.name == "Hurtbox":
+				witz.connected_hit()
 				area.owner.hit(self)
 				hit_hurtboxes.append(area)
 				global.heat_progress += 15
@@ -22,11 +28,6 @@ func _on_area_entered(area: Area2D) -> void:
 			queue_free()
 
 func _physics_process(_delta) -> void:
-	collision.shape.size = size
 	ticks -= 1
 	if ticks <= 0:
 		queue_free()
-
-
-func hit():
-	print("hitbox hit other hitbox (bad)")
