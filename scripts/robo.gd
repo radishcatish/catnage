@@ -71,6 +71,7 @@ func hit(node:Node):
 
 func _on_detection_range_area_entered(area: Area2D) -> void:
 	if area.owner == global.player and not attacking:
+		await get_tree().create_timer(0.1).timeout
 		attacking = true
 		spawnhitbox = true
 		

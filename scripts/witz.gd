@@ -4,7 +4,6 @@ extends CharacterBody2D
 @onready var sprite: AnimatedSprite2D = $Sprite
 @onready var camera: Camera2D = $Camera2D
 @onready var hitboxes: Node2D = $Hitboxes
-
 @onready var swish_1: AudioStreamPlayer = $Sounds/swish1
 @onready var swish_2: AudioStreamPlayer = $Sounds/swish2
 @onready var whip_1: AudioStreamPlayer = $Sounds/whip1
@@ -26,43 +25,32 @@ enum Attacks { NONE, JAB, UPGROUND, FAIR, BAIR, UAIR, DAIR, NAIR }
 
 var State := PlayerState.GENERAL
 var AttackState := Attacks.NONE
-
 var stun := 0
 var iframes := 1
 var lock_move := false
 var lock_dir := false
-
 var visual_dir := 1
 var extra_speed := 0.0
-
 var last_on_floor := 10
 var last_off_floor := 10
 var last_on_wall := 10
 var last_z_press := 10
 var last_x_press := 10
-
 var wall_touch_timer := 0
 var current_wall_normal := 0
 var last_wall_jump_normal := 999
 var current_attack_anim: String = ""
-
-var input := {
-	"dir": 0,
-	"jump_pressed": false,
-	"attack_pressed": false,
-	"up": false,
-	"down": false
-}
+var dir := 0
 
 func _ready():
-	sprite.connect("animation_finished", Callable(self, "_on_attack_animation_finished"))
+	sprite.connect("animation_finished", Callable(self, "_animation_finished"))
+	sprite.connect("frame_changed", Callable(self, "_frame_changed"))
 
 func _process(_delta):
 	sprite.visible = (iframes % 2 == 0) or iframes <= 1
 
 func _physics_process(_d):
 	misc()
-	handle_jump()
 	handle_movement()
 	update_animation()
 	apply_state_logic()
@@ -70,11 +58,7 @@ func _physics_process(_d):
 	move_and_slide()
 	
 func misc():
-	input.dir = int(Input.get_axis("left", "right")) if not lock_move else 0
-	input.jump_pressed = Input.is_action_just_pressed("z")
-	input.attack_pressed = Input.is_action_just_pressed("x")
-	input.up = Input.is_action_pressed("up")
-	input.down = Input.is_action_pressed("down")
+	dir = int(Input.get_axis("left", "right")) if not lock_move else 0
 	extra_speed = 500 if not Input.is_action_pressed("shift") else 0
 	
 	if is_on_wall():
@@ -82,8 +66,11 @@ func misc():
 		wall_touch_timer = 8
 	else:
 		wall_touch_timer = max(wall_touch_timer - 1, 0)
-	
-	
+		current_wall_normal = 0
+		
+	if is_on_floor():
+		last_wall_jump_normal = 0
+		
 	stun = max(stun - 1, 0)
 	iframes = max(iframes - 1, 0)
 	last_on_floor = 0 if is_on_floor() else last_on_floor + 1
@@ -92,41 +79,43 @@ func misc():
 	last_z_press = 0 if Input.is_action_just_pressed("z") else last_z_press + 1
 	last_x_press = 0 if Input.is_action_just_pressed("x") else last_x_press + 1
 	
-	if input.attack_pressed:
+	if Input.is_action_just_pressed("x"):
 		attack_handler()
 
 func handle_movement():
 	var accel = WALK_ACCEL if is_on_floor() else AIR_ACCEL
 
 	if stun <= 0 and (not lock_move or not is_on_floor()):
-		if input.dir != 0:
-			velocity.x = move_toward(velocity.x, input.dir * (MAX_SPEED + extra_speed), accel)
+		if dir != 0:
+			velocity.x = move_toward(velocity.x, dir * (MAX_SPEED + extra_speed), accel)
 		else:
 			velocity.x = move_toward(velocity.x, 0, accel / 2)
 	else:
 		velocity.x = move_toward(velocity.x, 0, accel / 2)
+	
+	
+	if last_z_press < 4 and not lock_move:
+		last_z_press = 4
+		if last_on_wall < 10 and not last_on_floor < 7 and last_wall_jump_normal != current_wall_normal:
+			velocity.x += sign(current_wall_normal) * 1200
+			velocity.y = JUMP_VELOCITY
+			last_on_wall = 10
+			last_wall_jump_normal = current_wall_normal
+			if not lock_dir:
+				visual_dir = current_wall_normal
+			jumpsound()
+			stepsound()
+			
+		if last_on_floor < 5:
+			velocity.y += JUMP_VELOCITY - abs(velocity.x) / 10
+			last_on_floor = 5
+			jumpsound()
 
 	velocity.y += (60 - (int(Input.is_action_pressed("z")) * 20))
 	if Input.is_action_just_released("z") and velocity.y < -200:
 		velocity.y = -200
 
-func handle_jump():
-	if last_z_press > 5 or lock_move or stun > 0:
-		return
-
-	if last_on_floor < 5:
-		velocity.y = JUMP_VELOCITY - abs(velocity.x)/10
-		last_on_floor = 5
-		jumpsound()
-		return
-
-	if wall_touch_timer > 0 and current_wall_normal != 0 and current_wall_normal != last_wall_jump_normal:
-		velocity.x = current_wall_normal * 1200
-		velocity.y = JUMP_VELOCITY
-		last_wall_jump_normal = current_wall_normal
-		jumpsound()
-		stepsound()
-		visual_dir = int(current_wall_normal)
+	
 
 
 func attack_handler():
@@ -136,11 +125,10 @@ func attack_handler():
 	State = PlayerState.ATTACKING
 	lock_move = is_on_floor()
 
-	var dir = input.dir
-	var vdir = -1 if input.up else (1 if input.down else 0)
+	var vdir = -1 if Input.is_action_pressed("up") else (1 if Input.is_action_pressed("down") else 0)
 
 	if is_on_floor():
-		if input.up:
+		if Input.is_action_pressed("up"):
 			start_attack(Attacks.UPGROUND, "upground", Vector2(0,-1), Vector2(visual_dir*10, -60), Vector2(40,120))
 			swishsound()
 		else:
@@ -170,12 +158,24 @@ func start_attack(state, anim, angle, pos, size):
 	sprite.play(anim)
 	spawn_hitbox(5, angle, pos, size, 0.1, 0.5, 1)
 
-func _on_attack_animation_finished():
+func _animation_finished():
 	if State == PlayerState.ATTACKING and sprite.animation == current_attack_anim:
 		lock_move = false
 		State = PlayerState.GENERAL
 		AttackState = Attacks.NONE
 		current_attack_anim = ""
+
+func _frame_changed():
+	if sprite.animation == "run":
+		if sprite.frame == 1:
+			step_1.play()
+		if sprite.frame == 4:
+			step_2.play()
+	if sprite.animation == "walk":
+		if sprite.frame == 1:
+			step_1.play()
+		if sprite.frame == 3:
+			step_2.play()
 
 func spawn_hitbox(ticks:int, angle:Vector2, pos:Vector2, size:Vector2, knockback:float, damage:float, power:int):
 	var hitbox = load("res://scenes/hitbox.tscn").instantiate()
@@ -206,8 +206,9 @@ func hit(node: Node):
 	stun = 30
 
 func connected_hit():
-	if AttackState == Attacks.DAIR:
+	if AttackState == Attacks.DAIR and Input.is_action_pressed("z"):
 		velocity.y = JUMP_VELOCITY
+		global.heat_progress += 5
 		
 func apply_state_logic():
 	if AttackState != Attacks.NONE and State != PlayerState.OUCH:
@@ -226,8 +227,8 @@ func apply_state_logic():
 			lock_dir = false
 
 	if (not lock_dir) or State == PlayerState.ATTACKING:
-		if input.dir != 0 and last_on_floor < 2:
-			visual_dir = int(input.dir)
+		if dir != 0 and last_on_floor < 2:
+			visual_dir = int(dir)
 			
 func update_animation():
 	sprite.flip_h = (visual_dir == -1)
@@ -245,7 +246,7 @@ func update_animation():
 						sprite.play("skid")
 				else:
 					sprite.play("idle")
-					if input.down:
+					if Input.is_action_pressed("down"):
 						sprite.play("crouch")
 						
 			else:
