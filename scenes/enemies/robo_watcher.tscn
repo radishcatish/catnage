@@ -1,0 +1,90 @@
+[gd_scene load_steps=14 format=3 uid="uid://gh1rvoyrcsu5"]
+
+[ext_resource type="Script" uid="uid://dn6p72jdqjbx8" path="res://scripts/robo_watcher.gd" id="1_b43te"]
+[ext_resource type="SpriteFrames" uid="uid://bhx2w07epacmn" path="res://sprites/robofly.ase" id="2_ukgvs"]
+[ext_resource type="AudioStream" uid="uid://dk2bgdp01ojan" path="res://sounds/roboslap1.wav" id="3_1l1fu"]
+[ext_resource type="AudioStream" uid="uid://cd34vt3bsqcm0" path="res://sounds/roboslap2.wav" id="4_xrhdc"]
+[ext_resource type="AudioStream" uid="uid://qerpeqwelvq2" path="res://sounds/roboglitch1.mp3" id="5_5y586"]
+[ext_resource type="AudioStream" uid="uid://tdbe5d40m05h" path="res://sounds/roboglitch2.mp3" id="6_unwql"]
+[ext_resource type="AudioStream" uid="uid://c7yw4qjqy0gsm" path="res://sounds/roboglitch3.mp3" id="7_0x210"]
+[ext_resource type="AudioStream" uid="uid://bq4pc8icg0wpk" path="res://sounds/roboglitch4.mp3" id="8_7lb57"]
+[ext_resource type="AudioStream" uid="uid://bso125r58riqc" path="res://sounds/roboglitch5.mp3" id="9_phycd"]
+[ext_resource type="AudioStream" uid="uid://rufik18ydw8j" path="res://sounds/roboglitch6.mp3" id="10_xr2sm"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1l1fu"]
+radius = 212.02122
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gxgdh"]
+size = Vector2(32, 57)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b43te"]
+size = Vector2(28.897339, 31.178705)
+
+[node name="RoboWatcher" type="CharacterBody2D"]
+collision_layer = 0
+script = ExtResource("1_b43te")
+
+[node name="DetectionRange" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionRange"]
+position = Vector2(0, -30)
+shape = SubResource("CircleShape2D_1l1fu")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = ExtResource("2_ukgvs")
+autoplay = "default"
+frame_progress = 0.32724622
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -14.5)
+shape = SubResource("RectangleShape2D_gxgdh")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+scale = Vector2(1.315, 1.315)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(0, -23.194)
+scale = Vector2(0.9999999, 0.9999999)
+shape = SubResource("RectangleShape2D_b43te")
+
+[node name="Slaps" type="Node" parent="."]
+
+[node name="Roboslap1" type="AudioStreamPlayer2D" parent="Slaps"]
+stream = ExtResource("3_1l1fu")
+volume_db = -5.0
+
+[node name="Roboslap2" type="AudioStreamPlayer2D" parent="Slaps"]
+stream = ExtResource("4_xrhdc")
+volume_db = -5.0
+
+[node name="Glitches" type="Node" parent="."]
+
+[node name="Roboglitch1" type="AudioStreamPlayer2D" parent="Glitches"]
+stream = ExtResource("5_5y586")
+volume_db = 5.0
+max_polyphony = 3
+
+[node name="Roboglitch2" type="AudioStreamPlayer2D" parent="Glitches"]
+stream = ExtResource("6_unwql")
+volume_db = 5.0
+max_polyphony = 3
+
+[node name="Roboglitch3" type="AudioStreamPlayer2D" parent="Glitches"]
+stream = ExtResource("7_0x210")
+volume_db = 5.0
+max_polyphony = 3
+
+[node name="Roboglitch4" type="AudioStreamPlayer2D" parent="Glitches"]
+stream = ExtResource("8_7lb57")
+volume_db = 5.0
+max_polyphony = 3
+
+[node name="Roboglitch5" type="AudioStreamPlayer2D" parent="Glitches"]
+stream = ExtResource("9_phycd")
+volume_db = 5.0
+max_polyphony = 3
+
+[node name="Roboglitch6" type="AudioStreamPlayer2D" parent="Glitches"]
+stream = ExtResource("10_xr2sm")
+volume_db = 5.0
+max_polyphony = 3

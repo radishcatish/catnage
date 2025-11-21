@@ -16,14 +16,14 @@ var hit_hurtboxes: Array = []
 func _on_area_entered(area: Area2D) -> void:
 	if player:
 		var witz: CharacterBody2D = $"../.."
-		if area not in hit_hurtboxes and not area.owner == global.player:
-			if area.owner and area.owner.has_method("hit") and area.name == "Hurtbox":
-				witz.connected_hit()
-				area.owner.hit(self)
+		if area not in hit_hurtboxes and not area.get_parent() == global.player:
+			if area.get_parent() and area.owner.has_method("hit") and area.name == "Hurtbox":
+				witz.connected_hit(area.get_parent())
+				area.get_parent().hit(self)
 				hit_hurtboxes.append(area)
 	else:
-		if area.owner == global.player:
-			area.owner.hit(self)
+		if area.get_parent() == global.player:
+			global.player.hit(self)
 			queue_free()
 
 func _physics_process(_delta) -> void:

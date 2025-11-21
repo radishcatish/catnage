@@ -29,8 +29,9 @@ script = ExtResource("1_utthr")
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -48)
 sprite_frames = ExtResource("2_007ym")
-animation = &"walk"
+animation = &"idle"
 autoplay = "idle"
+frame_progress = 0.3834459
 
 [node name="Hurtbox" type="Area2D" parent="."]
 

@@ -1,8 +1,8 @@
 [gd_scene load_steps=7 format=3 uid="uid://dmj7de4okjq0w"]
 
-[ext_resource type="AudioStream" uid="uid://df03k2etc4pqe" path="res://sounds/hubbuttonpress.mp3" id="1_4kdbh"]
-[ext_resource type="Script" uid="uid://cvagnrabgr2h4" path="res://scripts/button.gd" id="1_vttqt"]
-[ext_resource type="PackedScene" uid="uid://dqpui52ogt8m2" path="res://scenes/witz.tscn" id="1_xuh2y"]
+[ext_resource type="AudioStream" uid="uid://df03k2etc4pqe" path="res://sounds/hubbuttonpress.mp3" id="1_0lo57"]
+[ext_resource type="Script" uid="uid://cvagnrabgr2h4" path="res://scripts/button.gd" id="2_hnhom"]
+[ext_resource type="PackedScene" uid="uid://dqpui52ogt8m2" path="res://scenes/witz.tscn" id="3_2vg4m"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_vttqt"]
 distance = 15.0
@@ -58,7 +58,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Hubbuttonpress" type="AudioStreamPlayer" parent="StaticBody2D/Control"]
-stream = ExtResource("1_4kdbh")
+stream = ExtResource("1_0lo57")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="StaticBody2D/Control"]
 auto_translate_mode = 2
@@ -68,22 +68,23 @@ offset_right = 399.0
 offset_bottom = 86.0
 scale = Vector2(2.885, 2.885)
 localize_numeral_system = false
-text = "res://levels/"
+text = "res://scenes/levels/"
 scroll_active = false
 shortcut_keys_enabled = false
 deselect_on_focus_loss_enabled = false
 drag_and_drop_selection_enabled = false
 
 [node name="button" type="Button" parent="StaticBody2D/Control"]
+modulate = Color(1, 1, 0, 1)
 layout_mode = 0
 offset_left = 32.0
 offset_top = 129.0
 offset_right = 159.0
 offset_bottom = 257.0
-text = "res://scenes/spotlight.tscn"
-autowrap_mode = 2
+text = "spotlight.tscn"
+autowrap_mode = 1
 clip_text = true
-script = ExtResource("1_vttqt")
+script = ExtResource("2_hnhom")
 
 [node name="button2" type="Button" parent="StaticBody2D/Control"]
 layout_mode = 0
@@ -91,9 +92,9 @@ offset_left = 224.0
 offset_top = 128.0
 offset_right = 352.0
 offset_bottom = 256.0
-text = "res://scenes/enemytestfight.tscn"
-autowrap_mode = 2
-script = ExtResource("1_vttqt")
+text = "enemytestfight.tscn"
+autowrap_mode = 1
+script = ExtResource("2_hnhom")
 
 [node name="button3" type="Button" parent="StaticBody2D/Control"]
 layout_mode = 0
@@ -101,7 +102,7 @@ offset_left = 416.0
 offset_top = 128.0
 offset_right = 544.0
 offset_bottom = 256.0
-autowrap_mode = 2
+autowrap_mode = 1
 clip_text = true
 
 [node name="button4" type="Button" parent="StaticBody2D/Control"]
@@ -110,7 +111,7 @@ offset_left = 607.0
 offset_top = 128.0
 offset_right = 735.0
 offset_bottom = 256.0
-autowrap_mode = 2
+autowrap_mode = 1
 
 [node name="button5" type="Button" parent="StaticBody2D/Control"]
 layout_mode = 0
@@ -118,7 +119,7 @@ offset_left = 799.0
 offset_top = 128.0
 offset_right = 927.0
 offset_bottom = 256.0
-autowrap_mode = 2
+autowrap_mode = 1
 
 [node name="button6" type="Button" parent="StaticBody2D/Control"]
 layout_mode = 0
@@ -126,7 +127,7 @@ offset_left = 991.0
 offset_top = 128.0
 offset_right = 1119.0
 offset_bottom = 256.0
-autowrap_mode = 2
+autowrap_mode = 1
 
 [node name="button7" type="Button" parent="StaticBody2D/Control"]
 layout_mode = 0
@@ -134,7 +135,7 @@ offset_left = 32.0
 offset_top = 288.0
 offset_right = 160.0
 offset_bottom = 416.0
-autowrap_mode = 2
+autowrap_mode = 1
 
 [node name="button8" type="Button" parent="StaticBody2D/Control"]
 layout_mode = 0
@@ -142,7 +143,7 @@ offset_left = 224.0
 offset_top = 288.0
 offset_right = 352.0
 offset_bottom = 416.0
-autowrap_mode = 2
+autowrap_mode = 1
 
 [node name="button9" type="Button" parent="StaticBody2D/Control"]
 layout_mode = 0
@@ -150,7 +151,7 @@ offset_left = 416.0
 offset_top = 288.0
 offset_right = 544.0
 offset_bottom = 416.0
-autowrap_mode = 2
+autowrap_mode = 1
 
 [node name="button10" type="Button" parent="StaticBody2D/Control"]
 layout_mode = 0
@@ -158,7 +159,7 @@ offset_left = 608.0
 offset_top = 288.0
 offset_right = 736.0
 offset_bottom = 416.0
-autowrap_mode = 2
+autowrap_mode = 1
 
 [node name="button11" type="Button" parent="StaticBody2D/Control"]
 layout_mode = 0
@@ -166,7 +167,7 @@ offset_left = 800.0
 offset_top = 288.0
 offset_right = 928.0
 offset_bottom = 416.0
-autowrap_mode = 2
+autowrap_mode = 1
 
 [node name="button12" type="Button" parent="StaticBody2D/Control"]
 layout_mode = 0
@@ -174,7 +175,7 @@ offset_left = 992.0
 offset_top = 288.0
 offset_right = 1120.0
 offset_bottom = 416.0
-autowrap_mode = 2
+autowrap_mode = 1
 
 [node name="button13" type="Button" parent="StaticBody2D/Control"]
 layout_mode = 0
@@ -182,7 +183,7 @@ offset_left = 32.0
 offset_top = 448.0
 offset_right = 160.0
 offset_bottom = 576.0
-autowrap_mode = 2
+autowrap_mode = 1
 
 [node name="button14" type="Button" parent="StaticBody2D/Control"]
 layout_mode = 0
@@ -190,7 +191,7 @@ offset_left = 224.0
 offset_top = 448.0
 offset_right = 352.0
 offset_bottom = 576.0
-autowrap_mode = 2
+autowrap_mode = 1
 
 [node name="button15" type="Button" parent="StaticBody2D/Control"]
 layout_mode = 0
@@ -198,7 +199,7 @@ offset_left = 416.0
 offset_top = 448.0
 offset_right = 544.0
 offset_bottom = 576.0
-autowrap_mode = 2
+autowrap_mode = 1
 
 [node name="button16" type="Button" parent="StaticBody2D/Control"]
 layout_mode = 0
@@ -206,7 +207,7 @@ offset_left = 608.0
 offset_top = 448.0
 offset_right = 736.0
 offset_bottom = 576.0
-autowrap_mode = 2
+autowrap_mode = 1
 
 [node name="button17" type="Button" parent="StaticBody2D/Control"]
 layout_mode = 0
@@ -214,7 +215,7 @@ offset_left = 800.0
 offset_top = 448.0
 offset_right = 928.0
 offset_bottom = 576.0
-autowrap_mode = 2
+autowrap_mode = 1
 
 [node name="button18" type="Button" parent="StaticBody2D/Control"]
 layout_mode = 0
@@ -222,11 +223,11 @@ offset_left = 992.0
 offset_top = 448.0
 offset_right = 1120.0
 offset_bottom = 576.0
-autowrap_mode = 2
+autowrap_mode = 1
 
 [node name="Sprite2D" type="Sprite2D" parent="StaticBody2D"]
 position = Vector2(38.000244, 2799)
 scale = Vector2(248.75, 87.96875)
 texture = SubResource("GradientTexture2D_nqy8e")
 
-[node name="Witz" parent="." instance=ExtResource("1_xuh2y")]
+[node name="Witz" parent="." instance=ExtResource("3_2vg4m")]

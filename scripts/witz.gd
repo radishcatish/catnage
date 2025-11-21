@@ -46,9 +46,14 @@ func _ready():
 	sprite.connect("animation_finished", Callable(self, "_animation_finished"))
 	sprite.connect("frame_changed", Callable(self, "_frame_changed"))
 
-func _process(_delta):
-	sprite.visible = (iframes % 2 == 0) or iframes <= 1
 
+
+func _process(_delta):
+	if Engine.get_frames_drawn() % 2 == 0 and iframes > 1:
+		sprite.visible = !sprite.visible
+	else:
+		sprite.visible = true
+		
 func _physics_process(_d):
 	misc()
 	handle_movement()
@@ -68,6 +73,7 @@ func misc():
 	last_on_wall = 0 if is_on_wall() else last_on_wall + 1
 	last_z_press = 0 if Input.is_action_just_pressed("z") else last_z_press + 1
 	last_x_press = 0 if Input.is_action_just_pressed("x") else last_x_press + 1
+	
 	if is_on_wall_only():
 		current_wall_normal = get_wall_normal().x
 		wall_touch_timer = 8
@@ -92,23 +98,22 @@ func handle_movement():
 		velocity.x = move_toward(velocity.x, 0, accel / 6)
 	
 	
-	if last_z_press <= 10 and not lock_move:
-		last_z_press = 11
-		if last_on_wall < 10 and not last_on_floor < 7 and last_wall_jump_normal != current_wall_normal:
-			velocity.x += sign(current_wall_normal) * 1200
-			velocity.y = JUMP_VELOCITY
-			last_on_wall = 10
-			last_wall_jump_normal = current_wall_normal
-			if not lock_dir:
-				visual_dir = current_wall_normal
-			jumpsound()
-			stepsound()
-			
+	if last_z_press <= 5 and not lock_move:
 		if last_on_floor < 5:
-			print(last_z_press)
 			velocity.y += JUMP_VELOCITY - abs(velocity.x) / 10
 			last_on_floor = 5
 			jumpsound()
+	if last_on_wall <= 10 and last_wall_jump_normal != current_wall_normal:
+		velocity.x += sign(current_wall_normal) * 1200
+		velocity.y = JUMP_VELOCITY
+		print(last_on_wall)
+		last_on_wall = 10
+		last_wall_jump_normal = current_wall_normal
+		if not lock_dir:
+			visual_dir = current_wall_normal
+		jumpsound()
+		stepsound()
+		last_z_press = 6
 
 	velocity.y += (60 - (int(Input.is_action_pressed("z")) * 20))
 	if Input.is_action_just_released("z") and velocity.y < -200:
@@ -134,22 +139,19 @@ func attack_handler():
 			start_attack(Attacks.JAB, "jab", Vector2(visual_dir,0), Vector2(visual_dir*40, -30), Vector2(80,50))
 			whipsound()
 	else:
-		if dir == 0 and vdir == 0:
-			start_attack(Attacks.NAIR, "neutralair", Vector2(0,0), Vector2(0,-40), Vector2(80,80))
-			whipsound()
-			swishsound()
-		elif vdir == 1:
+		if vdir == 1:
 			start_attack(Attacks.DAIR, "downair", Vector2(0,1), Vector2(0,0), Vector2(40,70))
 			swishsound()
 		elif vdir == -1:
 			start_attack(Attacks.UAIR, "upair", Vector2(0,-1), Vector2(0,-80), Vector2(50,80))
 			whipsound()
-		elif dir == visual_dir:
-			start_attack(Attacks.FAIR, "forwardair", Vector2(visual_dir,0), Vector2(visual_dir*30, -30), Vector2(80,50))
-			swishsound()
-		else:
+		elif dir != visual_dir and dir != 0:
 			start_attack(Attacks.BAIR, "backair", Vector2(-visual_dir,0), Vector2(-visual_dir*30, -30), Vector2(80,50))
 			swishsound()
+		else:
+			start_attack(Attacks.FAIR, "forwardair", Vector2(visual_dir,0), Vector2(visual_dir*30, -30), Vector2(80,50))
+			swishsound()
+
 			
 func start_attack(state, anim, angle, pos, size):
 	AttackState = state
@@ -205,8 +207,9 @@ func hit(node: Node):
 	AttackState = Attacks.NONE
 	stun = 30
 
-func connected_hit():
-	global.heat_progress += 15
+func connected_hit(node: Node):
+	if node.is_in_group("Enemy"):
+		global.heat_progress += 15
 	if AttackState == Attacks.DAIR and Input.is_action_pressed("z"):
 		velocity.y = JUMP_VELOCITY
 		global.heat_progress += 5

@@ -7,6 +7,6 @@ func _physics_process(_delta: float) -> void:
 	
 	if timer % (200 - timer2) == 1:
 		timer2 += 1
-		var child = load("res://scenes/robo.tscn").duplicate().instantiate()
+		var child = load("res://scenes/enemies/robo.tscn").duplicate().instantiate()
 		child.position.x = randf_range(-640, 640)
 		add_child(child)

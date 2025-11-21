@@ -19,8 +19,13 @@ size = Vector2(40, 79)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oyjml"]
 size = Vector2(38, 51)
 
-[node name="Robo" type="CharacterBody2D"]
-collision_layer = 0
+[node name="Robo" type="CharacterBody2D" groups=["Enemy"]]
+slide_on_ceiling = false
+floor_stop_on_slope = false
+floor_block_on_wall = false
+floor_max_angle = 0.0
+floor_snap_length = 0.0
+platform_on_leave = 2
 script = ExtResource("1_3a0kg")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
