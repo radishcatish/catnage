@@ -2,13 +2,13 @@
 
 importer="aseprite_wizard.plugin.spriteframes"
 type="SpriteFrames"
-uid="uid://deatolctvbv1f"
-path="res://.godot/imported/demini.aseprite-d04441b100868cfa5523dc310564cb66.res"
+uid="uid://3icpojsc3xlt"
+path="res://.godot/imported/mortarshrumbaby.ase-60ef9d1c37fcd8ed680167871e7d2f3a.res"
 
 [deps]
 
-source_file="res://sprites/demini.aseprite"
-dest_files=["res://.godot/imported/demini.aseprite-d04441b100868cfa5523dc310564cb66.res"]
+source_file="res://sprites/mortarshrumbaby.ase"
+dest_files=["res://.godot/imported/mortarshrumbaby.ase-60ef9d1c37fcd8ed680167871e7d2f3a.res"]
 
 [params]
 

@@ -14,7 +14,7 @@
 [ext_resource type="AudioStream" uid="uid://clad82pd65lmg" path="res://sounds/whop3.wav" id="11_i5k17"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i5k17"]
-size = Vector2(20, 67)
+size = Vector2(16, 63)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_007ym"]
 radius = 8.0
@@ -35,7 +35,7 @@ autoplay = "idle"
 [node name="Hurtbox" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
-position = Vector2(0, -33.5)
+position = Vector2(0, -35.5)
 shape = SubResource("RectangleShape2D_i5k17")
 
 [node name="Camera2D" type="Camera2D" parent="."]

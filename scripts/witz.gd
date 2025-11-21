@@ -17,7 +17,7 @@ extends CharacterBody2D
 
 const WALK_ACCEL = 100.0
 const AIR_ACCEL = 60.0
-const MAX_SPEED = 500.0
+const MAX_SPEED = 300.0
 const JUMP_VELOCITY = -1000.0
 
 enum PlayerState { GENERAL, ATTACKING, OUCH }
@@ -54,23 +54,13 @@ func _physics_process(_d):
 	handle_movement()
 	update_animation()
 	apply_state_logic()
-
+	
 	move_and_slide()
 	
 func misc():
+	sprite.flip_h = (visual_dir == -1)
 	dir = int(Input.get_axis("left", "right")) if not lock_move else 0
 	extra_speed = 500 if not Input.is_action_pressed("shift") else 0
-	
-	if is_on_wall():
-		current_wall_normal = get_wall_normal().x
-		wall_touch_timer = 8
-	else:
-		wall_touch_timer = max(wall_touch_timer - 1, 0)
-		current_wall_normal = 0
-		
-	if is_on_floor():
-		last_wall_jump_normal = 0
-		
 	stun = max(stun - 1, 0)
 	iframes = max(iframes - 1, 0)
 	last_on_floor = 0 if is_on_floor() else last_on_floor + 1
@@ -78,24 +68,32 @@ func misc():
 	last_on_wall = 0 if is_on_wall() else last_on_wall + 1
 	last_z_press = 0 if Input.is_action_just_pressed("z") else last_z_press + 1
 	last_x_press = 0 if Input.is_action_just_pressed("x") else last_x_press + 1
-	
+	if is_on_wall_only():
+		current_wall_normal = get_wall_normal().x
+		wall_touch_timer = 8
+	else:
+		wall_touch_timer = max(wall_touch_timer - 1, 0)
+		current_wall_normal = 0
+		if is_on_floor():
+			last_wall_jump_normal = 0
+
 	if Input.is_action_just_pressed("x"):
 		attack_handler()
 
 func handle_movement():
 	var accel = WALK_ACCEL if is_on_floor() else AIR_ACCEL
-
+	
 	if stun <= 0 and (not lock_move or not is_on_floor()):
 		if dir != 0:
 			velocity.x = move_toward(velocity.x, dir * (MAX_SPEED + extra_speed), accel)
 		else:
 			velocity.x = move_toward(velocity.x, 0, accel / 2)
 	else:
-		velocity.x = move_toward(velocity.x, 0, accel / 2)
+		velocity.x = move_toward(velocity.x, 0, accel / 6)
 	
 	
-	if last_z_press < 4 and not lock_move:
-		last_z_press = 4
+	if last_z_press <= 10 and not lock_move:
+		last_z_press = 11
 		if last_on_wall < 10 and not last_on_floor < 7 and last_wall_jump_normal != current_wall_normal:
 			velocity.x += sign(current_wall_normal) * 1200
 			velocity.y = JUMP_VELOCITY
@@ -107,6 +105,7 @@ func handle_movement():
 			stepsound()
 			
 		if last_on_floor < 5:
+			print(last_z_press)
 			velocity.y += JUMP_VELOCITY - abs(velocity.x) / 10
 			last_on_floor = 5
 			jumpsound()
@@ -195,6 +194,7 @@ func hit(node: Node):
 		hitboxes.remove_child(c)
 		
 	global.punchsound()
+	global.heat_progress -= 10
 	global.witz_health -= 1
 	visual_dir = sign(global_position.x - node.get_parent().global_position.x) * -1
 	velocity = node.angle * 500
@@ -206,6 +206,7 @@ func hit(node: Node):
 	stun = 30
 
 func connected_hit():
+	global.heat_progress += 15
 	if AttackState == Attacks.DAIR and Input.is_action_pressed("z"):
 		velocity.y = JUMP_VELOCITY
 		global.heat_progress += 5
@@ -231,16 +232,15 @@ func apply_state_logic():
 			visual_dir = int(dir)
 			
 func update_animation():
-	sprite.flip_h = (visual_dir == -1)
 	match State:
 		PlayerState.GENERAL:
 			if is_on_floor():
 				var speed = abs(velocity.x)
 				if speed > 22:
 					if speed > 500:
-						sprite.play("run", speed/1000.0)
+						sprite.play("run", speed/(WALK_ACCEL + extra_speed))
 					else:
-						sprite.play("walk", speed/500.0)
+						sprite.play("walk", speed/(WALK_ACCEL * 2))
 
 					if ((visual_dir == 1 and velocity.x < 0) or (visual_dir == -1 and velocity.x > 0)) and speed > 22:
 						sprite.play("skid")
@@ -251,9 +251,7 @@ func update_animation():
 						
 			else:
 				sprite.play("midair")
-				if sprite.animation == "midair":
-					var t = clamp((velocity.y + 20.0) / 500.0, 0.0, 1.0)
-					sprite.frame = int(t * 1.999)
+				sprite.frame = 0 if velocity.y < 300 else 1
 		PlayerState.OUCH:
 			sprite.play("ouch")
 

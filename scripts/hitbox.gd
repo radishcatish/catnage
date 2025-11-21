@@ -21,7 +21,6 @@ func _on_area_entered(area: Area2D) -> void:
 				witz.connected_hit()
 				area.owner.hit(self)
 				hit_hurtboxes.append(area)
-				global.heat_progress += 15
 	else:
 		if area.owner == global.player:
 			area.owner.hit(self)
