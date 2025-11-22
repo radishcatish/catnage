@@ -99,22 +99,22 @@ func handle_movement():
 	else:
 		velocity.x = move_toward(velocity.x, 0, accel / 6)
 	
-	
+
 	if last_z_press <= 5 and not lock_move:
 		if last_on_floor < 5:
 			velocity.y += JUMP_VELOCITY - abs(velocity.x) / 10
 			last_on_floor = 5
 			jumpsound()
-		if last_on_wall <= 5 and last_on_floor > 7 and (last_wall_jump_normal != current_wall_normal or (current_wall_normal == 0 and last_wall_jump_normal == 0)):
+		if last_on_wall <= 5 and last_on_floor > 10 and (last_wall_jump_normal != current_wall_normal or (current_wall_normal == 0 and last_wall_jump_normal == 0)):
 			velocity.x += sign(last_wall_normal) * 1200
 			velocity.y = JUMP_VELOCITY
-			last_on_wall = 10
+			last_on_wall = 6
 			last_wall_jump_normal = last_wall_normal
 			if not lock_dir:
 				visual_dir = last_wall_normal
 			jumpsound()
 			stepsound()
-		last_z_press = 6
+
 
 	velocity.y += (60 - (int(Input.is_action_pressed("z")) * 20))
 	if Input.is_action_just_released("z") and velocity.y < -200:
@@ -141,7 +141,7 @@ func attack_handler():
 			whipsound()
 	else:
 		if vdir == 1:
-			start_attack(Attacks.DAIR, "downair", Vector2(0,1), Vector2(0,0), Vector2(40,70))
+			start_attack(Attacks.DAIR, "downair", Vector2(0,1), Vector2(0,0), Vector2(40,40))
 			swishsound()
 		elif vdir == -1:
 			start_attack(Attacks.UAIR, "upair", Vector2(0,-1), Vector2(0,-80), Vector2(50,80))
