@@ -75,7 +75,7 @@ func misc():
 	last_on_wall = 0 if is_on_wall() else last_on_wall + 1
 	last_z_press = 0 if Input.is_action_just_pressed("z") else last_z_press + 1
 	last_x_press = 0 if Input.is_action_just_pressed("x") else last_x_press + 1
-	valid_wall_normal = (current_wall_normal == -1 or current_wall_normal == 1) and ((last_wall_jump_normal != last_wall_normal or (last_wall_normal == 0 and last_wall_jump_normal == 0)))
+	valid_wall_normal = (last_wall_normal == -1 or last_wall_normal == 1) and ((last_wall_jump_normal != last_wall_normal or (last_wall_normal == 0 and last_wall_jump_normal == 0)))
 
 	
 	if is_on_wall_only():
@@ -117,14 +117,9 @@ func handle_movement():
 				visual_dir = last_wall_normal
 			jumpsound()
 			stepsound()
-
-
+			
 	velocity.y += (60 - (int(Input.is_action_pressed("z")) * 20))
-	if Input.is_action_just_released("z") and velocity.y < -200:
-		velocity.y = -200
-
-	
-
+	velocity.y = -200 if Input.is_action_just_released("z") and velocity.y < -200 else velocity.y
 
 func attack_handler():
 	if State == PlayerState.ATTACKING or State == PlayerState.OUCH:
@@ -161,7 +156,7 @@ func start_attack(state, anim, angle, pos, size):
 	AttackState = state
 	current_attack_anim = anim
 	sprite.play(anim)
-	spawn_hitbox(7, angle, pos, size, 0.1, 0.5, 1)
+	global.spawn_hitbox(self, 7, angle, pos, size, 500, 1, true)
 
 func _animation_finished():
 	if State == PlayerState.ATTACKING and sprite.animation == current_attack_anim:
@@ -182,29 +177,19 @@ func _frame_changed():
 		if sprite.frame == 3:
 			step_2.play()
 
-func spawn_hitbox(ticks:int, angle:Vector2, pos:Vector2, size:Vector2, knockback:float, damage:float, power:int):
-	var hitbox = load("res://scenes/hitbox.tscn").instantiate()
-	hitbox.player = true
-	hitbox.size = size
-	hitbox.position = pos
-	hitbox.ticks = ticks
-	hitbox.angle = angle
-	hitbox.knockback = knockback
-	hitbox.damage = damage
-	hitbox.power = power
-	hitboxes.add_child(hitbox)
+
 
 func hit(node: Node):
 	if iframes > 1 or State == PlayerState.OUCH: return
 	for c in hitboxes.get_children():
 		hitboxes.remove_child(c)
 		
-	global.punchsound()
+
 	global.heat_progress -= 10
-	global.witz_health -= 1
+	global.witz_health -= node.damage
 	global.add_score(-10)
 	visual_dir = sign(global_position.x - node.get_parent().global_position.x) * -1
-	velocity = node.angle * 500
+	velocity = node.angle * node.knockback
 	squeak.pitch_scale = randf_range(.9,1.1)
 	squeak.play()
 	iframes = 100

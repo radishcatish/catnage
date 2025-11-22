@@ -2,7 +2,7 @@ extends Area2D
 var ticks:     int     = 1
 var angle:     Vector2 = Vector2.ZERO
 var knockback: float   = 1
-var damage:    float   = .5
+var damage:    float   = 1
 var power:     int     = 1
 var player:    bool    = false
 var size:      Vector2 = Vector2.ZERO
@@ -15,12 +15,11 @@ func _ready() -> void:
 var hit_hurtboxes: Array = []
 func _on_area_entered(area: Area2D) -> void:
 	if player:
-		var witz: CharacterBody2D = $"../.."
 		if area not in hit_hurtboxes and not area.get_parent() == global.player:
 			if area and area.name == "Hurtbox":
 				var parent = area.get_parent()
 				if parent and parent.has_method("hit"):
-					witz.connected_hit(parent)
+					global.player.connected_hit(parent)
 					parent.hit(self)
 					hit_hurtboxes.append(area)
 	else:

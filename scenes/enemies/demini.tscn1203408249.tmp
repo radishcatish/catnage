@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://6eml61dwhuyp"]
+
+[ext_resource type="Script" uid="uid://bq3qt0wqfhkhp" path="res://scripts/demini.gd" id="1_40yic"]
+[ext_resource type="SpriteFrames" uid="uid://deatolctvbv1f" path="res://sprites/demini.ase" id="1_aw4qx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_40yic"]
+size = Vector2(28, 41)
+
+[node name="Demini" type="CharacterBody2D" groups=["Enemy"]]
+collision_layer = 0
+script = ExtResource("1_40yic")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -0.5)
+sprite_frames = ExtResource("1_aw4qx")
+animation = &"walk"
+autoplay = "walk"
+frame_progress = 0.94729143
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 4.5)
+shape = SubResource("RectangleShape2D_40yic")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+scale = Vector2(1.1, 1.1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(0, 4.5)
+shape = SubResource("RectangleShape2D_40yic")

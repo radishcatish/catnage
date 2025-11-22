@@ -43,7 +43,7 @@ func hit(node: Node):
 	if stun == 0 and iframes == 0:
 		stun = 20
 		iframes = 30
-		velocity = node.angle * 500
+		velocity = node.angle * node.knockback
 		var sound1 = glitches.get_child(randi_range(0, glitches.get_child_count() - 1))
 		sound1.pitch_scale = randf_range(.9, 1.1)
 		sound1.play()

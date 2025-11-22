@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://clofr7hhlhf4y"
-path="res://.godot/imported/proxy-image.png-3e7ecbaecd298e4830773bb684c1992c.ctex"
+uid="uid://1nuqfht5moww"
+path="res://.godot/imported/walljumpbug.png-ac932f62c6dac651b906b12e70f09843.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://a importange image/proxy-image.png"
-dest_files=["res://.godot/imported/proxy-image.png-3e7ecbaecd298e4830773bb684c1992c.ctex"]
+source_file="res://a importange image/walljumpbug.png"
+dest_files=["res://.godot/imported/walljumpbug.png-ac932f62c6dac651b906b12e70f09843.ctex"]
 
 [params]
 

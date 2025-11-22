@@ -1,0 +1,50 @@
+[gd_scene load_steps=6 format=3 uid="uid://6eml61dwhuyp"]
+
+[ext_resource type="Script" uid="uid://bq3qt0wqfhkhp" path="res://scripts/demini.gd" id="1_40yic"]
+[ext_resource type="SpriteFrames" uid="uid://deatolctvbv1f" path="res://sprites/demini.ase" id="1_aw4qx"]
+[ext_resource type="AudioStream" uid="uid://db8qvb4k6ccs8" path="res://sounds/bite.wav" id="2_2umxl"]
+[ext_resource type="Script" uid="uid://6c5nr2d74xvn" path="res://scripts/static_hitbox.gd" id="3_oa614"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_40yic"]
+size = Vector2(28, 41)
+
+[node name="Demini" type="CharacterBody2D" groups=["Enemy"]]
+collision_layer = 0
+script = ExtResource("1_40yic")
+
+[node name="Bite" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_2umxl")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -0.5)
+sprite_frames = ExtResource("1_aw4qx")
+animation = &"walk"
+autoplay = "walk"
+frame_progress = 0.86679834
+
+[node name="RayCast2D" type="RayCast2D" parent="AnimatedSprite2D"]
+position = Vector2(15, 25.5)
+target_position = Vector2(0, 17)
+collision_mask = 3
+hit_from_inside = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 4.5)
+shape = SubResource("RectangleShape2D_40yic")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+scale = Vector2(1.1, 1.1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(0, 4.5)
+shape = SubResource("RectangleShape2D_40yic")
+
+[node name="Hitbox" type="Area2D" parent="."]
+scale = Vector2(0.7, 0.7)
+script = ExtResource("3_oa614")
+angle = Vector2(0, -1)
+knockback = 500.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(0, 4.5)
+shape = SubResource("RectangleShape2D_40yic")

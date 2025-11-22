@@ -32,7 +32,7 @@ func punchsound():
 	s.pitch_scale = randf_range(.9, 1.1)
 	s.play()
 
-func spawn_hitbox(node: Node, ticks:int,angle:Vector2,pos:Vector2,size:Vector2,knockback:float,damage:float,power:int, plr:bool):
+func spawn_hitbox(node: Node, ticks:int,angle:Vector2,pos:Vector2,size:Vector2,knockback:float,damage:float,plr:bool):
 	var hitbox = load("res://scenes/hitbox.tscn").duplicate().instantiate()
 	hitbox.player = plr
 	hitbox.size = size
@@ -41,5 +41,4 @@ func spawn_hitbox(node: Node, ticks:int,angle:Vector2,pos:Vector2,size:Vector2,k
 	hitbox.angle = angle
 	hitbox.knockback = knockback
 	hitbox.damage = damage
-	hitbox.power = power
 	node.add_child(hitbox)

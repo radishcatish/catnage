@@ -23,7 +23,7 @@ func _physics_process(_delta: float) -> void:
 			if attacking:
 				animated_sprite_2d.play("attack")
 				if spawnhitbox:
-					global.spawn_hitbox(self, 3, Vector2(-direction, 0.3), Vector2(-direction * 40, -30), Vector2(75,60), .1, .5, 1, false)
+					global.spawn_hitbox(self, 3, Vector2(-direction, 0.3), Vector2(-direction * 40, -30), Vector2(75,60), 500, 1, false)
 					spawnhitbox = false
 				await animated_sprite_2d.animation_finished
 				attacking = false
@@ -62,7 +62,7 @@ func hit(node:Node):
 	sound2.pitch_scale = randf_range(.9, 1.1)
 	sound2.play()
 	global.punchsound()
-	velocity = node.angle * 1000
+	velocity = node.angle * node.knockback
 	if health <= 0:
 		deathtimer = 500
 		dead = true
