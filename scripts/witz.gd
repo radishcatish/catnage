@@ -40,6 +40,7 @@ var wall_touch_timer := 0
 var current_wall_normal := 0
 var last_wall_jump_normal := 999
 var last_wall_normal := 0
+var valid_wall_normal := false
 var current_attack_anim: String = ""
 var dir := 0
 
@@ -74,6 +75,8 @@ func misc():
 	last_on_wall = 0 if is_on_wall() else last_on_wall + 1
 	last_z_press = 0 if Input.is_action_just_pressed("z") else last_z_press + 1
 	last_x_press = 0 if Input.is_action_just_pressed("x") else last_x_press + 1
+	valid_wall_normal = (current_wall_normal == -1 or current_wall_normal == 1) and ((last_wall_jump_normal != last_wall_normal or (last_wall_normal == 0 and last_wall_jump_normal == 0)))
+
 	
 	if is_on_wall_only():
 		current_wall_normal = get_wall_normal().x
@@ -105,7 +108,7 @@ func handle_movement():
 			velocity.y += JUMP_VELOCITY - abs(velocity.x) / 10
 			last_on_floor = 5
 			jumpsound()
-		if last_on_wall <= 5 and last_on_floor > 10 and (last_wall_jump_normal != current_wall_normal or (current_wall_normal == 0 and last_wall_jump_normal == 0)):
+		if last_on_wall <= 5 and last_on_floor > 10 and valid_wall_normal:
 			velocity.x += sign(last_wall_normal) * 1200
 			velocity.y = JUMP_VELOCITY
 			last_on_wall = 6
