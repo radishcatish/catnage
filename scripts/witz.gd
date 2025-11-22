@@ -39,6 +39,7 @@ var last_x_press := 10
 var wall_touch_timer := 0
 var current_wall_normal := 0
 var last_wall_jump_normal := 999
+var last_wall_normal := 0
 var current_attack_anim: String = ""
 var dir := 0
 
@@ -76,6 +77,7 @@ func misc():
 	
 	if is_on_wall_only():
 		current_wall_normal = get_wall_normal().x
+		last_wall_normal = current_wall_normal
 		wall_touch_timer = 8
 	else:
 		wall_touch_timer = max(wall_touch_timer - 1, 0)
@@ -83,7 +85,7 @@ func misc():
 		if is_on_floor():
 			last_wall_jump_normal = 0
 
-	if Input.is_action_just_pressed("x"):
+	if last_x_press <= 5:
 		attack_handler()
 
 func handle_movement():
@@ -104,12 +106,12 @@ func handle_movement():
 			last_on_floor = 5
 			jumpsound()
 		if last_on_wall <= 5 and last_on_floor > 7 and (last_wall_jump_normal != current_wall_normal or (current_wall_normal == 0 and last_wall_jump_normal == 0)):
-			velocity.x += sign(current_wall_normal) * 1200
+			velocity.x += sign(last_wall_normal) * 1200
 			velocity.y = JUMP_VELOCITY
 			last_on_wall = 10
-			last_wall_jump_normal = current_wall_normal
+			last_wall_jump_normal = last_wall_normal
 			if not lock_dir:
-				visual_dir = current_wall_normal
+				visual_dir = last_wall_normal
 			jumpsound()
 			stepsound()
 		last_z_press = 6
@@ -156,7 +158,7 @@ func start_attack(state, anim, angle, pos, size):
 	AttackState = state
 	current_attack_anim = anim
 	sprite.play(anim)
-	spawn_hitbox(5, angle, pos, size, 0.1, 0.5, 1)
+	spawn_hitbox(7, angle, pos, size, 0.1, 0.5, 1)
 
 func _animation_finished():
 	if State == PlayerState.ATTACKING and sprite.animation == current_attack_anim:
@@ -197,6 +199,7 @@ func hit(node: Node):
 	global.punchsound()
 	global.heat_progress -= 10
 	global.witz_health -= 1
+	global.add_score(-10)
 	visual_dir = sign(global_position.x - node.get_parent().global_position.x) * -1
 	velocity = node.angle * 500
 	squeak.pitch_scale = randf_range(.9,1.1)

@@ -6,6 +6,7 @@ extends Node2D
 @onready var portrait: AnimatedSprite2D = $PortraitBounds/Portrait
 @onready var health_bar: AnimatedSprite2D = $HealthBar
 @onready var mult: AnimatedSprite2D = $Mult
+@onready var score: RichTextLabel = $Score
 
 var colors = PackedColorArray([
 	Color.from_hsv(0, 0, .5), 
@@ -30,7 +31,7 @@ func _process(delta: float) -> void:
 	mult.frame = heat_display / 100
 	health_bar.frame = autoload.witz_health
 	scale = Vector2(2,2) if DisplayServer.window_get_size() >= Vector2i(1500,750) else Vector2(1,1)
-	
+	score.text = str(autoload.score)
 	var heat_meter_color = snapped((heat_display / 100.0 ), 0) 
 	heat_meter.tint_under = colors[heat_meter_color]
 	if autoload.heat_progress == 1200:

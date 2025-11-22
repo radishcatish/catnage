@@ -20,6 +20,7 @@ size = Vector2(40, 79)
 size = Vector2(38, 51)
 
 [node name="Robo" type="CharacterBody2D" groups=["Enemy"]]
+collision_layer = 0
 slide_on_ceiling = false
 floor_stop_on_slope = false
 floor_block_on_wall = false

@@ -5,7 +5,7 @@ var heat_progress: int = 0
 var heat_progress_before: int = 0
 var heat_progress_wait : int = 0
 var witz_health: int = 8
-
+var score: int = 0
 func _process(_delta: float) -> void:
 	player = get_tree().get_first_node_in_group("Player")
 	
@@ -22,6 +22,10 @@ func _physics_process(_delta: float) -> void:
 	if heat_progress_wait <= 0 and abs(heat_progress_wait) % (1 + negative_heat / 3) == 0:
 		heat_progress -= 1
 
+
+func add_score(amt):
+	var multiplier = 1 + int(heat_progress / 100)
+	score += amt * multiplier
 
 func punchsound():
 	var s = $Sounds/Punch.get_child(randi_range(0, $Sounds/Punch.get_child_count() - 1))

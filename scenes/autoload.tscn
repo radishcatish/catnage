@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://b8do41wy0tc06"]
+[gd_scene load_steps=19 format=3 uid="uid://b8do41wy0tc06"]
 
 [ext_resource type="Script" uid="uid://bdq0hd4ed8o7" path="res://scripts/autoload.gd" id="1_jjwjd"]
 [ext_resource type="Script" uid="uid://bve8rdlosigco" path="res://scripts/ui.gd" id="2_5dcwp"]
@@ -17,6 +17,7 @@
 [ext_resource type="SpriteFrames" uid="uid://c6miehuuuvefr" path="res://sprites/portrait.ase" id="7_se0dm"]
 [ext_resource type="AudioStream" uid="uid://bwei8a5n85oy8" path="res://sounds/punch7.wav" id="8_3bwwj"]
 [ext_resource type="AudioStream" uid="uid://ba71s4o3xiqrt" path="res://sounds/punch8.wav" id="9_irbcs"]
+[ext_resource type="FontFile" uid="uid://bh5c3x8cv0cdh" path="res://scenes/resources/ari-w9500-condensed-display.ttf" id="18_j8f56"]
 
 [node name="Autoload" type="Node"]
 script = ExtResource("1_jjwjd")
@@ -89,4 +90,25 @@ frame_progress = 0.36651647
 position = Vector2(39, 130)
 sprite_frames = ExtResource("7_5dcwp")
 autoplay = "default"
-frame_progress = 0.63862884
+frame = 10
+frame_progress = 0.45252028
+
+[node name="Score" type="RichTextLabel" parent="CanvasLayer/Ui"]
+clip_contents = false
+offset_left = 80.5
+offset_top = 134.0
+offset_right = 515.0
+offset_bottom = 174.0
+theme_override_colors/font_outline_color = Color(0.13333334, 0.1254902, 0.20392157, 1)
+theme_override_constants/outline_size = 7
+theme_override_fonts/normal_font = ExtResource("18_j8f56")
+text = "10000"
+scroll_active = false
+autowrap_mode = 0
+autowrap_trim_flags = 0
+shortcut_keys_enabled = false
+justification_flags = 0
+meta_underlined = false
+hint_underlined = false
+deselect_on_focus_loss_enabled = false
+drag_and_drop_selection_enabled = false

@@ -50,6 +50,7 @@ func _physics_process(_delta: float) -> void:
 	
 func hit(node:Node):
 	if dead: return
+	global.add_score(20)
 	direction = sign(global_position.x - node.get_parent().global_position.x) * -1
 	attacking = false
 	health -= 1

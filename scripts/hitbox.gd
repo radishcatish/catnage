@@ -17,10 +17,12 @@ func _on_area_entered(area: Area2D) -> void:
 	if player:
 		var witz: CharacterBody2D = $"../.."
 		if area not in hit_hurtboxes and not area.get_parent() == global.player:
-			if area.get_parent() and area.owner.has_method("hit") and area.name == "Hurtbox":
-				witz.connected_hit(area.get_parent())
-				area.get_parent().hit(self)
-				hit_hurtboxes.append(area)
+			if area and area.name == "Hurtbox":
+				var parent = area.get_parent()
+				if parent and parent.has_method("hit"):
+					witz.connected_hit(parent)
+					parent.hit(self)
+					hit_hurtboxes.append(area)
 	else:
 		if area.get_parent() == global.player:
 			global.player.hit(self)
