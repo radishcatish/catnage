@@ -103,16 +103,15 @@ func handle_movement():
 			velocity.y += JUMP_VELOCITY - abs(velocity.x) / 10
 			last_on_floor = 5
 			jumpsound()
-	if last_on_wall <= 10 and last_wall_jump_normal != current_wall_normal:
-		velocity.x += sign(current_wall_normal) * 1200
-		velocity.y = JUMP_VELOCITY
-		print(last_on_wall)
-		last_on_wall = 10
-		last_wall_jump_normal = current_wall_normal
-		if not lock_dir:
-			visual_dir = current_wall_normal
-		jumpsound()
-		stepsound()
+		if last_on_wall <= 5 and last_on_floor > 7 and (last_wall_jump_normal != current_wall_normal or (current_wall_normal == 0 and last_wall_jump_normal == 0)):
+			velocity.x += sign(current_wall_normal) * 1200
+			velocity.y = JUMP_VELOCITY
+			last_on_wall = 10
+			last_wall_jump_normal = current_wall_normal
+			if not lock_dir:
+				visual_dir = current_wall_normal
+			jumpsound()
+			stepsound()
 		last_z_press = 6
 
 	velocity.y += (60 - (int(Input.is_action_pressed("z")) * 20))

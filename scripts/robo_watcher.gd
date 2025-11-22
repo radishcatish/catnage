@@ -6,7 +6,7 @@ extends CharacterBody2D
 @onready var start_pos = global_position
 var stun: int = 0
 var iframes: int = 0
-var tmr: float = 0
+var tmr: float = randf() * 10
 func _process(_d) -> void:
 	if Engine.get_frames_drawn() % 2 == 0 and iframes > 1:
 		sprite.visible = !sprite.visible
