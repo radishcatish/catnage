@@ -1,7 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://deym5pw8cssg8"]
+[gd_scene load_steps=7 format=3 uid="uid://deym5pw8cssg8"]
 
 [ext_resource type="Script" uid="uid://c68mlt714mppc" path="res://scripts/babyshrum.gd" id="1_qk6ar"]
+[ext_resource type="AudioStream" uid="uid://crlceohq011eq" path="res://sounds/boing1.wav" id="3_c6px3"]
 [ext_resource type="SpriteFrames" uid="uid://3icpojsc3xlt" path="res://sprites/mortarshrumbaby.ase" id="3_qk6ar"]
+[ext_resource type="AudioStream" uid="uid://dxsska4qa162j" path="res://sounds/boing2.wav" id="4_bhpfb"]
+[ext_resource type="AudioStream" uid="uid://c6sm6ukbex3ok" path="res://sounds/boing3.wav" id="5_deqn6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_40yic"]
 size = Vector2(40, 41)
@@ -31,5 +34,19 @@ shape = SubResource("RectangleShape2D_40yic")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(0, 4.5)
 shape = SubResource("RectangleShape2D_40yic")
+
+[node name="Boings" type="Node2D" parent="."]
+
+[node name="Boing1" type="AudioStreamPlayer2D" parent="Boings"]
+stream = ExtResource("3_c6px3")
+volume_db = 10.0
+
+[node name="Boing2" type="AudioStreamPlayer2D" parent="Boings"]
+stream = ExtResource("4_bhpfb")
+volume_db = 10.0
+
+[node name="Boing3" type="AudioStreamPlayer2D" parent="Boings"]
+stream = ExtResource("5_deqn6")
+volume_db = 10.0
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

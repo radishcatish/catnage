@@ -111,6 +111,10 @@ still = false
 [node name="ShrumBaby2" parent="." instance=ExtResource("6_3qewr")]
 position = Vector2(240, -33)
 
+[node name="ShrumBaby3" parent="." instance=ExtResource("6_3qewr")]
+position = Vector2(681, -38)
+spring_velocity = 500
+
 [node name="Robo" parent="." instance=ExtResource("7_g2cnx")]
 position = Vector2(-271, -69)
 

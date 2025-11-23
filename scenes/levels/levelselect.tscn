@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://dmj7de4okjq0w"]
 
-[ext_resource type="AudioStream" uid="uid://df03k2etc4pqe" path="res://sounds/hubbuttonpress.mp3" id="1_0lo57"]
+[ext_resource type="AudioStream" uid="uid://df03k2etc4pqe" path="res://dev/hubbuttonpress.mp3" id="1_0lo57"]
 [ext_resource type="Script" uid="uid://cvagnrabgr2h4" path="res://scripts/button.gd" id="2_hnhom"]
 [ext_resource type="PackedScene" uid="uid://dqpui52ogt8m2" path="res://scenes/witz.tscn" id="3_2vg4m"]
 

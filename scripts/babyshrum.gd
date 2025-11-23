@@ -20,6 +20,7 @@ func _physics_process(_d):
 	move_and_slide()
 	animated_sprite_2d.scale.x = direction
 
+@onready var boings: Node2D = $Boings
 
 func _on_area_2d_area_entered(area: Area2D) -> void:
 	if area.get_parent() == global.player and area.name == "Hurtbox":
@@ -28,5 +29,8 @@ func _on_area_2d_area_entered(area: Area2D) -> void:
 		animated_sprite_2d.play("Spring")
 		animating = true
 		velocity.x = 0
+		var s = boings.get_child(randi_range(0, boings.get_child_count() - 1))
+		s.pitch_scale = randf_range(.9, 1.1)
+		s.play()
 		await animated_sprite_2d.animation_finished
 		animating = false
