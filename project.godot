@@ -39,6 +39,7 @@ folder_colors={
 "res://scenes/": "yellow",
 "res://scenes/enemies/": "red",
 "res://scenes/levels/": "orange",
+"res://scenes/resources/": "green",
 "res://scripts/": "green",
 "res://shaders/": "teal",
 "res://sounds/": "blue",

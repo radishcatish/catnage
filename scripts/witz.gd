@@ -105,11 +105,11 @@ func handle_movement():
 
 	if last_z_press <= 5 and not lock_move:
 		if last_on_floor < 5:
-			velocity.y += JUMP_VELOCITY - abs(velocity.x) / 10
+			velocity.y = JUMP_VELOCITY - abs(velocity.x) / 10
 			last_on_floor = 5
 			jumpsound()
 		if last_on_wall <= 5 and last_on_floor > 10 and valid_wall_normal:
-			velocity.x += sign(last_wall_normal) * 1200
+			velocity.x = sign(last_wall_normal) * 1200
 			velocity.y = JUMP_VELOCITY
 			last_on_wall = 6
 			last_wall_jump_normal = last_wall_normal

@@ -2,8 +2,8 @@ extends CharacterBody2D
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var glitches: Node = $Glitches
 @onready var slaps: Node = $Slaps
-@onready var detection_range: Area2D = $DetectionRange
 @onready var deaths: Node = $Deaths
+@onready var detection_range: Area2D = $Hitbox
 
 var health: int = 2
 var stuntimer: int = 0
@@ -41,6 +41,7 @@ func _physics_process(_delta: float) -> void:
 		velocity.y += 30
 		animated_sprite_2d.play("hurt")
 		deathtimer -= 1
+		animated_sprite_2d.z_index = 10
 
 		if deathtimer == 0:
 			queue_free()
@@ -70,9 +71,8 @@ func hit(node:Node):
 		sound3.pitch_scale = randf_range(.9, 1.1)
 		sound3.play()
 
-func _on_detection_range_area_entered(area: Area2D) -> void:
-	if area.owner == global.player and not attacking:
-		await get_tree().create_timer(0.1).timeout
+func successful_hit():
 		attacking = true
 		spawnhitbox = true
+		global.punchsound()
 		

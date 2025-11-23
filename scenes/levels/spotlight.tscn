@@ -1,10 +1,12 @@
-[gd_scene load_steps=7 format=4 uid="uid://b1m3o2cka3kqj"]
+[gd_scene load_steps=9 format=4 uid="uid://b1m3o2cka3kqj"]
 
 [ext_resource type="Texture2D" uid="uid://cxk5ylklp81xb" path="res://sprites/barkgrou.png" id="1_jaxv1"]
 [ext_resource type="TileSet" uid="uid://da7ued2gbphnx" path="res://scenes/resources/new_level_tileset.tres" id="2_b6nkd"]
 [ext_resource type="PackedScene" uid="uid://dqpui52ogt8m2" path="res://scenes/witz.tscn" id="3_wbeks"]
-[ext_resource type="PackedScene" uid="uid://gh1rvoyrcsu5" path="res://scenes/enemies/robo_watcher.tscn" id="4_b6nkd"]
+[ext_resource type="PackedScene" uid="uid://gh1rvoyrcsu5" path="res://scenes/objects/robo_watcher.tscn" id="4_b6nkd"]
 [ext_resource type="PackedScene" uid="uid://6eml61dwhuyp" path="res://scenes/enemies/demini.tscn" id="5_wbeks"]
+[ext_resource type="PackedScene" uid="uid://deym5pw8cssg8" path="res://scenes/objects/babyshrum.tscn" id="6_3qewr"]
+[ext_resource type="PackedScene" uid="uid://btj6i3022nwrd" path="res://scenes/enemies/robo.tscn" id="7_g2cnx"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_oqo4l"]
 distance = 15.0
@@ -61,34 +63,34 @@ tile_map_data = PackedByteArray("AADu/wAAAAAAAAAAAADv/wAAAAAAAAAAAADw/wAAAAAAAAA
 tile_set = ExtResource("2_b6nkd")
 
 [node name="RoboWatcher" parent="." instance=ExtResource("4_b6nkd")]
-position = Vector2(-329, -148)
+position = Vector2(-674, -173)
 
 [node name="RoboWatcher2" parent="." instance=ExtResource("4_b6nkd")]
-position = Vector2(-470, -202)
+position = Vector2(-815, -227)
 
 [node name="RoboWatcher3" parent="." instance=ExtResource("4_b6nkd")]
-position = Vector2(-597, -271)
+position = Vector2(-942, -296)
 
 [node name="RoboWatcher4" parent="." instance=ExtResource("4_b6nkd")]
-position = Vector2(-716, -347)
+position = Vector2(-1061, -372)
 
 [node name="RoboWatcher5" parent="." instance=ExtResource("4_b6nkd")]
-position = Vector2(-884, -448)
+position = Vector2(-1229, -473)
 
 [node name="RoboWatcher6" parent="." instance=ExtResource("4_b6nkd")]
-position = Vector2(-757, -528)
+position = Vector2(-1102, -553)
 
 [node name="RoboWatcher7" parent="." instance=ExtResource("4_b6nkd")]
-position = Vector2(-492, -625)
+position = Vector2(-837, -650)
 
 [node name="RoboWatcher8" parent="." instance=ExtResource("4_b6nkd")]
-position = Vector2(-260, -735)
+position = Vector2(-605, -760)
 
 [node name="RoboWatcher9" parent="." instance=ExtResource("4_b6nkd")]
-position = Vector2(5, -727)
+position = Vector2(-340, -752)
 
 [node name="Demini" parent="." instance=ExtResource("5_wbeks")]
-position = Vector2(100, -35)
+position = Vector2(-89, -39)
 
 [node name="Demini2" parent="." instance=ExtResource("5_wbeks")]
 position = Vector2(-787, -35)
@@ -97,7 +99,23 @@ position = Vector2(-787, -35)
 position = Vector2(885, -41)
 
 [node name="Demini4" parent="." instance=ExtResource("5_wbeks")]
-position = Vector2(456, -175)
+position = Vector2(739, -59)
 
 [node name="Demini5" parent="." instance=ExtResource("5_wbeks")]
-position = Vector2(-1324, -508)
+position = Vector2(-1299, -511)
+
+[node name="ShrumBaby" parent="." instance=ExtResource("6_3qewr")]
+position = Vector2(361, -180)
+still = false
+
+[node name="ShrumBaby2" parent="." instance=ExtResource("6_3qewr")]
+position = Vector2(240, -33)
+
+[node name="Robo" parent="." instance=ExtResource("7_g2cnx")]
+position = Vector2(-271, -69)
+
+[node name="Robo2" parent="." instance=ExtResource("7_g2cnx")]
+position = Vector2(-1056, -64)
+
+[node name="Robo3" parent="." instance=ExtResource("7_g2cnx")]
+position = Vector2(829, -71)
