@@ -29,8 +29,7 @@ func _physics_process(_d) -> void:
 			
 			
 	var direction_to_target_pos = global_position.direction_to(target_pos)
-	#velocity += direction_to_target_pos * 202
-	position = target_pos
+	velocity += direction_to_target_pos * 202
 	move_and_slide()
 		
 
