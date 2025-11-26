@@ -100,7 +100,7 @@ func handle_movement():
 		else:
 			velocity.x = move_toward(velocity.x, 0, accel / 2)
 	else:
-		velocity.x = move_toward(velocity.x, 0, accel / 6)
+		velocity.x = move_toward(velocity.x, 0, accel / 2)
 	
 
 	if last_z_press <= 5 and not lock_move:

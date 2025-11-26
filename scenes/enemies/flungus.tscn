@@ -1,19 +1,31 @@
-[gd_scene load_steps=7 format=3 uid="uid://bdkg17q88tpti"]
+[gd_scene load_steps=9 format=3 uid="uid://bdkg17q88tpti"]
 
 [ext_resource type="Script" uid="uid://cq254wrotf0ku" path="res://scripts/flungus.gd" id="1_hhkh2"]
 [ext_resource type="SpriteFrames" uid="uid://bd2doro4owbcm" path="res://sprites/flungus.ase" id="2_pcmiv"]
+[ext_resource type="Script" uid="uid://6c5nr2d74xvn" path="res://scripts/static_hitbox.gd" id="3_bq1kk"]
 [ext_resource type="AudioStream" uid="uid://2qt6aoyisk8j" path="res://sounds/flungushit1.mp3" id="3_xxe1t"]
 [ext_resource type="AudioStream" uid="uid://dnlbrqwvixo3m" path="res://sounds/flungushit2.mp3" id="4_1w1uy"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1w1uy"]
+size = Vector2(52.000008, 42.5)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_pcmiv"]
 radius = 525.36
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_13b67"]
-size = Vector2(121.000015, 37.000008)
+size = Vector2(48.000008, 37.000008)
 
 [node name="Flungus" type="CharacterBody2D" groups=["Enemy", "Pogo"]]
 collision_layer = 0
 script = ExtResource("1_hhkh2")
+
+[node name="Hitbox" type="Area2D" parent="."]
+script = ExtResource("3_bq1kk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(-4.7683716e-07, 20.75)
+scale = Vector2(0.9999999, 0.9999999)
+shape = SubResource("RectangleShape2D_1w1uy")
 
 [node name="DetectionRange" type="Area2D" parent="."]
 
@@ -22,12 +34,12 @@ shape = SubResource("CircleShape2D_pcmiv")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("2_pcmiv")
-animation = &"idle"
+animation = &"attack"
 autoplay = "idle"
-frame_progress = 0.50466704
+frame_progress = 0.8947035
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-2.4999976, 9.500001)
+position = Vector2(-1.1920929e-07, 9.500001)
 scale = Vector2(0.9999999, 0.9999999)
 shape = SubResource("RectangleShape2D_13b67")
 
