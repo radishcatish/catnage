@@ -156,6 +156,7 @@ func start_attack(state, anim, angle, pos, size):
 	AttackState = state
 	current_attack_anim = anim
 	sprite.play(anim)
+	await sprite.frame_changed
 	global.spawn_hitbox(self, 7, angle, pos, size, 500, 1, true)
 
 func _animation_finished():
