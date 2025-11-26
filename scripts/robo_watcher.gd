@@ -18,11 +18,10 @@ func _physics_process(d) -> void:
 	iframes = max(iframes - 1, 0)
 	stun = max(stun - 1, 0)
 	if stun == 0:
-		global_position.x = move_toward(global_position.x, start_pos.x, d * 150)
-		global_position.y = move_toward(global_position.y, start_pos.y, d * 150)
-		sprite.play("default")
 		tmr += .1
-		sprite.position.y = sin(tmr) * 10
+		global_position.x = move_toward(global_position.x, start_pos.x, d * 150)
+		global_position.y = move_toward(global_position.y, start_pos.y + sin(tmr) * 5, d * 150)
+		sprite.play("default")
 		
 		for area in detection_range.get_overlapping_areas():
 			if area.get_parent() == global.player:

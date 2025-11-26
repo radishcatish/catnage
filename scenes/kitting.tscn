@@ -1,8 +1,8 @@
 [gd_scene load_steps=10 format=3 uid="uid://d28hedbaepd28"]
 
 [ext_resource type="Shader" uid="uid://bc1gxcv5bd3rc" path="res://shaders/kitting.gdshader" id="1_gq7kj"]
-[ext_resource type="Texture2D" uid="uid://bxmrt0igga602" path="res://sprites/kittingfog.png" id="2_bwpq7"]
-[ext_resource type="Texture2D" uid="uid://bxx65r8uj756j" path="res://sprites/kitting.png" id="3_nl17w"]
+[ext_resource type="Texture2D" uid="uid://bxmrt0igga602" path="res://sprites/kifighosttex.png" id="2_bwpq7"]
+[ext_resource type="Texture2D" uid="uid://c6jwrnvai3ehe" path="res://sprites/kifi.ase" id="3_nl17w"]
 [ext_resource type="Script" uid="uid://csm3rdx2p6gyw" path="res://scripts/kitting.gd" id="4_bwpq7"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1g1wr"]
@@ -14,40 +14,40 @@ shader_parameter/direction = Vector2(0, 1)
 shader_parameter/speed = 0.15
 shader_parameter/transparency_strength = 1.0
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_wa4f5"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_bwpq7"]
 atlas = ExtResource("3_nl17w")
 region = Rect2(0, 0, 192, 192)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_xgv37"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_nl17w"]
 atlas = ExtResource("3_nl17w")
 region = Rect2(192, 0, 192, 192)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_5ppe3"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_kk3ae"]
 atlas = ExtResource("3_nl17w")
 region = Rect2(384, 0, 192, 192)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_me1ak"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_0ctlr"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_wa4f5")
+"texture": SubResource("AtlasTexture_bwpq7")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_xgv37")
+"texture": SubResource("AtlasTexture_nl17w")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_5ppe3")
+"texture": SubResource("AtlasTexture_kk3ae")
 }],
 "loop": true,
 "name": &"default",
 "speed": 5.0
 }]
 
-[node name="Kitting" type="AnimatedSprite2D"]
+[node name="Kifi" type="AnimatedSprite2D"]
 modulate = Color(1, 1, 1, 0.733333)
 texture_filter = 1
 material = SubResource("ShaderMaterial_1g1wr")
-sprite_frames = SubResource("SpriteFrames_me1ak")
+sprite_frames = SubResource("SpriteFrames_0ctlr")
 autoplay = "default"
-frame_progress = 0.15111572
+frame_progress = 0.81219
 script = ExtResource("4_bwpq7")

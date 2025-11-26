@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://b8do41wy0tc06"]
+[gd_scene load_steps=18 format=3 uid="uid://b8do41wy0tc06"]
 
 [ext_resource type="Script" uid="uid://bdq0hd4ed8o7" path="res://scripts/autoload.gd" id="1_jjwjd"]
 [ext_resource type="Script" uid="uid://bve8rdlosigco" path="res://scripts/ui.gd" id="2_5dcwp"]
@@ -8,7 +8,6 @@
 [ext_resource type="Texture2D" uid="uid://c8rd47p2uya3c" path="res://sprites/ui1.png" id="3_kagk1"]
 [ext_resource type="AudioStream" uid="uid://dkoj2ch1k5pxj" path="res://sounds/punch3.wav" id="4_5rxs2"]
 [ext_resource type="Texture2D" uid="uid://bgk4yxr7pic1h" path="res://sprites/ui2.png" id="4_vbx3c"]
-[ext_resource type="Texture2D" uid="uid://cv7n676ewv16r" path="res://sprites/littledetailonheatbar.png" id="5_kagk1"]
 [ext_resource type="AudioStream" uid="uid://dyh6n1pd01llu" path="res://sounds/punch4.wav" id="5_p8r6a"]
 [ext_resource type="AudioStream" uid="uid://db7iemf3fjvjl" path="res://sounds/punch5.wav" id="6_4p6s5"]
 [ext_resource type="SpriteFrames" uid="uid://dhnhq4gkpb6xp" path="res://sprites/hpbar.ase" id="6_wjqoq"]
@@ -66,10 +65,6 @@ texture_under = ExtResource("2_nfvj1")
 texture_over = ExtResource("3_kagk1")
 texture_progress = ExtResource("4_vbx3c")
 metadata/_edit_use_anchors_ = true
-
-[node name="detail" type="Sprite2D" parent="CanvasLayer/Ui/HeatMeter"]
-position = Vector2(67, 12)
-texture = ExtResource("5_kagk1")
 
 [node name="PortraitBounds" type="Polygon2D" parent="CanvasLayer/Ui"]
 clip_children = 2

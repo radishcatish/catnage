@@ -200,7 +200,7 @@ func hit(node: Node):
 func connected_hit(node: Node):
 	if node.is_in_group("Enemy"):
 		global.heat_progress += 15
-	if AttackState == Attacks.DAIR and Input.is_action_pressed("z"):
+	if AttackState == Attacks.DAIR and node.is_in_group("Pogo"):
 		velocity.y = JUMP_VELOCITY
 		global.heat_progress += 5
 		

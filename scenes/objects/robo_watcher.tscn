@@ -20,7 +20,7 @@ size = Vector2(32, 57)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b43te"]
 size = Vector2(28.897339, 31.178705)
 
-[node name="RoboWatcher" type="CharacterBody2D"]
+[node name="RoboWatcher" type="CharacterBody2D" groups=["Pogo"]]
 collision_layer = 0
 script = ExtResource("1_b43te")
 

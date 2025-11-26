@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cv7n676ewv16r"
-path="res://.godot/imported/littledetailonheatbar.png-f5abc3a50d761810ed8dd45a2c51ad7b.ctex"
+uid="uid://bxmrt0igga602"
+path="res://.godot/imported/kifighosttex.png-218ff3aa230af67935a0e53ef91a5944.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/littledetailonheatbar.png"
-dest_files=["res://.godot/imported/littledetailonheatbar.png-f5abc3a50d761810ed8dd45a2c51ad7b.ctex"]
+source_file="res://sprites/kifighosttex.png"
+dest_files=["res://.godot/imported/kifighosttex.png-218ff3aa230af67935a0e53ef91a5944.ctex"]
 
 [params]
 

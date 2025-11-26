@@ -1,12 +1,14 @@
-[gd_scene load_steps=9 format=4 uid="uid://b1m3o2cka3kqj"]
+[gd_scene load_steps=11 format=4 uid="uid://b1m3o2cka3kqj"]
 
 [ext_resource type="Texture2D" uid="uid://cxk5ylklp81xb" path="res://sprites/barkgrou.png" id="1_jaxv1"]
 [ext_resource type="TileSet" uid="uid://dehtr5becjcda" path="res://scenes/resources/tilemap.tres" id="3_g2cnx"]
+[ext_resource type="PackedScene" uid="uid://d28hedbaepd28" path="res://scenes/kitting.tscn" id="3_nubuj"]
 [ext_resource type="PackedScene" uid="uid://dqpui52ogt8m2" path="res://scenes/witz.tscn" id="3_wbeks"]
 [ext_resource type="PackedScene" uid="uid://gh1rvoyrcsu5" path="res://scenes/objects/robo_watcher.tscn" id="4_b6nkd"]
 [ext_resource type="PackedScene" uid="uid://6eml61dwhuyp" path="res://scenes/enemies/demini.tscn" id="5_wbeks"]
 [ext_resource type="PackedScene" uid="uid://deym5pw8cssg8" path="res://scenes/objects/babyshrum.tscn" id="6_3qewr"]
 [ext_resource type="PackedScene" uid="uid://btj6i3022nwrd" path="res://scenes/enemies/robo.tscn" id="7_g2cnx"]
+[ext_resource type="PackedScene" uid="uid://bdkg17q88tpti" path="res://scenes/enemies/flungus.tscn" id="9_nubuj"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_oqo4l"]
 distance = 15.0
@@ -62,9 +64,12 @@ tile_set = ExtResource("3_g2cnx")
 tile_map_data = PackedByteArray("AAAkAPj/AAAIAAEAAAAjAPj/AAAHAAEAAAAjAPn/AAAIAAEAAAAiAPn/AAAIAAEAAAAhAPn/AAAHAAEAAAAhAPr/AAAIAAEAAAAgAPr/AAAIAAEAAAAfAPr/AAAHAAEAAAAfAPv/AAAIAAEAAAAeAPv/AAAIAAEAAAAdAPv/AAAHAAEAAAAdAPz/AAAIAAEAAAAcAPz/AAAIAAEAAAAbAPz/AAAHAAEAAAAaAP3/AAAIAAEAAAAZAP3/AAAIAAEAAAAYAP3/AAAHAAEAAAAYAP7/AAAIAAEAAAAXAP7/AAAIAAEAAAAWAP7/AAAHAAEAAAAWAP//AAAIAAEAAAAVAP//AAAIAAEAAAAUAP//AAAIAAEAAAAXAP//AAAIAAEAAAAYAP//AAAIAAEAAAAZAP//AAAIAAEAAAAaAP//AAAIAAEAAAAbAP//AAAIAAEAAAAcAP//AAAIAAEAAAAdAP//AAAIAAEAAAAeAP//AAAIAAEAAAAfAP//AAAIAAEAAAAgAP//AAAIAAEAAAAhAP7/AAAIAAEAAAAiAP7/AAAIAAEAAAAjAP7/AAAIAAEAAAAkAP7/AAAIAAEAAAAlAP7/AAAIAAEAAAAmAP7/AAAIAAEAAAAmAP//AAAIAAEAAAAlAP//AAAIAAEAAAAkAP//AAAIAAEAAAAjAP//AAAIAAEAAAAnAP7/AAAIAAEAAAAnAP3/AAAIAAEAAAAmAP3/AAAIAAEAAAAmAPz/AAAIAAEAAAAmAPv/AAAIAAEAAAAmAPr/AAAIAAEAAAAlAPr/AAAIAAEAAAAlAPn/AAAIAAEAAAAlAPj/AAAIAAEAAAAkAPn/AAAIAAEAAAAkAPr/AAAIAAEAAAAjAPr/AAAIAAEAAAAjAPv/AAAIAAEAAAAkAPv/AAAIAAEAAAAlAPv/AAAIAAEAAAAiAPr/AAAIAAEAAAAhAPv/AAAIAAEAAAAhAPz/AAAIAAEAAAAhAP3/AAAIAAEAAAAjAP3/AAAIAAEAAAAkAPz/AAAIAAEAAAAiAPv/AAAIAAEAAAAiAPz/AAAIAAEAAAAiAP3/AAAIAAEAAAAjAPz/AAAIAAEAAAAkAP3/AAAIAAEAAAAlAP3/AAAIAAEAAAAlAPz/AAAIAAEAAAAZAP7/AAAIAAEAAAAaAP7/AAAIAAEAAAAbAP7/AAAIAAEAAAAcAP7/AAAIAAEAAAAdAP7/AAAIAAEAAAAeAP7/AAAIAAEAAAAfAP7/AAAIAAEAAAAgAP7/AAAIAAEAAAAgAPz/AAAIAAEAAAAgAP3/AAAIAAEAAAAfAP3/AAAIAAEAAAAgAPv/AAAIAAEAAAAfAPz/AAAIAAEAAAAeAP3/AAAIAAEAAAAeAPz/AAAIAAEAAAAdAP3/AAAIAAEAAAAcAP3/AAAIAAEAAAAbAP3/AAAIAAEAAAATAP//AAAJAAEAAAAhAP//AAAIAAEAAAAiAP//AAAIAAEAAAAnAP//AAAJAAEAAAAoAP//AAAIAAAAAAAoAP7/AAAIAAAAAAAoAP3/AAAIAAAAAAAoAPz/AAAHAAEAAAAnAPv/AAAIAAAAAAAnAPr/AAAIAAEAAAAnAPn/AAAIAAEAAAAmAPn/AAAIAAEAAAAmAPj/AAAIAAEAAAAnAPz/AAAIAAEAAAA=")
 tile_set = ExtResource("3_g2cnx")
 
-[node name="Objects" type="Node" parent="."]
+[node name="Witz" parent="." instance=ExtResource("3_wbeks")]
 
-[node name="Witz" parent="Objects" instance=ExtResource("3_wbeks")]
+[node name="Kifi" parent="." instance=ExtResource("3_nubuj")]
+position = Vector2(-117, -89)
+
+[node name="Objects" type="Node" parent="."]
 
 [node name="RoboWatcher" parent="Objects" instance=ExtResource("4_b6nkd")]
 position = Vector2(-674, -173)
@@ -113,10 +118,10 @@ position = Vector2(361, -180)
 still = false
 
 [node name="ShrumBaby2" parent="Objects" instance=ExtResource("6_3qewr")]
-position = Vector2(240, -33)
+position = Vector2(208, -32)
 
 [node name="ShrumBaby3" parent="Objects" instance=ExtResource("6_3qewr")]
-position = Vector2(681, -38)
+position = Vector2(672, -27)
 spring_velocity = 500
 
 [node name="Robo" parent="Objects" instance=ExtResource("7_g2cnx")]
@@ -127,3 +132,12 @@ position = Vector2(-1056, -64)
 
 [node name="Robo3" parent="Objects" instance=ExtResource("7_g2cnx")]
 position = Vector2(829, -71)
+
+[node name="Flungus" parent="Objects" instance=ExtResource("9_nubuj")]
+position = Vector2(340, -413)
+
+[node name="Flungus2" parent="Objects" instance=ExtResource("9_nubuj")]
+position = Vector2(-704, -402)
+
+[node name="Flungus3" parent="Objects" instance=ExtResource("9_nubuj")]
+position = Vector2(1134, -173)

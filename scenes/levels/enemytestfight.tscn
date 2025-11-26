@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://b63rfol4tymgn"]
 
-[ext_resource type="Script" uid="uid://cjct8b0x1hqe" path="res://scripts/testlevelspawner.gd" id="1_mx8sn"]
+[ext_resource type="Script" uid="uid://cjct8b0x1hqe" path="res://dev/testlevelspawner.gd" id="1_mx8sn"]
 [ext_resource type="PackedScene" uid="uid://d28hedbaepd28" path="res://scenes/kitting.tscn" id="2_mx8sn"]
 [ext_resource type="PackedScene" uid="uid://dqpui52ogt8m2" path="res://scenes/witz.tscn" id="2_w7c3h"]
 
