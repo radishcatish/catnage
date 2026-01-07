@@ -5,7 +5,7 @@ var last_off_floor := 10
 var last_on_wall := 10
 var last_wall_normal := 0.0
 enum PlayerState {GENERAL}
-var State := PlayerState.GENERAL
+var state := PlayerState.GENERAL
 func _physics_process(_d):
 	last_on_floor = 0 if is_on_floor() else last_on_floor + 1
 	last_off_floor = 0 if not is_on_floor() else last_off_floor + 1
