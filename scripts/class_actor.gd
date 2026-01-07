@@ -1,4 +1,7 @@
 extends CharacterBody2D
 class_name Actor
+var health: int = 1
+signal hurt(damage)
 
-func hurt(damage, direction): pass
+func apply_damage(damage: int) -> void:
+	emit_signal("hurt", damage)
