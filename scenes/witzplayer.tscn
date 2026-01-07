@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://do45pk2vyjfhw"]
+
+[ext_resource type="Script" uid="uid://f782684f3cb4" path="res://scripts/witzplayer_main.gd" id="1_l86uq"]
+[ext_resource type="SpriteFrames" uid="uid://c7e2l4qfjkjnn" path="res://sprites/witz.ase" id="2_38lr1"]
+[ext_resource type="Script" uid="uid://oy1nbjhvs4yo" path="res://scripts/witzplayer_animsound.gd" id="3_xkgla"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_38lr1"]
+size = Vector2(14, 26)
+
+[node name="Witz" type="CharacterBody2D"]
+script = ExtResource("1_l86uq")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = ExtResource("2_38lr1")
+animation = &"idle"
+autoplay = "idle"
+script = ExtResource("3_xkgla")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 35)
+shape = SubResource("RectangleShape2D_38lr1")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-7, 22, 7, 22, 0, -26)

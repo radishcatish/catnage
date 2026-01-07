@@ -11,16 +11,18 @@ config_version=5
 [application]
 
 config/name="CATNAGE"
-run/main_scene="uid://dmj7de4okjq0w"
+run/main_scene="uid://0gs020owd4b7"
 config/features=PackedStringArray("4.5")
 boot_splash/use_filter=false
 
 [autoload]
 
-global="*res://scenes/autoload.tscn"
+Camera="*res://scenes/camera.tscn"
+I="*res://scenes/radinput.tscn"
 
 [display]
 
+window/size/initial_position_type=4
 window/stretch/scale_mode="integer"
 
 [dotnet]
@@ -43,7 +45,8 @@ folder_colors={
 "res://scripts/": "green",
 "res://shaders/": "teal",
 "res://sounds/": "blue",
-"res://sprites/": "purple"
+"res://sprites/": "purple",
+"res://sprites/ui/": "red"
 }
 
 [global_group]
@@ -92,6 +95,11 @@ c={
 shift={
 "deadzone": 0.2,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194325,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
+]
+}
+esc={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194305,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
 ]
 }
 
