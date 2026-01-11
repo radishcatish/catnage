@@ -19,6 +19,7 @@ boot_splash/use_filter=false
 
 Camera="*res://scenes/camera.tscn"
 I="*res://scenes/radinput.tscn"
+GameDisplay="*res://scenes/gamedisplay.tscn"
 
 [display]
 

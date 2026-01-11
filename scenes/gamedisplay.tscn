@@ -1,0 +1,68 @@
+[gd_scene load_steps=9 format=3 uid="uid://b8do41wy0tc06"]
+
+[ext_resource type="Script" uid="uid://cptn5hg3ksytn" path="res://scripts/gamedisplay.gd" id="9_itjjb"]
+[ext_resource type="Texture2D" uid="uid://dnd5a6m22cor7" path="res://sprites/ui/ui3.png" id="10_suoh8"]
+[ext_resource type="Texture2D" uid="uid://c8rd47p2uya3c" path="res://sprites/ui/ui1.png" id="11_5uyp2"]
+[ext_resource type="Texture2D" uid="uid://bgk4yxr7pic1h" path="res://sprites/ui/ui2.png" id="12_vc14n"]
+[ext_resource type="SpriteFrames" uid="uid://c6miehuuuvefr" path="res://sprites/portrait.ase" id="13_os8aq"]
+[ext_resource type="SpriteFrames" uid="uid://dhnhq4gkpb6xp" path="res://sprites/ui/hpbar.ase" id="14_121b5"]
+[ext_resource type="SpriteFrames" uid="uid://crlsjkwqorugs" path="res://sprites/ui/mult.ase" id="15_vwpdc"]
+[ext_resource type="FontFile" uid="uid://bh5c3x8cv0cdh" path="res://scenes/resources/ari-w9500-condensed-display.ttf" id="16_x621q"]
+
+[node name="GameDisplay" type="CanvasLayer"]
+offset = Vector2(20, 20)
+scale = Vector2(2, 2)
+transform = Transform2D(2, 0, 0, 2, 20, 20)
+script = ExtResource("9_itjjb")
+
+[node name="HeatMeter" type="TextureProgressBar" parent="."]
+offset_right = 134.0
+offset_bottom = 134.0
+step = 0.0
+fill_mode = 4
+texture_under = ExtResource("10_suoh8")
+texture_over = ExtResource("11_5uyp2")
+texture_progress = ExtResource("12_vc14n")
+metadata/_edit_use_anchors_ = true
+
+[node name="PortraitBounds" type="Polygon2D" parent="."]
+clip_children = 2
+position = Vector2(67, 67)
+color = Color(0.45840502, 0.45840508, 0.45840502, 1)
+polygon = PackedVector2Array(-12, -38, -32, -16, -37, 20, -16, 34, 16, 36, 34, 17, 41, -12, 18, -34)
+
+[node name="Portrait" type="AnimatedSprite2D" parent="PortraitBounds"]
+sprite_frames = ExtResource("13_os8aq")
+
+[node name="HealthBar" type="AnimatedSprite2D" parent="."]
+position = Vector2(67, 67)
+sprite_frames = ExtResource("14_121b5")
+autoplay = "default"
+frame_progress = 0.36651647
+
+[node name="Mult" type="AnimatedSprite2D" parent="."]
+position = Vector2(39, 130)
+sprite_frames = ExtResource("15_vwpdc")
+autoplay = "default"
+frame = 10
+frame_progress = 0.45252028
+
+[node name="Score" type="RichTextLabel" parent="."]
+clip_contents = false
+offset_left = 79.5
+offset_top = 134.0
+offset_right = 514.0
+offset_bottom = 174.0
+theme_override_colors/font_outline_color = Color(0.13333334, 0.1254902, 0.20392157, 1)
+theme_override_constants/outline_size = 7
+theme_override_fonts/normal_font = ExtResource("16_x621q")
+text = "0"
+scroll_active = false
+autowrap_mode = 0
+autowrap_trim_flags = 0
+shortcut_keys_enabled = false
+justification_flags = 0
+meta_underlined = false
+hint_underlined = false
+deselect_on_focus_loss_enabled = false
+drag_and_drop_selection_enabled = false
